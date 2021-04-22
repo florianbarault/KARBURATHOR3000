@@ -47,14 +47,7 @@
 		</div>
 	</nav>
 
-	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
-		<div class="gtco-container">
-			<div class="row">
-				{% block header %}{% endblock %}
-			</div>
-		</div>
-	</header>
-
+	{% block header %}{% endblock %}
 	{% block content %}{% endblock %}
 
 	<footer id="gtco-footer" role="contentinfo">

@@ -1,23 +1,28 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-Karburathor 3000 &mdash; Accueil
+NOM_SITE &mdash; Accueil
 {% endblock %}
 
 {% block header %}
-<div class="col-md-8 col-md-offset-2 text-center">
-	<div class="display-t">
-		<div class="display-tc animate-box" data-animate-effect="fadeIn">
-			<h1>Karburator 3000</h1>
-			<h2>Le carburant pour les bonhommes !</h2>
-			<p><a href="/login" class="btn btn-default">Je me connecte</a></p>
+<header id="gtco-header" class="gtco-cover" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center">
+				<div class="display-t">
+					<div class="display-tc animate-box" data-animate-effect="fadeIn">
+						<h1>Karburator 3000</h1>
+						<h2>Le carburant pour les bonhommes !</h2>
+						<p><a href="/login" class="btn btn-default">Je me connecte</a></p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+</header>
 {% endblock %}
 
 {% block content %}
-
 <div id="gtco-features">
 	<div class="gtco-container">
 		<div class="row">
@@ -56,13 +61,9 @@ Karburathor 3000 &mdash; Accueil
 	<div class="gtco-container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-				<h2>Why Choose Us</h2>
-				<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<div class="gtco-video gtco-bg" style="background-image: url(images/img_1.jpg); ">
+				<h2>Vidéo explicative</h2>
+				<p>[Bientôt disponible]</p>
+				<div class="gtco-video gtco-bg" style="background-image: url(../static/images/img_1.jpg); ">
 					<a href="" class=""><i class="icon-video2"></i></a>
 					<div class="overlay"></div>
 				</div>
@@ -121,5 +122,4 @@ Karburathor 3000 &mdash; Accueil
 		</div>
 	</div>
 </div>
-
 {% endblock %}
