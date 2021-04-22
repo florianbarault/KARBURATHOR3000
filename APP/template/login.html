@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Connectez-vous
+{% endblock %}
+
+
+
+{% block header %}
+<div class="col-md-8 col-md-offset-2 text-center">
+	<div class="display-t">
+		<div class="display-tc animate-box" data-animate-effect="fadeIn">
+			<h1>Rejoignez-nous</h1>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="gtco-section">
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-md-6 animate-box">
+				<h3>S'enregistrer</h3>
+				<form action="#">
+					<div class="row form-group">
+						<div class="col-md-6">
+							<label for="fname">Prénom</label>
+							<input type="text" id="fname" class="form-control" placeholder="Votre prénom">
+						</div>
+						<div class="col-md-6">
+							<label for="lname">Nom</label>
+							<input type="text" id="lname" class="form-control" placeholder="Votre nom">
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="email">Email</label>
+							<input type="text" id="email" class="form-control" placeholder="Votre adresse mail">
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="password">Mot de passe</label>
+							<input type="text" id="password" class="form-control" placeholder="Votre mot de passe">
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="certification">Certification (optionnel)</label>
+							<input type="text" id="certification" class="form-control" placeholder="Votre certification">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<input type="submit" value="Enregistrement" class="btn btn-primary">
+					</div>
+
+				</form>
+			</div>
+
+			<div class="col-md-5 col-md-push-1 animate-box">
+				<h3>Déjà membre ? Connectez-vous</h3>
+				<form action="#">
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="email">Email</label>
+							<input type="text" id="email" class="form-control" placeholder="Votre adresse mail">
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="password">Mot de passe</label>
+							<input type="text" id="password" class="form-control" placeholder="Votre mot de passe">
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Connexion" class="btn btn-primary">
+					</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="gtco-cover gtco-cover-sm" style="background-image:url(images/img_bg_3.jpg);">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>insérer texte stylé ici</h1>
+							<h2>là aussi</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

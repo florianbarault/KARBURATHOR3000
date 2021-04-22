@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{% block title %}{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="INSERER SLOGAN" />
+
+		<!-- <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'> -->
+
+		<!-- Animate.css -->
+		<link rel="stylesheet" href="../static/css/animate.css">
+		<!-- Icomoon Icon Fonts-->
+		<link rel="stylesheet" href="../static/css/icomoon.css">
+		<!-- Bootstrap  -->
+		<link rel="stylesheet" href="../static/css/bootstrap.css">
+		<!-- Magnific Popup -->
+		<link rel="stylesheet" href="../static/css/magnific-popup.css">
+		<!-- Owl Carousel  -->
+		<link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+		<link rel="stylesheet" href="../static/css/owl.theme.default.min.css">
+		<!-- Theme style  -->
+		<link rel="stylesheet" href="../static/css/style.css">
+		<!-- Modernizr JS -->
+		<script src="../static/js/modernizr-2.6.2.min.js"></script>
+		<!-- FOR IE9 below -->
+		<!--[if lt IE 9]>
+		<script src="../static/js/respond.min.js"></script>
+		<![endif]-->
+
+		{%block CSSlink %}{% endblock %}
+	</head>
+	<body>
+		
+	<div class="gtco-loader"></div>
+	
+	<div id="page">
+	<nav class="gtco-nav" role="navigation">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-xs-3">
+					<div id="gtco-logo"><a href="/">karburator 3000</a></div>
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+
+	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
+		<div class="gtco-container">
+			<div class="row">
+				{% block header %}{% endblock %}
+			</div>
+		</div>
+	</header>
+
+	{% block content %}{% endblock %}
+
+	<footer id="gtco-footer" role="contentinfo">
+		<div class="gtco-container">
+			<div class="row copyright">
+				<div class="col-md-12">
+					<p class="pull-left">
+						<small class="block">&copy; 2021 ENAC All Rights Reserved.</small>
+					</p>
+					<p class="pull-right">
+						<ul class="gtco-social-icons pull-right">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="../static/js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="../static/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="../static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="../static/js/jquery.waypoints.min.js"></script>
+	<!-- Carousel -->
+	<script src="../static/js/owl.carousel.min.js"></script>
+	<!-- countTo -->
+	<script src="../static/js/jquery.countTo.js"></script>
+	<!-- Magnific Popup -->
+	<script src="../static/js/jquery.magnific-popup.min.js"></script>
+	<script src="../static/js/magnific-popup-options.js"></script>
+	<!-- Main -->
+	<script src="../static/js/main.js"></script>
+
+	{% block JSscript %}{% endblock %}
+	</body>
+</html>
+
