@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-Nouvelle route
+Commentaires
 {% endblock %}
 
 {% block header %}
@@ -13,9 +13,9 @@ Nouvelle route
 				</div>
 				<div class="col-xs-8 text-center menu-1">
 					<ul>
-						<li class="active"><a href="#">Nouveau trajet</a></li>
+						<li><a href="/new_route">Nouveau trajet</a></li>
 						<li><a href="/historic">Historique</a></li>
-						<li><a href="/comments">Commentaires</a></li>
+						<li class="active"><a href="#">Commentaires</a></li>
 					</ul>
 				</div>
 				<div class="col-xs-2 text-right hidden-xs menu-2">
@@ -24,7 +24,7 @@ Nouvelle route
 					</ul>
 				</div>
 			</div>
-			
+
 		</div>
 	</nav>
 
@@ -35,7 +35,7 @@ Nouvelle route
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Nouveau trajet</h1>
+							<h1>Commentaires</h1>
 						</div>
 					</div>
 				</div>
@@ -43,19 +43,14 @@ Nouvelle route
 		</div>
 	</header>
 {% endblock %}
+
+
 {% block content %}
 <div id="gtco-features">
 	<div class="gtco-container">
 		<div class="row">
-			<div class="col-md-4 col-sm-4">
+			<div class="col-md-4 col-sm-4 text-center">
 				<div class="feature-center animate-box" data-animate-effect="fadeIn">
-					<label for="S1" >Type d'avion</label>
-					<select name="select" id="S1">
-						<option value="" selected="true" >Veuillez sélectionner un avion</option>
-						<option value="1">Avion 1</option>
-						<option value="2">Avion 2</option>
-						<option value="3">Avion 3</option>
-					</select>
 				</div>
 			</div>
 		</div>
