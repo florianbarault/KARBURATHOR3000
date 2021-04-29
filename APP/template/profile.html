@@ -36,28 +36,140 @@ Profil
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Profil</h1>
+							<h1>Profil {% if session.nom and session.prenom %} de {% endif %} {{ session.prenom }} {{ session.nom }}</h1>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
-
 {% endblock %}
+
 {% block content %}
-<div id="gtco-features">
+<div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(../static/images/img_bg_2.jpg);">
 	<div class="gtco-container">
 		<div class="row">
-			<div class="col-md-4 col-sm-4">
-				<div class="feature-center animate-box" data-animate-effect="fadeIn">
-					<label>Type d'avion</label>
+				<div class="display-tc">
+					<div class="col-md-3 col-sm-6 animate-box">
+						<div class="feature-center">
+								<span class="icon">
+									<i class="icon-eye"></i>
+								</span>
+							<span class="counter js-counter" data-from="0" data-to="22070" data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter-label">Litres de carburant consommés</span>
+
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 animate-box">
+						<div class="feature-center">
+								<span class="icon">
+									<i class="icon-anchor"></i>
+								</span>
+
+							<span class="counter js-counter" data-from="0" data-to="2" data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter-label">avions utilisés</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 animate-box">
+						<div class="feature-center">
+								<span class="icon">
+									<i class="icon-briefcase"></i>
+								</span>
+							<span class="counter js-counter" data-from="0" data-to="42" data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter-label">Vols</span>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 animate-box">
+						<div class="feature-center">
+								<span class="icon">
+									<i class="icon-clock"></i>
+								</span>
+
+							<span class="counter js-counter" data-from="0" data-to="2127" data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter-label">miles nautiques parcourus</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<div class="gtco-section">
+	<div class="gtco-container">
+		<div class="row">
 
+			<section id="signUp">
+				<div class="col-md-6 animate-box">
+					<h3>Informations personnelles</h3>
+					<form method="POST" action="/signUp">
+						<div class="row form-group">
+							<div class="col-md-6">
+								<label for="prenom">Prénom</label>
+								<input id="prenom" class="form-control" placeholder= {{ session.prenom }} disabled>
+							</div>
+							<div class="col-md-6">
+								<label for="nom">Nom</label>
+								<input id="nom" class="form-control" placeholder= {{ session.nom }} disabled>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="email">Email</label>
+								<input id="email" class="form-control" placeholder= {{ session.email }} disabled>
+							</div>
+						</div>
+						{% if session.certification %}
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="certif">Certification</label>
+								<input id="certif" class="form-control" placeholder= {{ session.certification }} disabled>
+							</div>
+						</div>
+						{% endif %}
+
+
+					</form>
+		</div>
+			</section>
+			<section id="signIn">
+				<div class="col-md-5 col-md-push-1 animate-box">
+					<h3>Modifier votre mot de passe</h3>
+					<form method="POST" action="/signIn">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="password">Ancien mot de passe</label>
+								<input type="text" id="password" name="password" class="form-control" placeholder="Entrez votre mot de passe actuel">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="mdp1">Nouveau mot de passe</label>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez votre nouveau mot de passe" required>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="text" id="mdp2" name="mdp2" class="form-control" placeholder="Confirmez votre nouveau mot de passe" required>
+							</div>
+						</div>
+						<div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary">Modifier mon mot de passe</button>
+								</div>
+							</div>
+							<div class="col-md-6">
+								{% if info and info == "errorSignIn" %}
+								<div class="text-danger text-center fw-bold">Erreur d'authentification</div>
+								{% endif %}
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
 
 
 

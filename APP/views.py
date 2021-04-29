@@ -61,6 +61,7 @@ def signUp():
     mdp1 = request.form['mdp1']
     mdp2 = request.form['mdp2']
     certif = request.form['certif']
+    certification = b.getCertification(certif)
     if mdp1 != mdp2:
         return render_template("login.html", info="errorMdp")
     else:
@@ -69,10 +70,10 @@ def signUp():
         if msg == "userExist":
             return render_template("login.html", info="errorSignUp", )
         else:
-            b.addUser(prenom, nom, email, mdp1, certif)
+            b.addUser(prenom, nom, email, mdp1, certification)
             session["nom"] = nom
             session["prenom"] = prenom
             session["email"] = email
-            session["certification"] = certif
+            session["certification"] = certification
             session["statut"] = "user"
             return render_template("profile.html", info=session["statut"])

@@ -73,3 +73,18 @@ def verifAuthData(login, mdp):
         msg = "Failed authentification : {}".format(e)
     closeConnexion(cnx)
     return res, msg
+
+
+def getCertification(certif):
+    if certif == "1":
+        return "LAPL"
+    if certif == "2":
+        return "PPL"
+    if certif == "3":
+        return "CPL"
+    if certif == "4":
+        return "ATPL"
+    else:
+        return None
+
+
