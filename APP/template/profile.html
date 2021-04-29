@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-Nouveau trajet
+Profil
 {% endblock %}
 
 {% block header %}
@@ -13,10 +13,10 @@ Nouveau trajet
 				</div>
 				<div class="col-xs-8 text-center menu-1">
 					<ul>
-						<li class="active"><a href="/new_route">Nouveau trajet</a></li>
+						<li><a href="/new_route">Nouveau trajet</a></li>
 						<li><a href="/historic">Historique</a></li>
 						<li><a href="/comments">Commentaires</a></li>
-						<li><a href="/profile">Profil</a></li>
+						<li class="active"><a href="/profile">Profil</a></li>
 					</ul>
 				</div>
 				<div class="col-xs-2 text-right hidden-xs menu-2">
@@ -36,46 +36,28 @@ Nouveau trajet
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Nouveau trajet</h1>
+							<h1>Profil</h1>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
+
 {% endblock %}
 {% block content %}
-
-<section id="planes">
-	<div id="gtco-features">
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-md-2 col-sm-2">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<label for="S1" >Type d'avion</label>
-						<select name="select" id="S1">
-							<option value="" selected="true" >Veuillez sélectionner un avion</option>
-							<option value="1">Avion 1</option>
-							<option value="2">Avion 2</option>
-							<option value="3">Avion 3</option>
-						</select>
-					</div>
-				{% if session.statut == "admin" %}
-					<div class="col-md-4 col-sm-4">
-						<label for="S1" >Modifier avion</label>
-					</div>
-				{% endif %}
+<div id="gtco-features">
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-md-4 col-sm-4">
+				<div class="feature-center animate-box" data-animate-effect="fadeIn">
+					<label>Type d'avion</label>
+				</div>
 			</div>
 		</div>
 	</div>
-		</div>
-	</div>
-</section>
-<section id="map">
-	<article>
-		<iframe src="https://www.google.fr/maps/@46.9390283,2.6125767,6z" width="100%" height="315" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-	</article>
-</section>
+</div>
+
 
 
 

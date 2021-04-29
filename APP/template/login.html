@@ -40,69 +40,100 @@ Connectez-vous
 <div class="gtco-section">
 	<div class="gtco-container">
 		<div class="row">
-			<div class="col-md-6 animate-box">
-				<h3>S'enregistrer</h3>
-				<form action="#">
-					<div class="row form-group">
-						<div class="col-md-6">
-							<label for="fname">Prénom</label>
-							<input type="text" id="fname" class="form-control" placeholder="Votre prénom">
-						</div>
-						<div class="col-md-6">
-							<label for="lname">Nom</label>
-							<input type="text" id="lname" class="form-control" placeholder="Votre nom">
-						</div>
-					</div>
 
-					<div class="row form-group">
-						<div class="col-md-12">
-							<label for="email">Email</label>
-							<input type="text" id="email" class="form-control" placeholder="Votre adresse mail">
+			<section id="signUp">
+				<div class="col-md-6 animate-box">
+					<h3>S'enregistrer</h3>
+					<form method="POST" action="/signUp">
+						<div class="row form-group">
+							<div class="col-md-6">
+								<label for="prenom">Prénom</label>
+								<input type="text" id="prenom" name="prenom" class="form-control" placeholder="Votre prénom" required>
+							</div>
+							<div class="col-md-6">
+								<label for="nom">Nom</label>
+								<input type="text" id="nom" name="nom" class="form-control" placeholder="Votre nom" required>
+							</div>
 						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-md-12">
-							<label for="password">Mot de passe</label>
-							<input type="text" id="password" class="form-control" placeholder="Votre mot de passe">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="email">Email</label>
+								<input type="text" id="email" name="email" class="form-control" placeholder="Votre adresse mail" required>
+							</div>
 						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-md-12">
-							<label for="certification">Certification (optionnel)</label>
-							<input type="text" id="certification" class="form-control" placeholder="Votre certification">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="mdp1">Mot de passe</label>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez votre mot de passe" required>
+							</div>
 						</div>
-					</div>
-
-					<div class="form-group">
-						<input type="submit" value="Enregistrement" class="btn btn-primary">
-					</div>
-				</form>
-			</div>
-
-			<div class="col-md-5 col-md-push-1 animate-box">
-				<h3>Déjà membre ? Connectez-vous</h3>
-				<form action="#">
-					<div class="row form-group">
-						<div class="col-md-12">
-							<label for="email">Email</label>
-							<input type="text" id="email" class="form-control" placeholder="Votre adresse mail">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="text" id="mdp2" name="mdp2" class="form-control" placeholder="Confirmez votre mot de passe" required>
+							</div>
 						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-md-12">
-							<label for="password">Mot de passe</label>
-							<input type="text" id="password" class="form-control" placeholder="Votre mot de passe">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="certif">Certification</label>
+								<select id="certif" name="certif" class="form-control">
+								<option value="0" selected="true" >Veuillez sélectionner votre qualification</option>
+								<option value="1">LAPL</option>
+								<option value="2">PPL</option>
+								<option value="3">CPL</option>
+								<option value="4">ATPL</option>
+								<option value="5">Autres</option>
+								</select>
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<input type="submit" value="Connexion" class="btn btn-primary">
-						<div id="gtco-logo"><a href="/new_route">Oxygen.</a></div>
-					</div>
-			</div>
+						<div class="form-group">
+							<div class="col-md-6">
+								<button type="submit" class="btn btn-primary">S'enregistrer</button>
+							</div>
+							<div class="col-md-6">
+								{% if info and info == "errorSignUp" %}
+								<div class="text-danger text-center fw-bold">Un compte est déjà associé à cette adresse mail</div>
+								{% endif %}
+								{% if info and info == "errorMdp" %}
+								<div class="text-danger text-center fw-bold">Mots de passe différents</div>
+								{% endif %}
 
+							</div>
+						</div>
+
+					</form>
+		</div>
+			</section>
+			<section id="signIn">
+				<div class="col-md-5 col-md-push-1 animate-box">
+					<h3>Déjà membre ? Connectez-vous</h3>
+					<form method="POST" action="/signIn">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="login">Identifiant</label>
+								<input type="email" id="login" name="login" class="form-control" placeholder="Votre adresse mail">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="password">Mot de passe</label>
+								<input type="text" id="password" name="password" class="form-control" placeholder="Votre mot de passe">
+							</div>
+						</div>
+						<div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary">Se connecter</button>
+								</div>
+							</div>
+							<div class="col-md-6">
+								{% if info and info == "errorSignIn" %}
+								<div class="text-danger text-center fw-bold">Erreur d'authentification</div>
+								{% endif %}
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
 		</div>
 	</div>
 </div>
