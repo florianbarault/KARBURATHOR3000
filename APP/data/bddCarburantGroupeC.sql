@@ -250,3 +250,6 @@ ALTER TABLE `messages`
 ALTER TABLE `vol`
   ADD CONSTRAINT `vol_ibfk_1` FOREIGN KEY (`idAvion`) REFERENCES `avion` (`idAvion`),
   ADD CONSTRAINT `vol_ibfk_2` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`idUtilisateur`);
+
+INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `certification`, `statut`) VALUES (
+NULL, 'admin@enac.fr', 'ienac', '', '', '', 'admin');
