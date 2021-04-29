@@ -4,19 +4,17 @@
 Historique
 {% endblock %}
 
-
 {% block header %}
-
 <nav class="gtco-nav" role="navigation">
-	<div>
+	<div class="gtco-container">
 		<div class="row">
 			<div class="col-xs-2">
 				<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
 			</div>
 			<div class="col-xs-8 text-center menu-1">
 				<ul>
-					<li ><a href="/new_route">Nouveau trajet</a></li>
-					<li class="active"><a href="#">Historique</a></li>
+					<li><a href="/new_route">Nouveau trajet</a></li>
+					<li class="active"><a href="/historic">Historique</a></li>
 					<li><a href="/comments">Commentaires</a></li>
 					<li><a href="/profile">Profile</a></li>
 				</ul>
@@ -30,15 +28,14 @@ Historique
 
 	</div>
 </nav>
+<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
 
-
-<header id="gtco-header" class="gtco-cover" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
 	<div class="gtco-container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 text-center">
 				<div class="display-t">
 					<div class="display-tc animate-box" data-animate-effect="fadeIn">
-						<h1>Historique de Vol</h1>
+						<h1>Historique de vol</h1>
 					</div>
 				</div>
 			</div>
@@ -48,7 +45,6 @@ Historique
 {% endblock %}
 
 {% block content %}
-
 <section id="historic-table">
 	<div class="gtco-container">
 		<div class="row">
@@ -56,36 +52,36 @@ Historique
 				<div class="display-t">
 					<table style="table{bakcground: rgb(120,120,120);}">
 						<thead>
-							<tr>
-								<th>Type Avion</th>
-								<th>Départ</th>
-								<th>Arrivée</th>
-								<th>Date</th>
-								<th>Prévision (L)</th>
-							</tr>
+						<tr>
+							<th>Type Avion</th>
+							<th>Départ</th>
+							<th>Arrivée</th>
+							<th>Date</th>
+							<th>Prévision (L)</th>
+						</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>2</td>
-								<td>JHOK</td>
-								<td>HGIS</td>
-								<td>04/04/2020</td>
-								<td>134</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>JOHB</td>
-								<td>ETRZ</td>
-								<td>18/03/2019</td>
-								<td>12</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>GHYT</td>
-								<td>LOIK</td>
-								<td>11/02/2021</td>
-								<td>89</td>
-							</tr>
+						<tr>
+							<td>2</td>
+							<td>JHOK</td>
+							<td>HGIS</td>
+							<td>04/04/2020</td>
+							<td>134</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>JOHB</td>
+							<td>ETRZ</td>
+							<td>18/03/2019</td>
+							<td>12</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>GHYT</td>
+							<td>LOIK</td>
+							<td>11/02/2021</td>
+							<td>89</td>
+						</tr>
 						</tbody>
 					</table>
 				</div>
@@ -93,5 +89,4 @@ Historique
 		</div>
 	</div>
 </section>
-
 {% endblock %}
