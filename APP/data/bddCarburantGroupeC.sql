@@ -1,8 +1,6 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-CREATE DATABASE IF NOT EXISTS bddCarburantGroupeC;
-USE bddCarburantGroupeC;
 
 
 CREATE TABLE `aerodrome` (
@@ -148,14 +146,25 @@ INSERT INTO `aerodrome` (`OACI`, `nom_ad`, `latitude`, `longitude`, `numero`) VA
 ('LFXA', 'AMBERIEU', 45.9695, 5.32522, 0);
 
 
+
 CREATE TABLE `avion` (
   `masseVide` float NOT NULL,
   `rayonAction` float NOT NULL,
   `finesse` float NOT NULL,
-  `consoSpe` float NOT NULL,
+  `consoHoraire` float NOT NULL,
   `idAvion` int(11) NOT NULL,
-  `reference` varchar(30) NOT NULL
+  `reference` varchar(30) NOT NULL,
+  `puissanceMoteur` float NOT NULL,
+  `vitesseCroisière` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+INSERT INTO `avion` (`masseVide`, `rayonAction`, `finesse`, `consoHoraire`, `idAvion`, `reference`, `puissanceMoteur`, `vitesseCroisière`) VALUES
+(580, 430, 10, 38, 1, 'DR 400', 160, 215),
+(430, 390, 10, 14, 2, 'APM 20', 80, 185),
+(900, 645, 10, 60, 3, 'TB-20', 250, 279);
+
 
 
 
@@ -170,12 +179,23 @@ CREATE TABLE `etapes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+INSERT INTO `etapes` (`idEtape`, `idVol`, `OACIdep`, `OACIarr`, `OACIdeg`, `rang`, `vent`) VALUES
+(1, 1, 'LFAB', 'LFAT', 'LFAV', 1, 40),
+(2, 1, 'LFAT', 'LFAY', 'LFAV', 2, 30);
+
+
 CREATE TABLE `messages` (
   `idMessage` int(11) NOT NULL,
   `date` date NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `contenu` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+INSERT INTO `messages` (`idMessage`, `date`, `idUtilisateur`, `contenu`) VALUES
+(1, '2021-05-12', 2, 'j\'adore le g@ming');
 
 
 CREATE TABLE `utilisateurs` (
@@ -188,6 +208,13 @@ CREATE TABLE `utilisateurs` (
   `statut` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `certification`, `statut`) VALUES
+(1, 'admin@enac.fr', 'ienac', '', '', '', 'admin'),
+(2, 'cc@gmail.com', 'gamer', 'deg', 'clem', '1', 'user');
+
+
 CREATE TABLE `vol` (
   `idvol` int(11) NOT NULL,
   `idAvion` int(11) NOT NULL,
@@ -195,11 +222,19 @@ CREATE TABLE `vol` (
   `idUtilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+INSERT INTO `vol` (`idvol`, `idAvion`, `date`, `idUtilisateur`) VALUES
+(1, 1, '2021-05-12', 2);
+
+
+
 ALTER TABLE `aerodrome`
   ADD PRIMARY KEY (`OACI`);
 
+
 ALTER TABLE `avion`
   ADD PRIMARY KEY (`idAvion`);
+
 
 ALTER TABLE `etapes`
   ADD PRIMARY KEY (`idEtape`),
@@ -208,12 +243,15 @@ ALTER TABLE `etapes`
   ADD KEY `OACIdeg` (`OACIdeg`),
   ADD KEY `OACIdep` (`OACIdep`);
 
+
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`idMessage`),
   ADD KEY `idUtilisateur` (`idUtilisateur`);
 
+
 ALTER TABLE `utilisateurs`
   ADD PRIMARY KEY (`idUtilisateur`);
+
 
 ALTER TABLE `vol`
   ADD PRIMARY KEY (`idvol`),
@@ -223,17 +261,19 @@ ALTER TABLE `vol`
 
 
 ALTER TABLE `etapes`
-  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 
 ALTER TABLE `messages`
-  MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 
 ALTER TABLE `utilisateurs`
-  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 
 ALTER TABLE `vol`
-  MODIFY `idvol` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `idvol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 
 ALTER TABLE `etapes`
@@ -250,6 +290,3 @@ ALTER TABLE `messages`
 ALTER TABLE `vol`
   ADD CONSTRAINT `vol_ibfk_1` FOREIGN KEY (`idAvion`) REFERENCES `avion` (`idAvion`),
   ADD CONSTRAINT `vol_ibfk_2` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`idUtilisateur`);
-
-INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `certification`, `statut`) VALUES (
-NULL, 'admin@enac.fr', 'ienac', '', '', '', 'admin');
