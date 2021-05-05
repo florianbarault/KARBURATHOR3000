@@ -51,38 +51,29 @@ Nouveau trajet
 {% endblock %}
 {% block content %}
 
-<section id="planes">
-	<div id="gtco-features">
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-md-2 col-sm-2">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<label for="S1" >Type d'avion</label>
-						<select name="select" id="S1">
-							<option value="" selected="true" >Veuillez sélectionner un avion</option>
-							<option value="1">Avion 1</option>
-							<option value="2">Avion 2</option>
-							<option value="3">Avion 3</option>
-						</select>
-					</div>
+<div id="gtco-features">
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-8 offset-2">
+				<div class="feature-center animate-box" data-animate-effect="fadeIn">
+					<label for="S1" >Type d'avion   </label>
+					<select name="select" id="S1">
+						<option value="" selected="true" >Veuillez sélectionner un avion</option>
+						<option value="1">Avion 1</option>
+						<option value="2">Avion 2</option>
+						<option value="3">Avion 3</option>
+					</select>
+				</div>
 				{% if session.statut == "admin" %}
-					<div class="col-md-4 col-sm-4">
-						<label for="S1" >Modifier avion</label>
-					</div>
+				<div class="col-8 offset-2">
+					<label for="S1" >Modifier avion</label>
+				</div>
 				{% endif %}
 			</div>
 		</div>
-	</div>
-		</div>
-	</div>
-</section>
-<div class="row">
-	<div class="col-8 offset-2">
-		<div id="map" class="map"></div>
+		<div id="ol_localisation" class="map"></div>
 	</div>
 </div>
-
-
 
 
 {% endblock %}
