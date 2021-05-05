@@ -10,7 +10,8 @@ app.config.from_object('config')
 
 @app.route("/")
 def index():
-    session["totalUser"] = b.getNumberUser()
+    session["totalUser"] = b.countAllFrom('utilisateurs', condition="statut='user'")
+    session['totalFlight'] = b.countAllFrom('vol')
     return render_template("index.html")
 
 @app.route("/login")
@@ -20,7 +21,8 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    session["totalUser"] = b.getNumberUser()
+    session["totalUser"] = b.countAll('utilisateurs',condition="statut='user'")
+    session['totalFlight'] = b.countAll('vol')
     return render_template("index.html")
 
 

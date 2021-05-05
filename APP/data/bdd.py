@@ -13,7 +13,6 @@ config = {
 #################################################################################################################
 # connexion au serveur de la base de données
 
-
 def createConnexion():
     cnx = None
     try:
@@ -27,10 +26,8 @@ def createConnexion():
             print(err)
     return cnx
 
-
 def closeConnexion(cnx):
     cnx.close()
-
 
 def addUser(prenom, nom, email, mdp, certif):
     request = "INSERT INTO utilisateurs (prenom, nom, email, mdp, certification, statut) VALUES (%s, %s, %s, %s, %s, 'user');"
@@ -58,7 +55,6 @@ def verifUserEmail(email):
         print("Failed verif email : {}".format(e))
     closeConnexion(cnx)
 
-
 def verifAuthData(login, mdp):
     request = "SELECT * FROM utilisateurs WHERE email=%s and mdp=%s LIMIT 1"
     param = (login, mdp,)
@@ -74,7 +70,6 @@ def verifAuthData(login, mdp):
     closeConnexion(cnx)
     return res, msg
 
-
 def getCertification(certif):
     if certif == "1":
         return "LAPL"
@@ -87,8 +82,12 @@ def getCertification(certif):
     else:
         return None
 
-def getNumberUser():
-    request = "SELECT COUNT(*) FROM utilisateurs WHERE statut='user'"
+def countAllFrom(table:str, condition=None):
+    if condition is None:
+        request = "SELECT COUNT(*) FROM {}".format(table)
+    else:
+        request = "SELECT COUNT(*) FROM {} WHERE ".format(table) + condition
+        print(request)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
