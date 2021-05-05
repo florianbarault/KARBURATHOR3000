@@ -101,21 +101,26 @@ Profil
 			<section id="signUp">
 				<div class="col-md-6 animate-box">
 					<h3>Informations personnelles</h3>
-					<form method="POST" action="/signUp">
 						<div class="row form-group">
 							<div class="col-md-6">
+								{% if session.prenom %}
 								<label for="prenom">Prénom</label>
 								<input id="prenom" class="form-control" placeholder= {{ session.prenom }} disabled>
+								{% endif %}
 							</div>
 							<div class="col-md-6">
+								{% if session.nom %}
 								<label for="nom">Nom</label>
 								<input id="nom" class="form-control" placeholder= {{ session.nom }} disabled>
+								{% endif %}
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
+								{% if session.email %}
 								<label for="email">Email</label>
 								<input id="email" class="form-control" placeholder= {{ session.email }} disabled>
+								{% endif %}
 							</div>
 						</div>
 						{% if session.certification %}
@@ -128,7 +133,6 @@ Profil
 						{% endif %}
 
 
-					</form>
 		</div>
 			</section>
 			<section id="signIn">
