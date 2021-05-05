@@ -87,4 +87,15 @@ def getCertification(certif):
     else:
         return None
 
-
+def getNumberUser():
+    request = "SELECT COUNT(*) FROM utilisateurs WHERE statut='user'"
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor(dictionary=True)
+        cursor.execute(request)
+        res = cursor.fetchone()
+        print(res)
+    except mysql.connector.Error as e:
+        res = None
+    closeConnexion(cnx)
+    return str(res['COUNT(*)'])
