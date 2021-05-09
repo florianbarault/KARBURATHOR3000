@@ -33,7 +33,11 @@ def new_route():
 
 @app.route("/historic")
 def historic():
-    return render_template("historic.html", info=session["statut"])
+    if session.get("idUtilisateur"):
+        histo = b.get_histo(session["idUtilisateur"])
+        return render_template("historic.html", data=histo, info=session["statut"])
+    else:
+        return redirect('/login')
 
 
 @app.route("/comments")

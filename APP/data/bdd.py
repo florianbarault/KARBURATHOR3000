@@ -98,3 +98,45 @@ def countAllFrom(table:str, condition=None):
         res = None
     closeConnexion(cnx)
     return str(res['COUNT(*)'])
+
+def get_histo(login):
+    request = "SELECT OACIdep, OACIarr , etapes.idVol, rang, vol.date, avion.reference FROM etapes " \
+               "INNER JOIN vol ON etapes.idVol = vol.idVol " \
+               "INNER JOIN avion ON vol.idAvion = avion.idAvion " \
+               "WHERE vol.idUtilisateur = %s order BY etapes.idVol ASC, etapes.rang ASC "
+    param = (login,)
+    cnx = createConnexion()
+    cursor = cnx.cursor(dictionary=True)
+    cursor.execute(request,param)
+    res = cursor.fetchall()
+
+    #Traitement des données
+    liste_vol = []
+    idVolOld = 0
+    i = 0 #indice d'étape
+    while i < len(res):
+        idVol = res[i]["idVol"]
+        if idVol != idVolOld:
+            liste_vol.append([])
+
+            type_avion = res[i]["reference"]
+            liste_vol[idVol-1].append(type_avion)
+
+            date = res[i]["date"]
+            liste_vol[idVol-1].append(date)
+
+            OACIdep = res[i]["OACIdep"]
+            liste_vol[idVol-1].append(OACIdep)
+
+            if idVolOld != 0:
+                OACIarr = res[i-1]["OACIarr"]
+                liste_vol[idVol-2].append(OACIarr)
+
+            idVolOld = idVol
+        i+=1
+
+    OACIarr = res[i - 1]['OACIarr']
+    liste_vol[idVol-1].append(OACIarr)
+    print (liste_vol)
+
+    closeConnexion(cnx)
