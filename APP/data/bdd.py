@@ -114,8 +114,9 @@ def get_histo(login):
     liste_vol = []
     idVolOld = 0
     i = 0 #indice d'étape
+    j = res[i]["idVol"] - 1 #pour calculer le décalage nécessaire de sorte que tous les id de vol d'un utilisateur commencent à 1
     while i < len(res):
-        idVol = res[i]["idVol"]
+        idVol = res[i]["idVol"] - j
         if idVol != idVolOld:
             liste_vol.append([])
 
@@ -137,6 +138,6 @@ def get_histo(login):
 
     OACIarr = res[i - 1]['OACIarr']
     liste_vol[idVol-1].append(OACIarr)
-    print (liste_vol)
 
+    return liste_vol
     closeConnexion(cnx)
