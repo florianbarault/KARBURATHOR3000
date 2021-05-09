@@ -21,15 +21,17 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    session["totalUser"] = b.countAll('utilisateurs',condition="statut='user'")
-    session['totalFlight'] = b.countAll('vol')
+    session["totalUser"] = b.countAllFrom('utilisateurs',condition="statut='user'")
+    session['totalFlight'] = b.countAllFrom('vol')
     return render_template("index.html")
 
 
 @app.route("/new_route")
 def new_route():
-    return render_template("new_route.html", info=session["statut"])
-
+    if session.get("idUtilisateur"):
+        return render_template("new_route.html", info=session["statut"])
+    else:
+        return redirect('/login')
 
 @app.route("/historic")
 def historic():
@@ -42,13 +44,17 @@ def historic():
 
 @app.route("/comments")
 def comments():
-    return render_template("comments.html", info=session["statut"])
-
+    if session.get("idUtilisateur"):
+        return render_template("comments.html", info=session["statut"])
+    else:
+        return redirect('/login')
 
 @app.route("/profile")
 def profile():
-    return render_template("profile.html", info=session["statut"])
-
+    if session.get("idUtilisateur"):
+        return render_template("profile.html", info=session["statut"])
+    else:
+        return redirect('/login')
 
 @app.route("/signIn", methods=['POST'])
 def signIn():
