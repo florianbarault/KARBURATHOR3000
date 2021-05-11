@@ -114,33 +114,38 @@ def get_histo(login):
     liste_vol = []
     idVolOld = 0
     i = 0 #indice d'étape
-    j = res[i]["idVol"] - 1 #pour calculer le décalage nécessaire de sorte que tous les id de vol d'un utilisateur commencent à 1
-    while i < len(res):
-        idVol = res[i]["idVol"] - j
-        if idVol != idVolOld:
-            liste_vol.append([])
 
-            type_avion = res[i]["reference"]
-            liste_vol[idVol-1].append(type_avion)
+    try:
+        j = res[i]["idVol"] - 1 #pour calculer le décalage nécessaire de sorte que tous les id de vol d'un utilisateur commencent à 1
+        while i < len(res):
+            idVol = res[i]["idVol"] - j
+            if idVol != idVolOld:
+                liste_vol.append([])
 
-            date = res[i]["date"]
-            liste_vol[idVol-1].append(date)
+                type_avion = res[i]["reference"]
+                liste_vol[idVol-1].append(type_avion)
 
-            OACIdep = res[i]["OACIdep"]
-            liste_vol[idVol-1].append(OACIdep)
+                date = res[i]["date"]
+                liste_vol[idVol-1].append(date)
 
-            if idVolOld != 0:
-                OACIarr = res[i-1]["OACIarr"]
-                liste_vol[idVol-2].append(OACIarr)
+                OACIdep = res[i]["OACIdep"]
+                liste_vol[idVol-1].append(OACIdep)
 
-            idVolOld = idVol
-        i+=1
+                if idVolOld != 0:
+                    OACIarr = res[i-1]["OACIarr"]
+                    liste_vol[idVol-2].append(OACIarr)
 
-    OACIarr = res[i - 1]['OACIarr']
-    liste_vol[idVol-1].append(OACIarr)
+                idVolOld = idVol
+            i+=1
 
-    return liste_vol
-    closeConnexion(cnx)
+        OACIarr = res[i - 1]['OACIarr']
+        liste_vol[idVol-1].append(OACIarr)
+
+        closeConnexion(cnx)
+        return liste_vol
+
+    except IndexError:
+        return [[]]
 
 def getAllFrom(table:str, condition =None):
     if condition is None:
@@ -166,8 +171,11 @@ def getNomAvion():
         dicNomAvion[idAvion] = dic['reference']
     return dicNomAvion
 
-
-
-
-
-
+def getaerodrome():
+    request = "SELECT * FROM aerodrome"
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+    return res

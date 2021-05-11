@@ -59,7 +59,7 @@ Nouveau trajet
 					<label for="S1" >Type d'avion   </label>
 					<select name="select" id="S1">
 						<option value="" selected="true" >Veuillez sélectionner un avion</option>
-						{% for idAvion, nomAvion in data.items() %}
+						{% for idAvion, nomAvion in avion.items() %}
 							<option value= {{ idAvion }}>{{ nomAvion }}</option>
 						{% endfor %}
 					</select>
@@ -81,4 +81,7 @@ Nouveau trajet
 {% block JSscript %}
 <script src="../static/library/openlayersv6.5.0/build/ol.js"></script>
 <script src="../static/js/ol_map.js"></script>
+<script>
+	initMap({{data | tojson }});
+</script>
 {% endblock %}
