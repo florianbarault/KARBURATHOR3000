@@ -29,7 +29,8 @@ def logout():
 @app.route("/new_route")
 def new_route():
     if session.get("idUtilisateur"):
-        return render_template("new_route.html", info=session["statut"])
+        dicNomAvion = b.getNomAvion()
+        return render_template("new_route.html", info=session["statut"], data=dicNomAvion)
     else:
         return redirect('/login')
 

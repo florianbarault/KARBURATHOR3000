@@ -141,3 +141,33 @@ def get_histo(login):
 
     return liste_vol
     closeConnexion(cnx)
+
+def getAllFrom(table:str, condition =None):
+    if condition is None:
+        request = "SELECT * FROM {}".format(table)
+    else:
+        request = "SELECT * FROM {} WHERE ".format(table) + condition
+        print(request)
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor(dictionary=True)
+        cursor.execute(request)
+        res = cursor.fetchall()
+    except mysql.connector.Error as e:
+        res = None
+    closeConnexion(cnx)
+    return res
+
+def getNomAvion():
+    res = getAllFrom('avion')
+    dicNomAvion = {}
+    for dic in res:
+        idAvion = dic['idAvion']
+        dicNomAvion[idAvion] = dic['reference']
+    return dicNomAvion
+
+
+
+
+
+

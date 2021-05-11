@@ -59,9 +59,9 @@ Nouveau trajet
 					<label for="S1" >Type d'avion   </label>
 					<select name="select" id="S1">
 						<option value="" selected="true" >Veuillez sélectionner un avion</option>
-						<option value="1">Avion 1</option>
-						<option value="2">Avion 2</option>
-						<option value="3">Avion 3</option>
+						{% for idAvion, nomAvion in data.items() %}
+							<option value= {{ idAvion }}>{{ nomAvion }}</option>
+						{% endfor %}
 					</select>
 				</div>
 				{% if session.statut == "admin" %}
