@@ -71,6 +71,7 @@ Nouveau trajet
 				{% endif %}
 			</div>
 		</div>
+		<div id="tooltip"></div>
 		<div id="ol_localisation" class="map"></div>
 	</div>
 </div>
@@ -81,6 +82,7 @@ Nouveau trajet
 {% block JSscript %}
 <script src="../static/library/openlayersv6.5.0/build/ol.js"></script>
 <script src="../static/js/ol_map.js"></script>
+<script src="../static/js/functionOpenLayer.js"></script>
 <script>
 	initMap({{data | tojson }});
 </script>

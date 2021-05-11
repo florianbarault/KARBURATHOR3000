@@ -14,6 +14,18 @@ var map = new ol.Map({
       });
 
 
+let tooltip = document.getElementById('tooltip');
+let overlay = new ol.Overlay({
+    element : tooltip,
+    offset :[10, 0],
+    positioning : 'bottomleft'
+})
+
+map.addOverlay(overlay);
+map.on('pointermove', function(evt){
+    displayTooltip(evt, overlay, map);
+})
+
 let style1 = new ol.style.Style({
     image: new ol.style.Icon({
         color: "black",
@@ -35,7 +47,7 @@ let F1 = new ol.Feature({
     latitude: lat,
     longitude :lg,
     oaci : data[a][0],
-    nom : data[a][1]
+    name : data[a][1]
 });
 
 F1.setStyle(style1);
@@ -55,13 +67,14 @@ var selectClick = new ol.interaction.Select({
   condition: ol.events.condition.click,
 });
 
+var liste_etapes = []
+
 if (selectClick !== null) {
     map.addInteraction(selectClick);
     selectClick.on('select', function (e) {
         let feat = e.target.getFeatures().getArray()[0];
-        console.log(feat.get('latitude'));
-        console.log(feat.get('longitude'));
-        console.log(feat.get('nom'));
+        liste_etapes.push([feat.get('latitude'),feat.get('longitude'),feat.get('nom')])
+        console.log(liste_etapes)
 
     });
     }
