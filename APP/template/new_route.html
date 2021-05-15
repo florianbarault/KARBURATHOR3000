@@ -51,30 +51,35 @@ Nouveau trajet
 {% endblock %}
 {% block content %}
 
-<div id="gtco-features">
-	<div class="gtco-container">
-		<div class="row">
-			<div class="col-8 offset-2">
-				<div class="feature-center animate-box" data-animate-effect="fadeIn">
-					<label for="S1" >Type d'avion   </label>
-					<select name="select" id="S1">
-						<option value="" selected="true" >Veuillez sélectionner un avion</option>
-						{% for idAvion, nomAvion in avion.items() %}
-							<option value= {{ idAvion }}>{{ nomAvion }}</option>
-						{% endfor %}
-					</select>
-				</div>
-				{% if session.statut == "admin" %}
+<form method="POST" action="/addflight">
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
 				<div class="col-8 offset-2">
-					<label for="S1" >Modifier avion</label>
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<select name="select_avion" id="select_avion" class="form-control">
+							<option value="" selected="true" >Veuillez sélectionner un avion</option>
+							{% for idAvion, nomAvion in avion.items() %}
+								<option value= {{ idAvion }}>{{ nomAvion }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					{% if session.statut == "admin" %}
+					<div class="col-md-12">
+						<label for="S1" >Modifier avion</label>
+					</div>
+					{% endif %}
 				</div>
-				{% endif %}
+			</div>
+			<div id="tooltip"></div>
+			<div id="ol_localisation" class="map"></div>
+			<div class="form-group">
+				<input type="text" id="vent" name="vent" class="form-control" placeholder="Entrez le vent" required>
+				<button type="submit" class="btn btn-primary">Valider</button>
 			</div>
 		</div>
-		<div id="tooltip"></div>
-		<div id="ol_localisation" class="map"></div>
 	</div>
-</div>
+</form>
 
 
 {% endblock %}

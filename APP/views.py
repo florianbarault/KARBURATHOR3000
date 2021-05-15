@@ -94,3 +94,9 @@ def signUp():
             session["certification"] = certification
             session["statut"] = "user"
             return render_template("profile.html", info=session["statut"])
+
+@app.route("/addflight", methods=['POST'])
+def addflight():
+    num_avion = request.form['select_avion']
+    avion = b.getNomAvion()[int(num_avion)]
+    return avion
