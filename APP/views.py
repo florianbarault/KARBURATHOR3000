@@ -59,6 +59,12 @@ def profile():
     else:
         return redirect('/login')
 
+@app.route("/gestion")
+def gestion():
+    liste = b.getaerodrome()
+    dicNomAvion = b.getNomAvion()
+    return render_template("gestion.html", data=liste, avion=dicNomAvion)
+
 @app.route("/signIn", methods=['POST'])
 def signIn():
     login = request.form['login']
