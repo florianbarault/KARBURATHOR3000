@@ -1,7 +1,7 @@
-CREATE DATABASE IF NOT EXISTS bddCarburantGroupeC;
+CREATE  DATABASE IF NOT EXISTS bddCarburantGroupeC;
 
 
-CREATE TABLE aerodrome (
+CREATE OR REPLACE TABLE aerodrome (
   OACI varchar(5) NOT NULL,
   nom_ad varchar(100) NOT NULL,
   latitude float NOT NULL,
@@ -145,7 +145,7 @@ INSERT INTO aerodrome (OACI, nom_ad, latitude, longitude) VALUES
 
 
 
-CREATE TABLE avion (
+CREATE OR REPLACE TABLE avion (
   masseVide float NOT NULL,
   rayonAction float NOT NULL,
   finesse float NOT NULL,
@@ -164,7 +164,7 @@ INSERT INTO avion (masseVide, rayonAction, finesse, consoHoraire, idAvion, refer
 
 
 
-CREATE TABLE etapes (
+CREATE OR REPLACE TABLE etapes (
   idEtape int(11) NOT NULL,
   idVol int(11) NOT NULL,
   OACIdep varchar(15) NOT NULL,
@@ -184,7 +184,7 @@ INSERT INTO etapes (idEtape, idVol, OACIdep, OACIarr, OACIdeg, rang) VALUES
 (6, 3, 'LFBP', 'LFBT', 'LFBZ', 2);
 
 
-CREATE TABLE messages (
+CREATE OR REPLACE TABLE messages (
   idMessage int(11) NOT NULL,
   date date NOT NULL,
   idUtilisateur int(11) NOT NULL,
@@ -197,7 +197,7 @@ INSERT INTO messages (idMessage, date, idUtilisateur, contenu) VALUES
 
 
 
-CREATE TABLE utilisateurs (
+CREATE OR REPLACE TABLE utilisateurs (
   idUtilisateur int(11) NOT NULL,
   email varchar(50) NOT NULL,
   mdp varchar(30) NOT NULL,
@@ -214,7 +214,7 @@ INSERT INTO utilisateurs (idUtilisateur, email, mdp, nom, prenom, certification,
 (3, 'bob.bob@bob.com', 'bob', 'bob', 'bob', '3', 'user');
 
 
-CREATE TABLE vol (
+CREATE OR REPLACE TABLE vol (
   idvol int(11) NOT NULL,
   idAvion int(11) NOT NULL,
   date date NOT NULL,
