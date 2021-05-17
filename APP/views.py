@@ -59,6 +59,12 @@ def profile():
     else:
         return redirect('/login')
 
+@app.route("/gestion")
+def gestion():
+    liste = b.getaerodrome()
+    dicNomAvion = b.getNomAvion()
+    return render_template("gestion.html", data=liste, avion=dicNomAvion)
+
 @app.route("/signIn", methods=['POST'])
 def signIn():
     login = request.form['login']
@@ -97,6 +103,13 @@ def signUp():
 
 @app.route("/addflight", methods=['POST'])
 def addflight():
-    num_avion = request.form['select_avion']
-    avion = b.getNomAvion()[int(num_avion)]
-    return avion
+    if session.get("idUtilisateur"):
+        idVol= b.get_idVol(session["idUtilisateur"])
+        print(int(idVol[0][0]))
+        return render_template("index.html",  info=session["statut"])
+
+    else:
+        return redirect('/login')
+    # num_avion = request.form['select_avion']
+    # avion = b.getNomAvion()[int(num_avion)]
+    # return avion

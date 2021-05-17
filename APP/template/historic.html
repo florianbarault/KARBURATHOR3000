@@ -23,7 +23,11 @@ Historique
 					<li><a href="/new_route">Nouveau trajet</a></li>
 					<li class="active"><a href="/historic">Historique</a></li>
 					<li><a href="/comments">Commentaires</a></li>
-					<li><a href="/profile">Profile</a></li>
+					{% if session.statut == "admin" %}
+					<li><a href="/gestion">Gestion</a></li>
+					{% else %}
+					<li><a href="/profile">Profil</a></li>
+					{% endif %}
 				</ul>
 			</div>
 			<div class="col-xs-2 text-right hidden-xs menu-2">
