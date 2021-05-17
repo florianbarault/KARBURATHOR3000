@@ -97,6 +97,13 @@ def signUp():
 
 @app.route("/addflight", methods=['POST'])
 def addflight():
-    num_avion = request.form['select_avion']
-    avion = b.getNomAvion()[int(num_avion)]
-    return avion
+    if session.get("idUtilisateur"):
+        idVol= b.get_idVol(session["idUtilisateur"])
+        print(int(idVol[0][0]))
+        return render_template("index.html",  info=session["statut"])
+
+    else:
+        return redirect('/login')
+    # num_avion = request.form['select_avion']
+    # avion = b.getNomAvion()[int(num_avion)]
+    # return avion
