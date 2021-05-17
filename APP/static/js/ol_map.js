@@ -47,7 +47,7 @@ let F1 = new ol.Feature({
     latitude: lat,
     longitude :lg,
     oaci : data[a][0],
-    name : data[a][1]
+    nom : data[a][1]
 });
 
 F1.setStyle(style1);

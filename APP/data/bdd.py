@@ -179,3 +179,34 @@ def getaerodrome():
     res = cursor.fetchall()
     closeConnexion(cnx)
     return res
+
+def get_idVol(login):
+    request = "SELECT max(idVol) FROM vol WHERE idUtilisateur =%s  "
+    param = (login,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request,param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+
+    return res
+
+
+
+
+
+def get_dist(idVol):
+    request =  "SELECT idEtape, dep.latitude, dep.longitude, arr.latitude, arr.longitude"\
+                "FROM etapes"\
+                "JOIN vol on vol.idVol = etapes.idVol"\
+                "JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI"\
+                "JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI"\
+               " WHERE idVol = %s"
+    param =(idVol,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request,param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+    print(res)
+    pass
