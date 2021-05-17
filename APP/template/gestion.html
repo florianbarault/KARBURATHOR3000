@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-Commentaires
+Gestion
 {% endblock %}
 
 {% block header %}
@@ -15,7 +15,7 @@ Commentaires
 					<ul>
 						<li><a href="/new_route">Nouveau trajet</a></li>
 						<li><a href="/historic">Historique</a></li>
-						<li><a href="#">Commentaires</a></li>
+						<li><a href="/comments">Commentaires</a></li>
 						<li class="active"><a href="/gestion">Gestion</a></li>
 					</ul>
 				</div>
@@ -56,43 +56,43 @@ Commentaires
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label for="email">Nom de l'avion</label>
-								<input type="email" id="email" name="email" class="form-control" placeholder="Entrez le nom de l'avion" required>
+								<input type="text" id="email" name="email" class="form-control" placeholder="Entrez le nom de l'avion" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Masse à vide (kg)</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la masse à vide de l'avion" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la masse à vide de l'avion" required>
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Rayon d'action (km)</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Finesse</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la finesse de l'avion" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la finesse de l'avion" required>
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Consommation horaire (L/h)</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la consommation horaire du moteur" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la consommation horaire du moteur" required>
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Puissance moteur (Cv)</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la puissance du moteur" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la puissance du moteur" required>
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Vitesse de croisière (km/h)</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
 							</div>
 						</div>
 						
@@ -216,25 +216,25 @@ Commentaires
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label for="email">Code OACI</label>
-								<input type="email" id="email" name="email" class="form-control" placeholder="Entrer le code OACI de l'aérodrome" required>
+								<input type="text" id="email" name="email" class="form-control" placeholder="Entrer le code OACI de l'aérodrome" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Nom</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez le nom de l'aérodrome" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez le nom de l'aérodrome" required>
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Latitude</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la latitude de l'aérodrome" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la latitude de l'aérodrome" required>
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-12">
 								<label for="mdp1">Longitude</label>
-								<input type="password" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la longitude de l'aérodrome" required>
+								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez la longitude de l'aérodrome" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -298,6 +298,13 @@ Commentaires
 							<div class="col-md-7">
 								<label for="nom"></label>
 								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouveau longitude de l'aérodrome">
+							</div>
+						</div>
+                        <div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary">Enregitrer les modifications</button>
+								</div>
 							</div>
 						</div>
 					</form>
