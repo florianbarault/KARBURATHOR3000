@@ -88,13 +88,11 @@ def countAllFrom(table:str, condition=None):
         request = "SELECT COUNT(*) FROM {}".format(table)
     else:
         request = "SELECT COUNT(*) FROM {} WHERE ".format(table) + condition
-        print(request)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
         cursor.execute(request)
         res = cursor.fetchone()
-        print(res)
     except mysql.connector.Error as e:
         res = None
     closeConnexion(cnx)
@@ -153,7 +151,6 @@ def getAllFrom(table:str, condition =None):
         request = "SELECT * FROM {}".format(table)
     else:
         request = "SELECT * FROM {} WHERE ".format(table) + condition
-        print(request)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
@@ -191,9 +188,6 @@ def get_idVol(login):
     closeConnexion(cnx)
 
     return res
-
-
-
 
 
 def get_dist(idVol):
@@ -238,17 +232,5 @@ def get_dist(idVol):
         else:
             cap.append(90 - theta_deg)
 
-
         D.append(d)
     return D, cap
-
-
-
-
-
-
-
-
-
-
-    return coordonnees, res
