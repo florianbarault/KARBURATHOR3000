@@ -21,7 +21,7 @@ def calcul_M4_M0(distance,conso_specifique,vitesse_croisiere,finesse):
 def calcul_Mcarb_M0(M4_M0):
     return 1.06*(1-M4_M0)
 
-def Mvide_M0(M0,Allongement,surface_ref,v_croisière):
+def Mvide_M0(M0,Allongement,surface_ref,v_croisiere):
     return 0.32 + 0.6446*M0**-0.13*(Allongement)**0.3*rapport_Pmg**0.06*(M0/surface_ref)**-0.05*(calcul_machmax(v_croisiere))**0.05
 def calcul_M0(Mvide,M_marchande,M_equipage,Mcar_M0):
     M0_i= 1000  
