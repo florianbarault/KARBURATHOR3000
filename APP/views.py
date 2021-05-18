@@ -104,13 +104,21 @@ def signUp():
 @app.route("/addflight", methods=['POST'])
 def addflight():
     if session.get("idUtilisateur"):
-        idVol= b.get_idVol(session["idUtilisateur"])
-        vol =idVol[0][0]
+        idUtilisateur = session["idUtilisateur"]
+        num_avion = request.form['select_avion']
+        dir_vent = request.form['vent_dir']
+        vit_vent = request.form['vent_vit']
+        date = request.form['date']
+        new_flight = [num_avion, date, idUtilisateur, vit_vent, dir_vent]
+        b.ajout_vol(new_flight)
+
+        # avion = b.getNomAvion()[int(num_avion)]
+        #idVol = b.get_idVol(idUtilisateur)
+        #vol =idVol[0][0]
         coord = b.get_dist(vol)
         return render_template("recap.html",  data=coord ,info=session["statut"])
 
     else:
         return redirect('/login')
-    # num_avion = request.form['select_avion']
-    # avion = b.getNomAvion()[int(num_avion)]
+
     # return avion
