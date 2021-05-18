@@ -250,4 +250,6 @@ def ajout_vol(new_flight):
     cursor.execute(request, param)
     cnx.commit()
     closeConnexion(cnx)
-    print("done")
+
+def ajout_etapes(vol,etapes):
+    print(vol,etapes)

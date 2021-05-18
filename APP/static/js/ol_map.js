@@ -73,8 +73,8 @@ if (selectClick !== null) {
     map.addInteraction(selectClick);
     selectClick.on('select', function (e) {
         let feat = e.target.getFeatures().getArray()[0];
-        liste_etapes.push([feat.get('latitude'),feat.get('longitude'),feat.get('nom')])
-        document.getElementById('textarea.nom').innerHTML = liste_etapes
+        liste_etapes.push(feat.get('oaci'))
+        document.getElementById('etapes').innerHTML = liste_etapes
         console.log(liste_etapes)
 
     });
