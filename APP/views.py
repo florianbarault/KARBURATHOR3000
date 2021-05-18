@@ -115,8 +115,8 @@ def addflight():
         # avion = b.getNomAvion()[int(num_avion)]
         #idVol = b.get_idVol(idUtilisateur)
         #vol =idVol[0][0]
-        coord = b.get_dist(vol)
-        return render_template("recap.html",  data=coord ,info=session["statut"])
+        #coord = b.get_dist(vol)
+        return render_template("recap.html" ,info=session["statut"])
 
     else:
         return redirect('/login')
