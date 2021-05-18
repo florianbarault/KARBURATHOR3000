@@ -68,23 +68,20 @@ Nouveau trajet
 							{% endfor %}
 						</select>
 					</div>
-					{% if session.statut == "admin" %}
-					<div class="col-md-12">
-						<label for="S1" >Modifier avion</label>
-					</div>
-					{% endif %}
 				</div>
 			</div>
 			<div id="tooltip"></div>
 			<div id="ol_localisation" class="map"></div>
 			<div class="form-group">
-				<input type="text" id="vent" name="vent" class="form-control" placeholder="Entrez le vent" required>
+				<input type="text" id="vent_vit" name="vent_vit" class="form-control" placeholder="Entrez la vitesse du vent en noeuds" required>
+				<input type="text" id="vent_dir" name="vent_dir" class="form-control" placeholder="Entrez la direction du vent" required>
+				<input type="date" id="date" name="date" class="form-control" placeholder="Entrez la date" required>
 				<button type="submit" class="btn btn-primary">Valider</button>
 			</div>
 		</div>
+		<textarea id="textarea.nom" name="nom" disabled></textarea>
 	</div>
 </form>
-
 
 {% endblock %}
 
