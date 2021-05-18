@@ -169,6 +169,21 @@ def getNomAvion():
         dicNomAvion[idAvion] = dic['reference']
     return dicNomAvion
 
+def getDataAvion():
+    res = getAllFrom('avion')
+    dicDataAvion = {}
+    for dic in res:
+        idAvion = dic['idAvion']
+        nom=dic['reference']
+        masseVide = dic['masseVide']
+        rayonAction = dic['rayonAction']
+        finesse=dic['finesse']
+        consoHoraire=dic['consoHoraire']
+        puissanceMoteur=dic['puissanceMoteur']
+        vitesseCroisière = dic['vitesseCroisière']
+        dicDataAvion[idAvion] = [nom, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur,vitesseCroisière]
+    return dicDataAvion
+
 def getaerodrome():
     request = "SELECT * FROM aerodrome"
     cnx = createConnexion()
@@ -234,3 +249,19 @@ def get_dist(idVol):
 
         D.append(d)
     return D, cap
+
+
+
+
+
+def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse):
+    request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+    param = (nom, masse, rayon, finesse, conso, puissance, vitesse,)
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        cnx.commit()
+    except mysql.connector.Error as e:
+        print("Failed add avion : {}".format(e))
+    closeConnexion(cnx)

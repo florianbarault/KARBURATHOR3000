@@ -59,11 +59,15 @@ def profile():
     else:
         return redirect('/login')
 
-@app.route("/gestion")
+@app.route("/gestion", methods=['POST'])
 def gestion():
     liste = b.getaerodrome()
     dicNomAvion = b.getNomAvion()
-    return render_template("gestion.html", data=liste, avion=dicNomAvion)
+    dicDataAvion = b.getDataAvion()
+    selectedAvion = request.form.get('selectedAvion')
+    if selectedAvion is not None:
+        selectedAvion = int(selectedAvion)
+    return render_template("gestion.html", data=liste, avion=dicDataAvion, selectedAvion=selectedAvion)
 
 @app.route("/signIn", methods=['POST'])
 def signIn():
@@ -114,3 +118,26 @@ def addflight():
     # num_avion = request.form['select_avion']
     # avion = b.getNomAvion()[int(num_avion)]
     # return avion
+
+@app.route("/addAvion", methods=['POST'])
+def addAvion():
+    nom = request.form['nom']
+    masse = request.form['masse']
+    rayon = request.form['rayon']
+    finesse = request.form['finesse']
+    conso = request.form['conso']
+    puissance = request.form['puissance']
+    vitesse = request.form['vitesse']
+
+    liste = b.getaerodrome()
+    dicNomAvion = b.getNomAvion()
+    dicDataAvion = b.getDataAvion()
+    selectedAvion = request.form.get('selectedAvion')
+    if selectedAvion is not None:
+        selectedAvion = int(selectedAvion)
+
+    b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse)
+
+    return render_template("gestion.html", data=liste, avion=dicDataAvion, selectedAvion=selectedAvion)
+    
+
