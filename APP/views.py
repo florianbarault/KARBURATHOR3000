@@ -107,7 +107,8 @@ def addflight():
         idVol= b.get_idVol(session["idUtilisateur"])
         print(int(idVol[0][0]))
         vol =idVol[0][0]
-        return render_template("recap.html",  data=vol ,info=session["statut"])
+        coord = b.get_dist(vol)
+        return render_template("recap.html",  data=coord ,info=session["statut"])
 
     else:
         return redirect('/login')

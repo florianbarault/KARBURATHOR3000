@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode
+from math import *
 
 config = {
         'user': 'ienac',
@@ -196,17 +197,58 @@ def get_idVol(login):
 
 
 def get_dist(idVol):
-    request =  "SELECT idEtape, dep.latitude, dep.longitude, arr.latitude, arr.longitude"\
-                "FROM etapes"\
-                "JOIN vol on vol.idVol = etapes.idVol"\
-                "JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI"\
-                "JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI"\
-               " WHERE idVol = %s"
+    request = "SELECT idEtape, dep.latitude, dep.longitude, arr.latitude, arr.longitude FROM etapes JOIN vol on vol.idVol = etapes.idVol JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI WHERE vol.idVol = %s "
+
     param =(idVol,)
     cnx = createConnexion()
     cursor = cnx.cursor()
     cursor.execute(request,param)
     res = cursor.fetchall()
     closeConnexion(cnx)
-    print(res)
-    pass
+    #Traitement des données
+    coordonnees= []
+    for i in range (0,len (res)):
+        coordonnees.append((res[i][1],res[i][2]))
+    coordonnees.append((res[-1][3],res[-1][4]))
+    D=[]
+    cap = []
+    for j in range (len(coordonnees)-1):
+        A = coordonnees[j]
+        B= coordonnees[j+1]
+        latA , longA = A[0], A[1]
+        latB, longB = B[0], B[1]
+
+        latA_rad = latA * pi / 180
+        longA_rad = longA * pi / 180
+        latB_rad = latB * pi / 180
+        longB_rad = longB * pi / 180
+
+        dlong = longB_rad - longA_rad
+        dlat = latB_rad - latA_rad
+        S_ab = acos(sin(latA_rad) * sin(latB_rad) + cos(latA_rad) * cos(latB_rad) * cos(dlong))
+        d = S_ab * 6378137
+
+        d = round(d)
+
+        theta = atan(dlat / dlong)
+        theta_deg = round(theta * 180 / pi)
+
+        if longB < longA:
+            cap.append(270 - theta_deg)
+        else:
+            cap.append(90 - theta_deg)
+
+
+        D.append(d)
+    return D, cap
+
+
+
+
+
+
+
+
+
+
+    return coordonnees, res
