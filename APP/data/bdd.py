@@ -88,11 +88,13 @@ def countAllFrom(table:str, condition=None):
         request = "SELECT COUNT(*) FROM {}".format(table)
     else:
         request = "SELECT COUNT(*) FROM {} WHERE ".format(table) + condition
+        print(request)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
         cursor.execute(request)
         res = cursor.fetchone()
+        print(res)
     except mysql.connector.Error as e:
         res = None
     closeConnexion(cnx)
@@ -151,6 +153,7 @@ def getAllFrom(table:str, condition =None):
         request = "SELECT * FROM {}".format(table)
     else:
         request = "SELECT * FROM {} WHERE ".format(table) + condition
+        print(request)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
@@ -205,6 +208,9 @@ def get_idVol(login):
     return res
 
 
+
+
+
 def get_dist(idVol):
     request = "SELECT idEtape, dep.latitude, dep.longitude, arr.latitude, arr.longitude FROM etapes JOIN vol on vol.idVol = etapes.idVol JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI WHERE vol.idVol = %s "
 
@@ -247,12 +253,9 @@ def get_dist(idVol):
         else:
             cap.append(90 - theta_deg)
 
+
         D.append(d)
     return D, cap
-
-
-
-
 
 def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse):
     request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière) VALUES (%s, %s, %s, %s, %s, %s, %s);"
@@ -265,3 +268,16 @@ def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse):
     except mysql.connector.Error as e:
         print("Failed add avion : {}".format(e))
     closeConnexion(cnx)
+
+
+def ajout_vol(new_flight):
+    request =" INSERT INTO vol (idAvion, date, idUtilisateur, vitesseVent, directionVent) values (%s, %s,%s, %s, %s) "
+    param = (new_flight[0],new_flight[1],new_flight[2],new_flight[3],new_flight[4],)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    cnx.commit()
+    closeConnexion(cnx)
+
+def ajout_etapes(vol,etapes):
+    print(vol,etapes)

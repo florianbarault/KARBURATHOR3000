@@ -157,10 +157,10 @@ CREATE OR REPLACE TABLE avion (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO avion (masseVide, rayonAction, finesse, consoHoraire, idAvion, reference, puissanceMoteur, vitesseCroisière) VALUES
-(580, 430, 10, 38, 1, 'DR 400', 160, 215),
-(430, 390, 10, 14, 2, 'APM 20', 80, 185),
-(900, 645, 10, 60, 3, 'TB-20', 250, 279);
+INSERT INTO avion (masseVide, rayonAction, finesse, consoHoraire, idAvion, reference, puissanceMoteur, vitesseCroisière,allongement,surfaceReference) VALUES
+(580, 430, 10, 38, 1, 'DR 400', 160, 215,5.35,14.2),
+(430, 390, 10, 14, 2, 'APM 20', 80, 185,8,9.5),
+(900, 645, 10, 60, 3, 'TB-20', 250, 279,8.35,11.9);
 
 
 
