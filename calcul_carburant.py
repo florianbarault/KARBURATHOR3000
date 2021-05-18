@@ -22,7 +22,7 @@ def calcul_M0(Mvide,M_marchande,M_equipage,Mcar_M0,Mv_M0):
     M0_i= 1000
         
         
-    Mv_M0= Mvide_M0(M0_i)
+    Mv_M0 = Mvide_M0(M0_i)
     M0_v= int((M_marchande+M_equipage)/(1-Mcar_M0-Mv_M0))# masses à renseigner 
     while M0_i != M0_v:
             M0_i+=1
