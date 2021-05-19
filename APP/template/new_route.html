@@ -83,10 +83,10 @@ Nouveau trajet
 					<input type="date" id="date" name="date" class="form-control" placeholder="Entrez la date" required>
 				</div>
 			</div>
-			<center>
+			<center class="animate-box">
 				<button type="submit" class="btn btn-primary">Valider</button>
 			</center>
-		</div>
+		</center>
 	</div>
 </form>
 
@@ -95,8 +95,8 @@ Nouveau trajet
 
 {% block JSscript %}
 <script src="../static/library/openlayersv6.5.0/build/ol.js"></script>
-<script src="../static/js/ol_map.js"></script>
 <script src="../static/js/functionOpenLayer.js"></script>
+<script src="../static/js/ol_map.js"></script>
 <script>
 	initMap({{data | tojson }});
 </script>

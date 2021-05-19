@@ -19,7 +19,18 @@
     resize: none;
     width: 350px;
     height: 500px;
+    box-shadow: none;
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    font-weight: 300;
     }
+
+.etapes:active, .etapes:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #52d3aa;
+}
 
 .form-control{
     margin: 15px 0px
