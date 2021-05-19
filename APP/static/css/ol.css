@@ -2,7 +2,7 @@
 {
     width: 100%;
     height: 500px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 #tooltip
@@ -13,4 +13,14 @@
     color: white;
     opacity: 0.7;
     white-space: nowrap;
+}
+
+.etapes{
+    resize: none;
+    width: 350px;
+    height: 500px;
+    }
+
+.form-control{
+    margin: 15px 0px
 }
