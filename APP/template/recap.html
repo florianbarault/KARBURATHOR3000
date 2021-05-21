@@ -4,6 +4,13 @@
 Récapitulatif
 {% endblock %}
 
+{%block CSSlink %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="../static/css/table.css" />
+<link rel="stylesheet" href="../static/library/openlayersv6.5.0/css/ol.css" />
+<link rel="stylesheet" href="../static/css/ol.css" />
+{% endblock %}
+
 {% block header %}
 	<nav class="gtco-nav" role="navigation">
 		<div class="gtco-container">
@@ -50,7 +57,58 @@ Récapitulatif
 {% endblock %}
 
 {% block content %}
-	{% if data %}
-		{{ data }}
-	{% endif %}
+
+<div id="gtco-features">
+		<center class="gtco-container">
+			<div id="ol_localisation" class="map"></div>
+		</center>
+</div>
+
+<section id="historic-table">
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+            <tr>
+                <th>Départ</th>
+                <th>Arrivée</th>
+                <th>Dégagement"</th>
+                <th>Estimation (L)</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="tbl-content">
+        {% if table %}
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+            {% for etape in table %}
+            <tr>
+                <td>{{ etape[0] }}</td>
+                <td>{{ etape[1] }}</td>
+                <td>{{ etape[2] }}</td>
+                <td>Prochainement</td>
+            </tr>
+            {% endfor %}
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>Consommation totale : Prochainement</td>
+			</tr>
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block JSscript %}
+<script src="../static/js/table.js"></script>
+<script src="../static/library/openlayersv6.5.0/build/ol.js"></script>
+<script src="../static/js/functionOpenLayer.js"></script>
+<script src="../static/js/ol_map_recap.js"></script>
+<script>
+	initMap({{coord_map | tojson }});
+</script>
 {% endblock %}

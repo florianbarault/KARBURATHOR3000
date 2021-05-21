@@ -137,12 +137,16 @@ def addflight():
         etapes = request.form['etapes']
         b.ajout_etapes(vol,etapes)
 
+        #Calculs pour les estimations
 
-        # avion = b.getNomAvion()[int(num_avion)]
-        coord = b.get_dist(vol)
-        b.calc_carbu(coord,vol)
-        return render_template("recap.html", data = coord  ,info=session["statut"])
+        D,cap,coordonnees,coordonnees_generales = b.get_dist(vol)
+        #b.calc_carbu(coord,vol)
 
+
+        #Data nécessaires pour la page recap
+        liste_etapes = b.get_etapes(vol)
+
+        return render_template("recap.html", table=liste_etapes, coord_map=coordonnees_generales, info=session["statut"])
     else:
         return redirect('/login')
     # num_avion = request.form['select_avion']

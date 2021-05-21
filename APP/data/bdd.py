@@ -234,7 +234,7 @@ def get_idVol(login):
 
 
 def get_dist(idVol):
-    request = "SELECT idEtape, dep.latitude, dep.longitude, arr.latitude, arr.longitude FROM etapes JOIN vol on vol.idVol = etapes.idVol JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI WHERE vol.idVol = %s "
+    request = "SELECT idEtape, dep.latitude AS latitude_depart, dep.longitude AS longitude_depart, arr.latitude AS latitude_arrivee, arr.longitude AS longitude_arrivee, deg.latitude AS latitude_degagement, deg.longitude AS longitude_degagement FROM etapes JOIN vol on vol.idVol = etapes.idVol JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI JOIN aerodrome AS deg ON etapes.OACIdeg = deg.OACI WHERE vol.idVol = %s"
 
     param =(idVol,)
     cnx = createConnexion()
@@ -242,11 +242,17 @@ def get_dist(idVol):
     cursor.execute(request,param)
     res = cursor.fetchall()
     closeConnexion(cnx)
+
     #Traitement des données
     coordonnees= []
+    coordonnees_generales=[]
     for i in range (0,len (res)):
         coordonnees.append((res[i][1],res[i][2]))
+        coordonnees_generales.append((res[i][1],res[i][2]))
+        coordonnees_generales.append((res[i][5],res[i][6]))
     coordonnees.append((res[-1][3],res[-1][4]))
+    coordonnees_generales.append((res[-1][3],res[-1][4]))
+
     D=[]
     cap = []
     for j in range (len(coordonnees)-1):
@@ -277,7 +283,7 @@ def get_dist(idVol):
 
 
         D.append(d)
-    return D, cap
+    return D, cap, coordonnees, coordonnees_generales
 
 def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface):
     request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière, allongement, surfaceReference) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
@@ -304,10 +310,20 @@ def ajout_vol(new_flight):
 def ajout_etapes(vol,etapes):
     liste_etapes = etapes.split(",")
 
-    for i in range(len(liste_etapes)-1):
-
-        request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, 'LFCF', %s) "
-        param = (vol, liste_etapes[i], liste_etapes[i+1],i+1,)
+    request = " INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, %s, %s) "
+    param = (vol, liste_etapes[0], liste_etapes[1], liste_etapes[2], 1,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    cnx.commit()
+    closeConnexion(cnx)
+    test = [i for i in range(1,len(liste_etapes)-2,2)]
+    print(liste_etapes)
+    print(test)
+    for i in range(1,len(liste_etapes)-2,2):
+        print(i)
+        request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, %s, %s) "
+        param = (vol, liste_etapes[i], liste_etapes[i+2],liste_etapes[i+3], (i+1)/2,)
         cnx = createConnexion()
         cursor = cnx.cursor()
         cursor.execute(request, param)
@@ -323,3 +339,13 @@ def calc_carbu(coord,idVol):
     res = cursor.fetchall()
     closeConnexion(cnx)
     print(res)
+
+def get_etapes(idVol):
+    request = "SELECT dep.nom_ad AS Depart, arr.nom_ad AS Arrivee, deg.nom_ad AS Degagement FROM etapes JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI JOIN aerodrome AS deg ON etapes.OACIdeg = deg.OACI WHERE idVol = %s"
+    param = (idVol,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+    return res
