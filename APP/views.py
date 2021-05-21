@@ -137,6 +137,7 @@ def addflight():
 
         # avion = b.getNomAvion()[int(num_avion)]
         coord = b.get_dist(vol)
+        b.calc_carbu(coord,num_avion)
         return render_template("recap.html", data = coord  ,info=session["statut"])
 
     else:

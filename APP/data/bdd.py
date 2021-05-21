@@ -299,3 +299,12 @@ def ajout_etapes(vol,etapes):
         cursor.execute(request, param)
         cnx.commit()
         closeConnexion(cnx)
+
+def calc_carbu(coord,idAvion):
+    request = "SELECT vitesseVent, directionVent, masseVide, rayonAction finesse, consoHoraire, puissanceMoteur, VitesseCroisière, allongement, surfaceReference FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE idAvion = %s"
+    param = (idAvion,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
