@@ -153,8 +153,8 @@ CREATE OR REPLACE TABLE avion (
   idAvion int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   reference varchar(30) NOT NULL,
   puissanceMoteur float NOT NULL,
-  vitesseCroisière float NOT NULL
-  allongement float NOT NULL
+  vitesseCroisière float NOT NULL,
+  allongement float NOT NULL,
   surfaceReference float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -234,10 +234,6 @@ INSERT INTO vol (idvol, idAvion, date, idUtilisateur, vitesseVent, directionVent
 
 ALTER TABLE aerodrome
   ADD PRIMARY KEY (OACI);
-
-
-ALTER TABLE avion
-  ADD PRIMARY KEY (idAvion);
 
 
 ALTER TABLE etapes
