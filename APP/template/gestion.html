@@ -95,12 +95,25 @@ Gestion
 								<input type="text" name ="vitesse" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
 							</div>
 						</div>
-						
+                        <div class="row form-group">
+							<div class="col-md-12">
+								<label>Allongement</label>
+								<input type="text" name ="allongement" class="form-control" placeholder="Entrez l'allongement de l'aile" required>
+							</div>
+						</div>
+                        <div class="row form-group">
+							<div class="col-md-12">
+								<label>Surface de référence (m²)</label>
+								<input type="text" name ="surface" class="form-control" placeholder="Entrez la surface de référence de l'aile" required>
+							</div>
+						</div>
 						<div class="form-group">
 							<div class="col-md-6">
 								<button type="submit" class="btn btn-primary">Enregistrer</button>
 							</div>
 						</div>
+
+                        
 					</form>
 		</div>
 			</section>
@@ -127,75 +140,94 @@ Gestion
                     <form method="POST" action="/gestion"></form>
                         <div class="row form-group">
 							<div class="col-md-5">
-								<label for="nom">Nom de l'avion</label>
+								<label>Nom de l'avion</label>
                                 <label class="form-control" for="nom">{{ dataAvion["nom"] }}</label>
                             </div>
 							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouveau nom">
+								<label></label>
+								<input type="text" name="nom" class="form-control" placeholder="Nouveau nom">
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-5">
-								<label for="prenom">Masse à vide (kg)</label>
-								<label class="form-control" for="nom">{{ dataAvion["masseVide"] }}</label>
+								<label>Masse à vide (kg)</label>
+								<label class="form-control">{{ dataAvion["masseVide"] }}</label>
 							</div>
 							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouvelle masse à vide">
+								<label></label>
+								<input type="text" name="nom" class="form-control" placeholder="Nouvelle masse à vide">
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-5">
-								<label for="prenom">Rayon d'action (km)</label>
-								<label class="form-control" for="nom">{{ dataAvion["rayonAction"] }}</label>
+								<label>Rayon d'action (km)</label>
+								<label class="form-control">{{ dataAvion["rayonAction"] }}</label>
 							</div>
 							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouveau rayon action">
+								<label></label>
+								<input type="text" name="nom" class="form-control" placeholder="Nouveau rayon action">
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-5">
-								<label for="prenom">Finesse</label>
+								<label>Finesse</label>
 								<label class="form-control" for="nom">{{ dataAvion["finesse"] }}</label>
 							</div>
 							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouvelle finesse">
+								<label></label>
+								<input type="text" name="nom" class="form-control" placeholder="Nouvelle finesse">
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-5">
-								<label for="prenom">Conso horaire (L/h)</label>
+								<label>Conso horaire (L/h)</label>
 								<label class="form-control" for="nom">{{ dataAvion["consoHoraire"] }}</label>
 							</div>
 							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouvelle consommation horaire">
+								<label></label>
+								<input type="text" name="nom" class="form-control" placeholder="Nouvelle consommation horaire">
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-5">
-								<label for="prenom">Puissance du moteur (Cv)</label>
-								<label class="form-control" for="nom">{{ dataAvion["puissanceMoteur"] }}</label>
+								<label>Puissance du moteur (Cv)</label>
+								<label class="form-control">{{ dataAvion["puissanceMoteur"] }}</label>
 							</div>
 							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouvelle puissance du moteur">
+								<label></label>
+								<input type="text" name="nom" class="form-control" placeholder="Nouvelle puissance du moteur">
 							</div>
 						</div>
                         <div class="row form-group">
 							<div class="col-md-5">
-								<label for="prenom">Vitesse de croisière (km/h)</label>
-								<label class="form-control" for="nom">{{ dataAvion["vitesseCroisière"] }}</label>
+								<label>Vitesse de croisière (km/h)</label>
+								<label class="form-control">{{ dataAvion["vitesseCroisière"] }}</label>
 							</div>
 							<div class="col-md-7">
                                 <label for="prenom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouvelle vitesse de croisière">
+								<input type="text" name="nom" class="form-control" placeholder="Nouvelle vitesse de croisière">
 							</div>
 						</div>
-						
+                        <div class="row form-group">
+							<div class="col-md-5">
+								<label>Allongement</label>
+								<label class="form-control">{{ dataAvion["allongement"] }}</label>
+							</div>
+							<div class="col-md-7">
+								<label for="nom"></label>
+								<input type="text" name="allongement" class="form-control" placeholder="Nouvelle allongement de l'aile">
+							</div>
+						</div>
+                        <div class="row form-group">
+							<div class="col-md-5">
+								<label>Surface de référence (m²)</label>
+								<label class="form-control">{{ dataAvion["surfaceReference"] }}</label>
+							</div>
+							<div class="col-md-7">
+								<label></label>
+								<input type="text" name="surface" class="form-control" placeholder="Nouvelle surface de référence de l'aile">
+							</div>
+						</div>
 						<div>
 							<div class="col-md-6">
 								<div class="form-group">
@@ -216,8 +248,7 @@ Gestion
 <div class="gtco-section">
 	<div class="gtco-container">
 		<div class="row">
-
-			<section id="signUp">
+			<section id="ajoutAerodrome">
 				<div class="col-md-5 animate-box">
 					<h3>Enregistrer un nouvel aérodrome</h3>
 					<form method="POST" action="/signUp">

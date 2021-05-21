@@ -177,22 +177,15 @@ def getDataAvion(idAvion):
     dicDataAvion = {}
     for dic in res:
         if idAvion == dic['idAvion']:
-            nom=dic['reference']
-            masseVide = dic['masseVide']
-            rayonAction = dic['rayonAction']
-            finesse=dic['finesse']
-            consoHoraire=dic['consoHoraire']
-            puissanceMoteur=dic['puissanceMoteur']
-            vitesseCroisière = dic['vitesseCroisière']
-
-            dicDataAvion["nom"] = nom
-            dicDataAvion["masseVide"] = masseVide
-            dicDataAvion["rayonAction"] = rayonAction
-            dicDataAvion["finesse"] = finesse
-            dicDataAvion["consoHoraire"] = consoHoraire
-            dicDataAvion["puissanceMoteur"] = puissanceMoteur
-            dicDataAvion["vitesseCroisière"] = vitesseCroisière
-
+            dicDataAvion["nom"] = dic['reference']
+            dicDataAvion["masseVide"] = dic['masseVide']
+            dicDataAvion["rayonAction"] = dic['rayonAction']
+            dicDataAvion["finesse"] = dic['finesse']
+            dicDataAvion["consoHoraire"] = dic['consoHoraire']
+            dicDataAvion["puissanceMoteur"] = dic['puissanceMoteur']
+            dicDataAvion["vitesseCroisière"] = dic['vitesseCroisière']
+            dicDataAvion["allongement"] = dic['allongement']
+            dicDataAvion["surfaceReference"] = dic['surfaceReference']
     return dicDataAvion
 
 def getaerodrome():
@@ -265,9 +258,9 @@ def get_dist(idVol):
         D.append(d)
     return D, cap
 
-def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse):
-    request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière) VALUES (%s, %s, %s, %s, %s, %s, %s);"
-    param = (nom, masse, rayon, finesse, conso, puissance, vitesse,)
+def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface):
+    request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière, allongement, surfaceReference) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+    param = (nom, masse, rayon, finesse, conso, puissance, vitesse,allongement, surface,)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor()
