@@ -59,15 +59,20 @@ def profile():
     else:
         return redirect('/login')
 
-@app.route("/gestion", methods=['POST'])
+@app.route("/gestion", methods=['POST', 'GET'])
 def gestion():
-    liste = b.getaerodrome()
-    dicNomAvion = b.getNomAvion()
-    dicDataAvion = b.getDataAvion()
-    selectedAvion = request.form.get('selectedAvion')
-    if selectedAvion is not None:
-        selectedAvion = int(selectedAvion)
-    return render_template("gestion.html", data=liste, avion=dicDataAvion, selectedAvion=selectedAvion)
+    if session.get("idUtilisateur"):
+        selectedAvion = request.form.get('selectedAvion')
+        dicDataAvion = {}
+        if selectedAvion is not None:
+            selectedAvion = int(selectedAvion)
+            dicDataAvion = b.getDataAvion(selectedAvion)
+            print(dicDataAvion)
+        dicAvion = b.getNomAvion()
+        liste = b.getaerodrome()
+        return render_template("gestion.html", data=liste,avion = dicAvion, dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+    else:
+        return redirect('/login')
 
 @app.route("/signIn", methods=['POST'])
 def signIn():
@@ -75,7 +80,10 @@ def signIn():
     password = request.form['password']
     msg = f.verifAuth(login, password)
     if msg == "okAuth":
-        return redirect('/profile')
+        if session['statut'] == "user":
+            return redirect('/profile')
+        elif session['statut'] =="admin":
+            return redirect('/gestion')
     else:
         return render_template("login.html", info="errorSignIn")
 

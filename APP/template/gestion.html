@@ -112,8 +112,8 @@ Gestion
                             <div class="col-md-7">
                                 <select name="selectedAvion" class="form-control">
                                 <option value="" selected="true" >Veuillez sélectionner un avion</option>
-                                {% for idAvion, dataAvion in avion.items() %}
-                                    <option value= {{ idAvion }}>{{ dataAvion[0] }}</option>
+                                {% for idAvion, nomAvion in avion.items() %}
+                                    <option value= {{ idAvion }}>{{ nomAvion }}</option>
                                 {% endfor %}
                                 </select>
                             </div>
@@ -128,7 +128,7 @@ Gestion
                         <div class="row form-group">
 							<div class="col-md-5">
 								<label for="nom">Nom de l'avion</label>
-                                <label class="form-control" for="nom">{{ avion[selectedAvion][0] }}</label>
+                                <label class="form-control" for="nom">{{ dataAvion["nom"] }}</label>
                             </div>
 							<div class="col-md-7">
 								<label for="nom"></label>
@@ -138,7 +138,7 @@ Gestion
                         <div class="row form-group">
 							<div class="col-md-5">
 								<label for="prenom">Masse à vide (kg)</label>
-								<label class="form-control" for="nom">{{ avion[selectedAvion][1] }}</label>
+								<label class="form-control" for="nom">{{ dataAvion["masseVide"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label for="nom"></label>
@@ -148,7 +148,7 @@ Gestion
                         <div class="row form-group">
 							<div class="col-md-5">
 								<label for="prenom">Rayon d'action (km)</label>
-								<label class="form-control" for="nom">{{ avion[selectedAvion][2] }}</label>
+								<label class="form-control" for="nom">{{ dataAvion["rayonAction"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label for="nom"></label>
@@ -158,7 +158,7 @@ Gestion
                         <div class="row form-group">
 							<div class="col-md-5">
 								<label for="prenom">Finesse</label>
-								<label class="form-control" for="nom">{{ avion[selectedAvion][3] }}</label>
+								<label class="form-control" for="nom">{{ dataAvion["finesse"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label for="nom"></label>
@@ -168,7 +168,7 @@ Gestion
                         <div class="row form-group">
 							<div class="col-md-5">
 								<label for="prenom">Conso horaire (L/h)</label>
-								<label class="form-control" for="nom">{{ avion[selectedAvion][4] }}</label>
+								<label class="form-control" for="nom">{{ dataAvion["consoHoraire"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label for="nom"></label>
@@ -178,7 +178,7 @@ Gestion
                         <div class="row form-group">
 							<div class="col-md-5">
 								<label for="prenom">Puissance du moteur (Cv)</label>
-								<label class="form-control" for="nom">{{ avion[selectedAvion][5] }}</label>
+								<label class="form-control" for="nom">{{ dataAvion["puissanceMoteur"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label for="nom"></label>
@@ -188,7 +188,7 @@ Gestion
                         <div class="row form-group">
 							<div class="col-md-5">
 								<label for="prenom">Vitesse de croisière (km/h)</label>
-								<label class="form-control" for="nom">{{ avion[selectedAvion][6] }}</label>
+								<label class="form-control" for="nom">{{ dataAvion["vitesseCroisière"] }}</label>
 							</div>
 							<div class="col-md-7">
                                 <label for="prenom"></label>
