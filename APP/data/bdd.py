@@ -317,9 +317,7 @@ def ajout_etapes(vol,etapes):
     cursor.execute(request, param)
     cnx.commit()
     closeConnexion(cnx)
-    test = [i for i in range(1,len(liste_etapes)-2,2)]
-    print(liste_etapes)
-    print(test)
+
     for i in range(1,len(liste_etapes)-2,2):
         print(i)
         request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, %s, %s) "
