@@ -153,7 +153,6 @@ def getAllFrom(table:str, condition =None):
         request = "SELECT * FROM {}".format(table)
     else:
         request = "SELECT * FROM {} WHERE ".format(table) + condition
-        print(request)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
@@ -172,19 +171,28 @@ def getNomAvion():
         dicNomAvion[idAvion] = dic['reference']
     return dicNomAvion
 
-def getDataAvion():
-    res = getAllFrom('avion')
+def getDataAvion(idAvion):
+    condition = "idAVion = {}".format(idAvion)
+    res = getAllFrom('avion', condition)
     dicDataAvion = {}
     for dic in res:
-        idAvion = dic['idAvion']
-        nom=dic['reference']
-        masseVide = dic['masseVide']
-        rayonAction = dic['rayonAction']
-        finesse=dic['finesse']
-        consoHoraire=dic['consoHoraire']
-        puissanceMoteur=dic['puissanceMoteur']
-        vitesseCroisière = dic['vitesseCroisière']
-        dicDataAvion[idAvion] = [nom, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur,vitesseCroisière]
+        if idAvion == dic['idAvion']:
+            nom=dic['reference']
+            masseVide = dic['masseVide']
+            rayonAction = dic['rayonAction']
+            finesse=dic['finesse']
+            consoHoraire=dic['consoHoraire']
+            puissanceMoteur=dic['puissanceMoteur']
+            vitesseCroisière = dic['vitesseCroisière']
+
+            dicDataAvion["nom"] = nom
+            dicDataAvion["masseVide"] = masseVide
+            dicDataAvion["rayonAction"] = rayonAction
+            dicDataAvion["finesse"] = finesse
+            dicDataAvion["consoHoraire"] = consoHoraire
+            dicDataAvion["puissanceMoteur"] = puissanceMoteur
+            dicDataAvion["vitesseCroisière"] = vitesseCroisière
+
     return dicDataAvion
 
 def getaerodrome():
