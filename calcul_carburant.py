@@ -4,9 +4,9 @@ M4_M3=0.995
 M2_M1=0.985
 M1_M0=0.970
 g=9.81
-rapport_Pmg=0.3 #BALLEC
+rapport_Pmg=0.3 #Estimation
 def calcul_machmax(v_croisiere):
-    return (v_croisiere/3.6)/340 #ballec
+    return (v_croisiere/3.6)/340 #nous négligeons la variation de la vitesse du son avec l'altitude
 def conso_carbu(M0,M4_M0):
     return 1.06*M0*(1-M4_M0) #masses en kg
 
@@ -21,7 +21,7 @@ def calcul_M4_M0(distance,conso_specifique,vitesse_croisiere,finesse):
 def calcul_Mcarb_M0(M4_M0):
     return 1.06*(1-M4_M0)
 
-def Mvide_M0(M0,Allongement,surface_ref,v_croisiere):
+def Mvide_M0(M0,Allongement,surface_ref,v_croisiere): #surface en m²
     return 0.32 + 0.6446*M0**-0.13*(Allongement)**0.3*rapport_Pmg**0.06*(M0/surface_ref)**-0.05*(calcul_machmax(v_croisiere))**0.05
 def calcul_M0(Mvide,M_marchande,M_equipage,Mcar_M0):
     M0_i= 1000  
