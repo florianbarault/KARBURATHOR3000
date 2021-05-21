@@ -281,4 +281,14 @@ def ajout_vol(new_flight):
     closeConnexion(cnx)
 
 def ajout_etapes(vol,etapes):
-    print(vol,etapes)
+    liste_etapes = etapes.split(",")
+    print(len(liste_etapes))
+    for i in range(len(liste_etapes)-1):
+        print(i)
+        request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, 'LFCF', %s) "
+        param = (vol, liste_etapes[i], liste_etapes[i+1],i+1,)
+        cnx = createConnexion()
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        cnx.commit()
+        closeConnexion(cnx)
