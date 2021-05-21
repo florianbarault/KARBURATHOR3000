@@ -154,14 +154,17 @@ def addAvion():
     conso = request.form['conso']
     puissance = request.form['puissance']
     vitesse = request.form['vitesse']
+    allongement = request.form["allongement"]
+    surface = request.form["surface"]
 
     liste = b.getaerodrome()
-    dicNomAvion = b.getNomAvion()
-    dicDataAvion = b.getDataAvion()
+    dicAvion = b.getNomAvion()
+    dicDataAvion ={}
     selectedAvion = request.form.get('selectedAvion')
     if selectedAvion is not None:
         selectedAvion = int(selectedAvion)
+        dicDataAvion = b.getDataAvion(selectedAvion)
 
-    b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse)
+    b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
 
-    return render_template("gestion.html", data=liste, avion=dicDataAvion, selectedAvion=selectedAvion)
+    return render_template("gestion.html", data=liste, avion=dicAvion,dataAvion=dicDataAvion, selectedAvion=selectedAvion)
