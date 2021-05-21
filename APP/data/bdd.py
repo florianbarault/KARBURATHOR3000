@@ -303,9 +303,9 @@ def ajout_vol(new_flight):
 
 def ajout_etapes(vol,etapes):
     liste_etapes = etapes.split(",")
-    print(len(liste_etapes))
+
     for i in range(len(liste_etapes)-1):
-        print(i)
+
         request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, 'LFCF', %s) "
         param = (vol, liste_etapes[i], liste_etapes[i+1],i+1,)
         cnx = createConnexion()
@@ -313,3 +313,13 @@ def ajout_etapes(vol,etapes):
         cursor.execute(request, param)
         cnx.commit()
         closeConnexion(cnx)
+
+def calc_carbu(coord,idVol):
+    request = "SELECT vitesseVent, directionVent, masseVide, rayonAction finesse, consoHoraire, puissanceMoteur, VitesseCroisière, allongement, surfaceReference FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
+    param = (idVol,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+    print(res)
