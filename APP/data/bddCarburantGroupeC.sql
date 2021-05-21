@@ -150,10 +150,12 @@ CREATE OR REPLACE TABLE avion (
   rayonAction float NOT NULL,
   finesse float NOT NULL,
   consoHoraire float NOT NULL,
-  idAvion int(11) NOT NULL,
+  idAvion int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   reference varchar(30) NOT NULL,
   puissanceMoteur float NOT NULL,
   vitesseCroisière float NOT NULL
+  allongement float NOT NULL
+  surfaceReference float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
