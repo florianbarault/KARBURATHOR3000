@@ -188,6 +188,26 @@ def getDataAvion(idAvion):
             dicDataAvion["surfaceReference"] = dic['surfaceReference']
     return dicDataAvion
 
+def getNomAerodrome():
+    res = getAllFrom('aerodrome')
+    dicNomAerodrome = {}
+    for dic in res:
+        OACI = dic['OACI']
+        dicNomAerodrome[OACI] = dic['nom_ad']
+    return dicNomAerodrome
+
+def getDataAerodrome(OACI):
+    condition = "OACI = '{}'".format(OACI)
+    res = getAllFrom('aerodrome',condition)
+    dicDataAerodrome = {}
+    for dic in res:
+        if OACI == dic['OACI']:
+            dicDataAerodrome['OACI'] = dic['OACI']
+            dicDataAerodrome["nom_ad"] = dic['nom_ad']
+            dicDataAerodrome["latitude"] = dic['latitude']
+            dicDataAerodrome["longitude"] = dic['longitude']
+    return dicDataAerodrome
+
 def getaerodrome():
     request = "SELECT * FROM aerodrome"
     cnx = createConnexion()
@@ -195,6 +215,7 @@ def getaerodrome():
     cursor.execute(request)
     res = cursor.fetchall()
     closeConnexion(cnx)
+    print(res)
     return res
 
 def get_idVol(login):

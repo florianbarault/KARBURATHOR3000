@@ -63,14 +63,17 @@ def profile():
 def gestion():
     if session.get("idUtilisateur"):
         selectedAvion = request.form.get('selectedAvion')
+        selectedAerodrome = request.form.get('selectedAerodrome')
         dicDataAvion = {}
+        dicDataAerodrome = {}
         if selectedAvion is not None:
             selectedAvion = int(selectedAvion)
             dicDataAvion = b.getDataAvion(selectedAvion)
-            print(dicDataAvion)
+        if selectedAerodrome is not None:
+            dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
         dicAvion = b.getNomAvion()
-        liste = b.getaerodrome()
-        return render_template("gestion.html", data=liste,avion = dicAvion, dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+        dicAerodrome = b.getNomAerodrome()
+        return render_template("gestion.html", aerodrome=dicAerodrome ,dataAerodrome=dicDataAerodrome, avion = dicAvion, dataAvion=dicDataAvion, selectedAvion=selectedAvion)
     else:
         return redirect('/login')
 
@@ -130,7 +133,7 @@ def addflight():
         #Ajout étapes
 
         idVol = b.get_idVol(idUtilisateur)
-        vol =idVol[0][0]
+        vol = idVol[0][0]
         etapes = request.form['etapes']
         b.ajout_etapes(vol,etapes)
 
@@ -157,7 +160,7 @@ def addAvion():
     allongement = request.form["allongement"]
     surface = request.form["surface"]
 
-    liste = b.getaerodrome()
+    dicAerodrome = b.getNomAerodrome()
     dicAvion = b.getNomAvion()
     dicDataAvion ={}
     selectedAvion = request.form.get('selectedAvion')
@@ -167,4 +170,4 @@ def addAvion():
 
     b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
 
-    return render_template("gestion.html", data=liste, avion=dicAvion,dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+    return render_template("gestion.html", aerodorme=dicAerodrome, avion=dicAvion,dataAvion=dicDataAvion, selectedAvion=selectedAvion)

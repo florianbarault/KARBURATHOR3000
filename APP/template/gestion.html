@@ -288,64 +288,69 @@ Gestion
 			<section id="signIn">
 				<div class="col-md-6 col-md-push-1 animate-box">
 					<h3>Modifier un aérodrome</h3>
-					<form method="POST" action="/signIn">
+					<form method="POST" action="/gestion#ajoutAerodrome">
                         <div class="row form-group">
-							<div class="col-md-12">
-								<select name="select_avion" id="select_avion" class="form-control">
-                                    <option value="" selected="true" >Veuillez sélectionner un aérodorme</option>
-                                    {% for idAvion, nomAvion in avion.items() %}
-                                        <option value= {{ idAvion }}>{{ nomAvion }}</option>
+							<div class="col-md-7">
+								<select name="selectedAerodrome"  class="form-control">
+                                    <option value="" selected="true" >Veuillez sélectionner un aérodrome</option>
+                                    {% for OACI, nom_ad in aerodrome.items() %}
+                                        <option value = {{ OACI }}>{{ nom_ad }}</option>
                                     {% endfor %}
                                 </select>
 							</div>
+                            <div class="col-md-5">
+                                <button type="submit" class="btn btn-primary">Modifier cet aérodrome</button>
+                            </div>
 						</div>
-						<div class="row form-group">
-							<div class="col-md-5">
-								<label for="prenom">Code OACI</label>
-								<input type="text" id="prenom" name="prenom" class="form-control" disabled>
-							</div>
-							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouveau code OACI">
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-5">
-								<label for="prenom">Nom de l'aérodorme</label>
-								<input type="text" id="prenom" name="prenom" class="form-control" disabled>
-							</div>
-							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouveau nom de l'aérodrome">
-							</div>
-						</div>
-                        <div class="row form-group">
-							<div class="col-md-5">
-								<label for="prenom">Latitude</label>
-								<input type="text" id="prenom" name="prenom" class="form-control" disabled>
-							</div>
-							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouvelle latitude l'aérodrome">
-							</div>
-						</div>
-                        <div class="row form-group">
-							<div class="col-md-5">
-								<label for="prenom">Longitude de l'aérodorme</label>
-								<input type="text" id="prenom" name="prenom" class="form-control" disabled>
-							</div>
-							<div class="col-md-7">
-								<label for="nom"></label>
-								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nouveau longitude de l'aérodrome">
-							</div>
-						</div>
-                        <div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<button type="submit" class="btn btn-primary">Enregitrer les modifications</button>
-								</div>
-							</div>
-						</div>
+                        {% if selectedAerodrome != None %}
+                            <div class="row form-group">
+                                <div class="col-md-5">
+                                    <label>Code OACI</label>
+                                    <label class="form-control" >{{ dataAerodrome["OACI"] }}</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <label></label>
+                                    <input type="text" name="nom" class="form-control" placeholder="Nouveau code OACI">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-5">
+                                    <label">Nom de l'aérodorme</label>
+                                    <label class="form-control">{{ dataAerodrome["nom_ad"] }}</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <label></label>
+                                    <input type="text" name="nom" class="form-control" placeholder="Nouveau nom de l'aérodrome">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-5">
+                                    <label">Latitude</label>
+                                    <label class="form-control">{{ dataAerodrome["latitude"] }}</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <label></label>
+                                    <input type="text" name="nom" class="form-control" placeholder="Nouvelle latitude l'aérodrome">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-5">
+                                    <label>Longitude de l'aérodorme</label>
+                                    <label class="form-control">{{ dataAerodrome["longitude"] }}</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <label></label>
+                                    <input type="text" name="longitude" class="form-control" placeholder="Nouveau longitude de l'aérodrome">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Enregitrer les modifications</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
 					</form>
 				</div>
 			</section>
