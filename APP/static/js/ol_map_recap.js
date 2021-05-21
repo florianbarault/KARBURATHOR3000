@@ -29,10 +29,11 @@ let style2 = new ol.style.Style({
     }),
 })
 
-
+let coord_villes=[]
 let tab_villes=[];
 for (var i = 0; i < coord_map.length; i += 2) {
 
+coord_villes.push(coord_map[i]);
 let lat= parseFloat(coord_map[i][0]);
 let lg= parseFloat(coord_map[i][1]);
 
@@ -85,28 +86,30 @@ var vectorLayer2 = new ol.layer.Vector({
 map.addLayer(vectorLayer);
 map.addLayer(vectorLayer2);
 
+coord_villes.map(function (l){
+    return l.reverse();
+});
 
-//let Fligne = new ol.Feature({
-//    geometry: new ol.geom.LineString(tab_villes),
-//    name: "trajet"
-//});
-//Fligne.getGeometry().transform('EPSG:4326','EPSG:3857');
-//
-//let style3 = new ol.style.Style({
-//    stroke: new ol.style.Stroke ({
-//        color: 'blue',
-//        width:2
-//    })
-//});
-//
-//var lignes = new ol.layer.Vector({
-//    source: new ol.source.Vector({
-//        features: [Fligne]
-//    }),
-//    name : "trajet"
-//});
-//
-//
-//map.addLayer(lignes);
+let Fligne = new ol.Feature({
+    geometry: new ol.geom.LineString(coord_villes),
+    name: "trajet"
+});
+Fligne.getGeometry().transform('EPSG:4326','EPSG:3857');
+
+let style3 = new ol.style.Style({
+    stroke: new ol.style.Stroke ({
+        color: 'blue',
+        width:2
+    })
+});
+
+var lignes = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: [Fligne]
+    }),
+    name : "trajet"
+});
+
+map.addLayer(lignes);
 
 }
