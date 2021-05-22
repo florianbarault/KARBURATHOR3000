@@ -300,13 +300,11 @@ def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement,
 def ajout_vol(new_flight):
     request =" INSERT INTO vol (idAvion, date, idUtilisateur, vitesseVent, directionVent) values (%s, %s,%s, %s, %s) "
     param = (new_flight[0],new_flight[1],new_flight[2],new_flight[3],new_flight[4],)
-    print(new_flight[2])
     cnx = createConnexion()
     cursor = cnx.cursor()
     cursor.execute(request, param)
     cnx.commit()
     closeConnexion(cnx)
-    print("done")
 
 def ajout_etapes(vol,etapes):
     liste_etapes = etapes.split(",")
@@ -320,9 +318,8 @@ def ajout_etapes(vol,etapes):
     closeConnexion(cnx)
 
     for i in range(1,len(liste_etapes)-2,2):
-        print(i)
         request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, %s, %s) "
-        param = (vol, liste_etapes[i], liste_etapes[i+2],liste_etapes[i+3], (i+1)/2,)
+        param = (vol, liste_etapes[i], liste_etapes[i+2],liste_etapes[i+3], (i+3)/2,)
         cnx = createConnexion()
         cursor = cnx.cursor()
         cursor.execute(request, param)
