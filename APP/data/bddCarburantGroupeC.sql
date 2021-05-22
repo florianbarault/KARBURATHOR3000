@@ -153,7 +153,7 @@ CREATE TABLE avion (
   idAvion int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   reference varchar(30) NOT NULL,
   puissanceMoteur float NOT NULL,
-  vitesseCroisière float NOT NULL,
+  vitesseCroisiere float NOT NULL,
   allongement float NOT NULL,
   surfaceReference float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

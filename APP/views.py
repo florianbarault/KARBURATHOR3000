@@ -139,7 +139,7 @@ def addflight():
 
         #Calculs pour les estimations
 
-        D,cap,coordonnees,coordonnees_generales = b.get_dist(vol)
+        D,cap,coordonnees_generales = b.get_dist(vol)
         #b.calc_carbu(coord,vol)
 
 

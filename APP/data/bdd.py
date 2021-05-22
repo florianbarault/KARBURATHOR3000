@@ -298,7 +298,7 @@ def get_dist(idVol):
 
 
 
-    return Dist, cap, coordonnees, coordonnees_generales
+    return Dist, cap, coordonnees_generales
 
 def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface):
     request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière, allongement, surfaceReference) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
