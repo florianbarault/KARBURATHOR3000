@@ -112,41 +112,40 @@ def get_histo(login):
     res = cursor.fetchall()
 
     #Traitement des données
+
     liste_vol = []
     idVolOld = 0
     i = 0 #indice d'étape
+    j = res[0]["idVol"] - 1 #pour calculer le décalage nécessaire de sorte que tous les id de vol d'un utilisateur commencent à 1
+    k=0
+    while i < len(res):
+        idVol = res[i]["idVol"] - j
+        if idVol != idVolOld:
+            liste_vol.append([])
 
-    try:
-        j = res[i]["idVol"] - 1 #pour calculer le décalage nécessaire de sorte que tous les id de vol d'un utilisateur commencent à 1
-        while i < len(res):
-            idVol = res[i]["idVol"] - j
-            if idVol != idVolOld:
-                liste_vol.append([])
+            type_avion = res[i]["reference"]
+            liste_vol[k].append(type_avion)
 
-                type_avion = res[i]["reference"]
-                liste_vol[idVol-1].append(type_avion)
+            date = res[i]["date"]
+            liste_vol[k].append(date)
 
-                date = res[i]["date"]
-                liste_vol[idVol-1].append(date)
+            OACIdep = res[i]["OACIdep"]
+            liste_vol[k].append(OACIdep)
 
-                OACIdep = res[i]["OACIdep"]
-                liste_vol[idVol-1].append(OACIdep)
+            if idVolOld != 0:
+                OACIarr = res[i-1]["OACIarr"]
+                liste_vol[k - 1].append(OACIarr)
 
-                if idVolOld != 0:
-                    OACIarr = res[i-1]["OACIarr"]
-                    liste_vol[idVol-2].append(OACIarr)
+            k+=1
+            idVolOld = idVol
+        i+=1
 
-                idVolOld = idVol
-            i+=1
+    OACIarr = res[i - 1]['OACIarr']
+    liste_vol[k-1].append(OACIarr)
 
-        OACIarr = res[i - 1]['OACIarr']
-        liste_vol[idVol-1].append(OACIarr)
+    closeConnexion(cnx)
+    return liste_vol
 
-        closeConnexion(cnx)
-        return liste_vol
-
-    except IndexError:
-        return [[]]
 
 def getAllFrom(table:str, condition =None):
     if condition is None:
@@ -301,11 +300,13 @@ def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement,
 def ajout_vol(new_flight):
     request =" INSERT INTO vol (idAvion, date, idUtilisateur, vitesseVent, directionVent) values (%s, %s,%s, %s, %s) "
     param = (new_flight[0],new_flight[1],new_flight[2],new_flight[3],new_flight[4],)
+    print(new_flight[2])
     cnx = createConnexion()
     cursor = cnx.cursor()
     cursor.execute(request, param)
     cnx.commit()
     closeConnexion(cnx)
+    print("done")
 
 def ajout_etapes(vol,etapes):
     liste_etapes = etapes.split(",")
