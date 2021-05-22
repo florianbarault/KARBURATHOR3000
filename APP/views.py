@@ -176,3 +176,7 @@ def addAvion():
     b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
 
     return render_template("gestion.html", aerodorme=dicAerodrome, avion=dicAvion,dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+
+@app.route("/cv", methods=['GET'])
+def cv():
+    return render_template("cv.html")
