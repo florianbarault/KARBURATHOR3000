@@ -252,14 +252,14 @@ def get_dist(idVol):
     coordonnees.append((res[-1][3],res[-1][4]))
     coordonnees_generales.append((res[-1][3],res[-1][4]))
 
-    D=[]
-    cap = []
-    for j in range (len(coordonnees)-1):
-        A = coordonnees[j]
-        B= coordonnees[j+1]
-        latA , longA = A[0], A[1]
-        latB, longB = B[0], B[1]
+    coordonnees_deg = []
+    for x in coordonnees_generales:
+        if x not in coordonnees:
+            coordonnees_deg.append(x)
 
+    def calc_dist(A, B):
+        latA, longA = A[0], A[1]
+        latB, longB = B[0], B[1]
         latA_rad = latA * pi / 180
         longA_rad = longA * pi / 180
         latB_rad = latB * pi / 180
@@ -268,21 +268,37 @@ def get_dist(idVol):
         dlong = longB_rad - longA_rad
         dlat = latB_rad - latA_rad
         S_ab = acos(sin(latA_rad) * sin(latB_rad) + cos(latA_rad) * cos(latB_rad) * cos(dlong))
-        d = S_ab * 6378137
-
-        d = round(d)
+        D = round(S_ab * 6378137)
 
         theta = atan(dlat / dlong)
-        theta_deg = round(theta * 180 / pi)
+        theta_deg = theta * 180 / pi
 
         if longB < longA:
-            cap.append(270 - theta_deg)
+            return (270 - theta_deg, D)
         else:
-            cap.append(90 - theta_deg)
+            return (90 - theta_deg, D)
+
+    Dist=[]
+    cap = []
+    compteur = 0
+    for j in range (len(coordonnees)-1):
+        A = coordonnees[j]
+        B= coordonnees[j+1]
+        C = coordonnees_deg[compteur]
+        c1, d1  = calc_dist(A,B)
+        c2, d2 = calc_dist(A,C)
+        if d2 < d1:
+            Dist.append(d1)
+            cap.append(c1)
+        else:
+            Dist.append(d2)
+            cap.append(c2)
+        compteur +=1
+    print(Dist)
 
 
-        D.append(d)
-    return D, cap, coordonnees, coordonnees_generales
+
+    return Dist, cap, coordonnees, coordonnees_generales
 
 def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface):
     request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière, allongement, surfaceReference) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
