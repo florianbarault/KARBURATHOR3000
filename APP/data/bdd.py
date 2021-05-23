@@ -268,7 +268,7 @@ def get_dist(idVol):
         dlong = longB_rad - longA_rad
         dlat = latB_rad - latA_rad
         S_ab = acos(sin(latA_rad) * sin(latB_rad) + cos(latA_rad) * cos(latB_rad) * cos(dlong))
-        D = round(S_ab * 6378137)
+        D = round(S_ab * 6378137)/1000
 
         theta = atan(dlat / dlong)
         theta_deg = theta * 180 / pi
@@ -342,7 +342,7 @@ def ajout_etapes(vol,etapes):
         cnx.commit()
         closeConnexion(cnx)
 
-def calc_carbu(coord,idVol):
+def calc_carbu(D,cap,idVol):
     request = "SELECT vitesseVent, directionVent, masseVide, rayonAction finesse, consoHoraire, puissanceMoteur, VitesseCroisière, allongement, surfaceReference FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
     param = (idVol,)
     cnx = createConnexion()
@@ -350,7 +350,25 @@ def calc_carbu(coord,idVol):
     cursor.execute(request, param)
     res = cursor.fetchall()
     closeConnexion(cnx)
-    print(res)
+
+    def calcul_carbu(D, conso_h, Vcroisiere, cap_avion, dir_vent, v_vent):
+         # on met D en km
+
+         cap_avion_rad, direction_vent_rad = cap_avion * pi / 180, dir_vent * pi / 180
+         vitesse_vraie = Vcroisiere - (v_vent * cos(cap_avion_rad - direction_vent_rad))  # en km/h
+
+         carbu_supp = 9  # carburant qui concerne le roulage et l'intégration à l'aérodrome
+
+         Tv = D / vitesse_vraie  # temps de vol en h
+
+         Vcarb = Tv * conso_h + carbu_supp
+
+         return Vcarb
+    carb = []
+    for i in range (len(D)):
+        x = calcul_carbu(D[i],res[0][4],res[0][6],cap[i],res[0][1],res[0][0])
+        carb.append(round(x))
+    return carb
 
 def get_etapes(idVol):
     request = "SELECT dep.nom_ad AS Depart, arr.nom_ad AS Arrivee, deg.nom_ad AS Degagement FROM etapes JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI JOIN aerodrome AS deg ON etapes.OACIdeg = deg.OACI WHERE idVol = %s"
