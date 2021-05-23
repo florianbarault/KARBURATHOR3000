@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 from math import *
+from datetime import datetime
 
 config = {
         'user': 'ienac',
@@ -386,3 +387,22 @@ def conso_etapes(liste_etapes,carb):
         data.append([liste_etapes[i][0],liste_etapes[i][1],liste_etapes[i][2],carb[i]])
     conso_totale = sum(carb)
     return data,conso_totale
+
+def add_comment(idUtilisateur,msg):
+    f = datetime.now().date()
+    request ="INSERT INTO messages (date, idUtilisateur, contenu) values (%s, %s, %s)"
+    param=(str(f),idUtilisateur,msg)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    cnx.commit()
+    closeConnexion(cnx)
+
+def get_comments():
+    request ="SELECT nom,prenom,date,contenu FROM messages JOIN utilisateurs ON messages.idUtilisateur = utilisateurs.idUtilisateur"
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+    return res

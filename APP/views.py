@@ -48,7 +48,8 @@ def historic():
 @app.route("/comments")
 def comments():
     if session.get("idUtilisateur"):
-        return render_template("comments.html", info=session["statut"])
+        data = b.get_comments()
+        return render_template("comments.html", data=data, info=session["statut"])
     else:
         return redirect('/login')
 
@@ -178,3 +179,15 @@ def addAvion():
 @app.route("/cv", methods=['GET'])
 def cv():
     return render_template("cv.html")
+
+@app.route("/addcomment", methods=['POST', 'GET'])
+def addcomment():
+    if session.get("idUtilisateur"):
+        idUtilisateur = session["idUtilisateur"]
+        msg = request.form['comment']
+        b.add_comment(idUtilisateur,msg)
+        data = b.get_comments()
+        return render_template("comments.html", data=data, info=session["statut"])
+
+    else:
+        return redirect('/login')
