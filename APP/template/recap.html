@@ -47,7 +47,7 @@ Récapitulatif
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>C'est l'heure du rewind</h1>
+							<h1>Récapitulatif du vol</h1>
 						</div>
 					</div>
 				</div>
@@ -86,14 +86,14 @@ Récapitulatif
                 <td>{{ etape[0] }}</td>
                 <td>{{ etape[1] }}</td>
                 <td>{{ etape[2] }}</td>
-                <td>Prochainement</td>
+                <td>{{ etape[3] }}</td>
             </tr>
             {% endfor %}
 			<tr>
 				<td></td>
 				<td></td>
 				<td></td>
-				<td>Consommation totale : Prochainement</td>
+				<td>Consommation totale : {{ conso_totale }}</td>
 			</tr>
             </tbody>
         </table>

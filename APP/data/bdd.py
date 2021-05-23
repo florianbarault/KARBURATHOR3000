@@ -343,7 +343,7 @@ def ajout_etapes(vol,etapes):
         closeConnexion(cnx)
 
 def calc_carbu(D,cap,idVol):
-    request = "SELECT vitesseVent, directionVent, masseVide, rayonAction finesse, consoHoraire, puissanceMoteur, VitesseCroisière, allongement, surfaceReference FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
+    request = "SELECT vitesseVent, directionVent, masseVide, rayonAction finesse, consoHoraire, puissanceMoteur, VitesseCroisiere, allongement, surfaceReference FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
     param = (idVol,)
     cnx = createConnexion()
     cursor = cnx.cursor()
@@ -379,3 +379,12 @@ def get_etapes(idVol):
     res = cursor.fetchall()
     closeConnexion(cnx)
     return res
+
+def conso_etapes(liste_etapes,carb):
+    data = []
+    conso_totale=0
+    for i in range(len(liste_etapes)):
+        data.append([liste_etapes[i][0],liste_etapes[i][1],liste_etapes[i][2],carb[i]])
+    for x in carb:
+        conso_totale+=x
+    return data,conso_totale
