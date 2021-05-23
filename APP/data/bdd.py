@@ -382,9 +382,7 @@ def get_etapes(idVol):
 
 def conso_etapes(liste_etapes,carb):
     data = []
-    conso_totale=0
     for i in range(len(liste_etapes)):
         data.append([liste_etapes[i][0],liste_etapes[i][1],liste_etapes[i][2],carb[i]])
-    for x in carb:
-        conso_totale+=x
+    conso_totale = sum(carb)
     return data,conso_totale

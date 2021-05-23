@@ -150,9 +150,6 @@ def addflight():
         return render_template("recap.html", table=data, coord_map=coordonnees_generales,conso_totale=conso_totale, carbu=carb, info=session["statut"])
     else:
         return redirect('/login')
-    # num_avion = request.form['select_avion']
-    # avion = b.getNomAvion()[int(num_avion)]
-    # return avion
 
 @app.route("/addAvion", methods=['POST'])
 def addAvion():
