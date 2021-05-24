@@ -46,10 +46,10 @@ Gestion
 {% endblock %}
 
 {% block content %}
-<div class="gtco-section">
-	<div class="gtco-container">
-		<div class="row">
-			<section id="ajoutAvion">
+<section id="avion">
+	<div class="gtco-section">
+		<div class="gtco-container">
+			<div class="row">
 				<div class="col-md-5 animate-box">
 					<h3>Enregistrer un nouvel avion</h3>
 					<form method="POST" action="/addAvion">
@@ -65,43 +65,43 @@ Gestion
 								<input type="number" name ="masse" class="form-control" placeholder="Entrez la masse à vide de l'avion" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Rayon d'action (km)</label>
 								<input type="number" name ="rayon" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Finesse</label>
 								<input type="number" name ="finesse" class="form-control" placeholder="Entrez la finesse de l'avion" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Consommation horaire (L/h)</label>
 								<input type="number" step="0.1" name ="conso" class="form-control" placeholder="Entrez la consommation horaire du moteur" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Puissance moteur (Cv)</label>
 								<input type="number" name ="puissance" class="form-control" placeholder="Entrez la puissance du moteur" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Vitesse de croisière (km/h)</label>
 								<input type="number" name ="vitesse" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Allongement</label>
 								<input type="number" step="0.01" name ="allongement" class="form-control" placeholder="Entrez l'allongement de l'aile" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Surface de référence (m²)</label>
 								<input type="number" step="0.01" name ="surface" class="form-control" placeholder="Entrez la surface de référence de l'aile" required>
@@ -113,143 +113,141 @@ Gestion
 							</div>
 						</div>
 					</form>
-		</div>
-			</section>
-			<section id="modifAvion">
+				</div>
 				<div class="col-md-6 col-md-push-1 animate-box">
 					<h3>Modifier un avion enregistré</h3>
-                    <form method="POST" action="#modifAvion">
+					<form method="POST" action="/gestion#avion">
 						<div class="row form-group">
-                            <div class="col-md-7">
-                                <select name="selectedAvion" class="form-control">
-                                <option value="" selected="true" >Veuillez sélectionner un avion</option>
-                                {% for idAvion, nomAvion in avion.items() %}
-                                    <option value= {{ idAvion }}>{{ nomAvion }}</option>
-                                {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-md-5">
-                                <button type="submit" class="btn btn-primary">Modifier cet avion</button>
-                            </div>
-                        </div>
-                    </form>	
-                    {% if session['selectedAvion'] != None %}
-                    <form method="POST" action="/modifAvion"></form>
-                        <div class="row form-group">
-							<div class="col-md-5">
-								<label>Nom de l'avion</label>
-                                <label class="form-control">{{ dataAvion["nom"] }}</label>
-                            </div>
 							<div class="col-md-7">
-								<label></label>
-								<input type="text" name="nom" class="form-control" placeholder="Nouveau nom">
+								<select name="selectedAvion" class="form-control">
+								<option value="" selected="true" >Veuillez sélectionner un avion</option>
+								{% for idAvion, nomAvion in session['avion'].items() %}
+									<option value= {{ idAvion }}>{{ nomAvion }}</option>
+								{% endfor %}
+								</select>
+							</div>
+							<div class="col-md-5">
+								<button type="submit" class="btn btn-primary">Modifier cet avion</button>
 							</div>
 						</div>
-                        <div class="row form-group">
+					</form>	
+					{% if session['selectedAvion'] != None %}
+					<form id="modifAvion" method="POST" action="/modifAvion">
+						<div class="row form-group">
+							<div class="col-md-5">
+								<label>Nom de l'avion</label>
+								<label class="form-control">{{ dataAvion["nom"] }}</label>
+							</div>
+							<div class="col-md-7">
+								<label></label>
+								<input type="text" name="reference" class="form-control" placeholder="Nouveau nom">
+							</div>
+						</div>
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Masse à vide (kg)</label>
 								<label class="form-control">{{ dataAvion["masseVide"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="number" name="nom" class="form-control" placeholder="Nouvelle masse à vide">
+								<input type="number" name="masseVide" class="form-control" placeholder="Nouvelle masse à vide">
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Rayon d'action (km)</label>
 								<label class="form-control">{{ dataAvion["rayonAction"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="number" name="nom" class="form-control" placeholder="Nouveau rayon action">
+								<input type="number" name="rayonAction" class="form-control" placeholder="Nouveau rayon action">
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Finesse</label>
 								<label class="form-control">{{ dataAvion["finesse"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="number" name="nom" class="form-control" placeholder="Nouvelle finesse">
+								<input type="number" name="finesse" class="form-control" placeholder="Nouvelle finesse">
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Conso horaire (L/h)</label>
 								<label class="form-control">{{ dataAvion["consoHoraire"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="number" name="nom" class="form-control" placeholder="Nouvelle consommation horaire">
+								<input type="number" name="consoHoraire" class="form-control" placeholder="Nouvelle consommation horaire">
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Puissance du moteur (Cv)</label>
 								<label class="form-control">{{ dataAvion["puissanceMoteur"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="number" name="nom" class="form-control" placeholder="Nouvelle puissance du moteur">
+								<input type="number" name="puissanceMoteur" class="form-control" placeholder="Nouvelle puissance du moteur">
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Vitesse de croisière (km/h)</label>
-								<label class="form-control">{{ dataAvion["vitesseCroisière"] }}</label>
+								<label class="form-control">{{ dataAvion["vitesseCroisiere"] }}</label>
 							</div>
 							<div class="col-md-7">
-                                <label for="prenom"></label>
-								<input type="number" name="nom" class="form-control" placeholder="Nouvelle vitesse de croisière">
+								<label></label>
+								<input type="number" name="vitesseCroisiere" class="form-control" placeholder="Nouvelle vitesse de croisière">
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Allongement</label>
 								<label class="form-control">{{ dataAvion["allongement"] }}</label>
 							</div>
 							<div class="col-md-7">
-								<label for="nom"></label>
+								<label></label>
 								<input type="number" step="0.01" name="allongement" class="form-control" placeholder="Nouvelle allongement de l'aile">
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Surface de référence (m²)</label>
 								<label class="form-control">{{ dataAvion["surfaceReference"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="number" step="0.01" name="surface" class="form-control" placeholder="Nouvelle surface de référence de l'aile">
+								<input type="number" step="0.01" name="surfaceReference" class="form-control" placeholder="Nouvelle surface de référence de l'aile">
 							</div>
 						</div>
 						<div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary">Enregitrer les modifications</button>
+									<button for="modifAvion" type="submit" class="btn btn-primary">Enregitrer les modifications</button>
 								</div>
 							</div>
-							<form method="POST" action="/supprimerAvion"
-								<div class="col-md-6">
-									<div class="form-group">
-										<button type="submit" class="btn btn-primary">Supprimer cet avion</button>
-									</div>
-								</div>
-							</form>
 						</div>
-                    </form>
-                    {% endif %}
+					</form>
+					<form method="POST" action="/supprimerAvion">
+						<div class="col-md-6">
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Supprimer cet avion</button>
+							</div>
+						</div>
+					</form>
+					{% endif %}
 				</div>
-			</section>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="gtco-section">
-	<div class="gtco-container">
-		<div class="row">
-			<section id="ajoutAerodrome">
+</section>
+<section id="aerodrome">
+	<div class="gtco-section">
+		<div class="gtco-container">
+			<div class="row">
 				<div class="col-md-5 animate-box">
 					<h3>Enregistrer un nouvel aérodrome</h3>
 					<form method="POST" action="/addAerodrome">
@@ -265,13 +263,13 @@ Gestion
 								<input type="text"  name ="nomAerodrome" pattern="[A-Z]*" class="form-control" placeholder="Entrez le nom de l'aérodrome" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Latitude</label>
 								<input type="number" step="0.000001"  name ="latitude" class="form-control" placeholder="Entrez la latitude de l'aérodrome" required>
 							</div>
 						</div>
-                        <div class="row form-group">
+						<div class="row form-group">
 							<div class="col-md-12">
 								<label">Longitude</label>
 								<input type="number" step="0.000001"  name ="longitude" class="form-control" placeholder="Entrez la longitude de l'aérodrome" required>
@@ -291,24 +289,22 @@ Gestion
 						{% endif %}
 
 					</form>
-		</div>
-			</section>
-			<section id="aerodrome">
+			</div>
 				<div class="col-md-6 col-md-push-1 animate-box">
 					<h3>Modifier un aérodrome</h3>
-					<form method="POST" action="/aerodrome">
-                        <div class="row form-group">
+					<form method="POST" action="/gestion#aerodrome">
+						<div class="row form-group">
 							<div class="col-md-7">
 								<select name="selectedAerodrome"  class="form-control">
-                                    <option value = "" selected="true">Veuillez sélectionner un aérodrome</option>
-                                    {% for OACI, nom_ad in aerodrome.items() %}
-                                        <option value = {{ OACI }}>{{ nom_ad }}</option>
-                                    {% endfor %}
-                                </select>
+									<option value = "" selected="true">Veuillez sélectionner un aérodrome</option>
+									{% for OACI, nom_ad in session['aerodrome'].items() %}
+										<option value = {{ OACI }}>{{ nom_ad }}</option>
+									{% endfor %}
+								</select>
 							</div>
-                            <div class="col-md-5">
-                                <button type="submit" class="btn btn-primary">Modifier cet aérodrome</button>
-                            </div>
+							<div class="col-md-5">
+								<button type="submit" class="btn btn-primary">Modifier cet aérodrome</button>
+							</div>
 						</div>
 					</form>
 					{% if session['selectedAerodrome'] != None %}
@@ -370,10 +366,10 @@ Gestion
 					</form>
 					{% endif %}
 				</div>
-			</section>
+			</div>
 		</div>
 	</div>
-</div>
+</section>
 
 <div class="gtco-cover gtco-cover-sm" style="background-image:url(../static/images/img_bg_3.jpg);">
 	<div class="overlay"></div>

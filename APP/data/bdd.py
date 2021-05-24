@@ -43,7 +43,6 @@ def addUser(prenom, nom, email, mdp, certif):
         print("Failed add user : {}".format(e))
     closeConnexion(cnx)
 
-
 def verifUserEmail(email):
     request = "SELECT * FROM utilisateurs WHERE email = %s LIMIT 1"
     param = (email,)
@@ -183,7 +182,7 @@ def getDataAvion(idAvion):
             dicDataAvion["finesse"] = dic['finesse']
             dicDataAvion["consoHoraire"] = dic['consoHoraire']
             dicDataAvion["puissanceMoteur"] = dic['puissanceMoteur']
-            dicDataAvion["vitesseCroisière"] = dic['vitesseCroisière']
+            dicDataAvion["vitesseCroisiere"] = dic['vitesseCroisiere']
             dicDataAvion["allongement"] = dic['allongement']
             dicDataAvion["surfaceReference"] = dic['surfaceReference']
     return dicDataAvion
@@ -297,7 +296,7 @@ def get_dist(idVol):
     return Dist, cap, coordonnees_generales
 
 def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface):
-    request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisière, allongement, surfaceReference) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+    request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisiere, allongement, surfaceReference) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
     param = (nom, masse, rayon, finesse, conso, puissance, vitesse,allongement, surface,)
     cnx = createConnexion()
     try:
@@ -308,6 +307,23 @@ def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement,
         print("Failed add avion : {}".format(e))
     closeConnexion(cnx)
 
+def modifAvion(dataAvion, selectedAvion):
+    request = "UPDATE avion SET {} = %s WHERE idAvion = %s"
+    for k, v in dataAvion.items():
+        msg = ""
+        if v != "":
+            param = (v, selectedAvion,)
+            cnx = createConnexion()
+            try:
+                cursor = cnx.cursor()
+                cursor.execute(request.format(k), param)
+                cnx.commit()
+                msg = "ok"
+            except mysql.connector.Error as e:
+                msg="fail"
+                print("Failed add {} at avion : {}".format(k, e))
+            closeConnexion(cnx)
+    return msg
 
 def ajout_vol(new_flight):
     request =" INSERT INTO vol (idAvion, date, idUtilisateur, vitesseVent, directionVent) values (%s, %s,%s, %s, %s) "
@@ -351,12 +367,12 @@ def addAerodrome(oaci, nomAerodrome, latitude, longitude):
         msg="fail"
         print("Failed add aerodrome : {}".format(e))
     closeConnexion(cnx)
-    print(msg)
     return msg
 
 def modifAerodrome(dataAerodrome, selectedAerodrome):
     request = "UPDATE aerodrome SET {} = %s WHERE OACI = %s"
     for k, v in dataAerodrome.items():
+        msg=""
         if v != "":
             param = (v, selectedAerodrome,)
             cnx = createConnexion()
@@ -370,7 +386,6 @@ def modifAerodrome(dataAerodrome, selectedAerodrome):
                 msg="fail"
                 print("Failed add {} a aerodrome : {}".format(k, e))
             closeConnexion(cnx)
-    print(msg)
     return msg
 
 def deleteAvion(oaci):
