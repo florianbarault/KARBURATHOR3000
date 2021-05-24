@@ -62,18 +62,32 @@ def profile():
 @app.route("/gestion", methods=['POST', 'GET'])
 def gestion():
     if session.get("idUtilisateur"):
-        selectedAvion = request.form.get('selectedAvion')
-        selectedAerodrome = request.form.get('selectedAerodrome')
         dicDataAvion = {}
         dicDataAerodrome = {}
-        if selectedAvion is not None:
-            selectedAvion = int(selectedAvion)
-            dicDataAvion = b.getDataAvion(selectedAvion)
-        if selectedAerodrome is not None:
-            dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+
         dicAvion = b.getNomAvion()
         dicAerodrome = b.getNomAerodrome()
-        return render_template("gestion.html", aerodrome=dicAerodrome ,dataAerodrome=dicDataAerodrome, avion = dicAvion, dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+
+        selectedAerodrome = session['selectedAerodrome']
+        selectedAvion = session['selectedAvion']
+
+        selectedAvion = request.form.get("selectedAvion")
+        if selectedAvion == "":
+            selectedAvion = None
+        elif selectedAvion is not None:
+            selectedAvion = int(selectedAvion)
+            dicDataAvion = b.getDataAvion(selectedAvion)
+
+        selectedAerodrome = request.form.get('selectedAerodrome')
+        if selectedAerodrome == "":
+            selectedAerodrome = None
+        elif selectedAerodrome is not None:
+            selectedAvion = request.form.get('selectedAvion')
+            dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+
+        session['selectedAerodrome'] = selectedAerodrome
+        session['selectedAvion'] = selectedAvion
+        return render_template("gestion.html", aerodrome=dicAerodrome ,dataAerodrome=dicDataAerodrome, avion = dicAvion, dataAvion=dicDataAvion, info=None)
     else:
         return redirect('/login')
 
@@ -169,6 +183,81 @@ def addAvion():
         selectedAvion = int(selectedAvion)
         dicDataAvion = b.getDataAvion(selectedAvion)
 
-    b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
+    info = b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
 
-    return render_template("gestion.html", aerodorme=dicAerodrome, avion=dicAvion,dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+    session['selectedAvion'] = selectedAvion
+
+    return render_template("gestion.html", aerodrome=dicAerodrome, avion=dicAvion,dataAvion=dicDataAvion, info=info)
+
+
+@app.route("/addAerodrome", methods=['POST'])
+def addAerodrome():
+    oaci = request.form['oaci']
+    nomAerodrome = request.form['nomAerodrome']
+    latitude = request.form['latitude']
+    longitude = request.form['longitude']
+    msg = b.addAerodrome(oaci, nomAerodrome, latitude, longitude)
+
+    selectedAerodrome = request.form.get('selectedAerodrome')
+    dicDataAerodrome = {}
+    if selectedAerodrome is not None:
+        dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+    dicAvion = b.getNomAvion()
+    dicAerodrome = b.getNomAerodrome()
+
+    session['selectedAerodrome'] = selectedAerodrome
+
+    return render_template("/gestion.html",session=session, aerodrome=dicAerodrome ,dataAerodrome=dicDataAerodrome, avion = dicAvion, info = msg)
+
+
+@app.route("/modifAerodrome", methods=['POST'])
+def modifAerodrome():
+    dicDataAerodrome={}
+    dicDataAerodrome["nom_ad"] = request.form['nomAerodrome']
+    dicDataAerodrome["longitude"] = request.form['longitude']
+    dicDataAerodrome["latitude"] = request.form['latitude']
+    dicDataAerodrome["oaci"] = request.form['oaci']
+    selectedAerodrome = session['selectedAerodrome']
+
+    msg = b.modifAerodrome(dicDataAerodrome, selectedAerodrome)
+
+    dicDataAerodrome = {}
+    if selectedAerodrome is not None:
+        dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+
+    dicAvion = b.getNomAvion()
+    dicAerodrome = b.getNomAerodrome()
+    return render_template("gestion.html", aerodrome=dicAerodrome ,dataAerodrome=dicDataAerodrome, avion=dicAvion, info=msg)
+
+@app.route("/modifAvion", methods=['POST'])
+def modifAvion():
+    dicDataAvion={}
+    #dicDataAvion["nom_ad"] = request.form['nomAerodrome']
+    #dicDataAvion["longitude"] = request.form['longitude']
+    #dicDataAvion["latitude"] = request.form['latitude']
+    #dicDataAvion["oaci"] = request.form['oaci']
+    selectedAvion = session['selectedAvion']
+    print(selectedAvion)
+
+    #msg = b.modifAerodrome(dicDataAvion, selectedAvion)
+
+    dicDataAvion = {}
+    if selectedAvion is not None:
+        dicDataAvion = b.getDataAvion(selectedAvion)
+
+    dicAvion = b.getNomAvion()
+    dicAerodrome = b.getNomAerodrome()
+    return render_template("gestion.html", aerodrome=dicAerodrome ,dataAvion=dicDataAvion, avion=dicAvion)
+
+@app.route("/supprimerAvion", methods=['POST'])
+def supprimerAvion():
+    oaci = session['selectedAvion']
+
+    b.deleteAvion(oaci)
+
+    session['selectedAvion'] = None
+    
+    dicAvion = b.getNomAvion()
+    dicAerodrome = b.getNomAerodrome()
+    return render_template("gestion.html", aerodrome=dicAerodrome , avion=dicAvion)
+

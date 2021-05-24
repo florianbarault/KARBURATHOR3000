@@ -230,9 +230,6 @@ def get_idVol(login):
     return res
 
 
-
-
-
 def get_dist(idVol):
     request = "SELECT idEtape, dep.latitude, dep.longitude, arr.latitude, arr.longitude FROM etapes JOIN vol on vol.idVol = etapes.idVol JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI WHERE vol.idVol = %s "
 
@@ -323,3 +320,53 @@ def calc_carbu(coord,idVol):
     res = cursor.fetchall()
     closeConnexion(cnx)
     print(res)
+
+def addAerodrome(oaci, nomAerodrome, latitude, longitude):
+    request = "INSERT INTO aerodrome (OACI, nom_ad, latitude, longitude) VALUES (%s, %s, %s, %s);"
+    param = (oaci, nomAerodrome, latitude, longitude,)
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        cnx.commit()
+        msg = "ok"
+    except mysql.connector.Error as e:
+        msg="fail"
+        print("Failed add aerodrome : {}".format(e))
+    closeConnexion(cnx)
+    print(msg)
+    return msg
+
+def modifAerodrome(dataAerodrome, selectedAerodrome):
+    request = "UPDATE aerodrome SET {} = %s WHERE OACI = %s"
+    for k, v in dataAerodrome.items():
+        if v != "":
+            param = (v, selectedAerodrome,)
+            cnx = createConnexion()
+            try:
+                cursor = cnx.cursor()
+                print(request.format(k),param)
+                cursor.execute(request.format(k), param)
+                cnx.commit()
+                msg = "ok"
+            except mysql.connector.Error as e:
+                msg="fail"
+                print("Failed add {} a aerodrome : {}".format(k, e))
+            closeConnexion(cnx)
+    print(msg)
+    return msg
+
+def deleteAvion(oaci):
+    request = "DELETE FROM avion WHERE idAvion = %s"
+    param = (oaci,)
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        cnx.commit()
+        msg = "ok"
+    except mysql.connector.Error as e:
+        msg="fail"
+        print("Failed delete aerodrome : {}".format(e))
+    closeConnexion(cnx)
+    return msg
