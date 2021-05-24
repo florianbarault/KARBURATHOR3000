@@ -3,6 +3,8 @@ from mysql.connector import errorcode
 from math import *
 from datetime import datetime
 
+from mysql.connector import cursor
+
 config = {
         'user': 'ienac',
         'password': 'ienac',
@@ -467,4 +469,40 @@ def get_comments():
     res = cursor.fetchall()
     closeConnexion(cnx)
     return res
+
+def verifMdp(email, mdp):
+    request = "SELECT mdp FROM utilisateurs WHERE email=%s LIMIT 1"
+    param = (email,)
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor(dictionary=True)
+        cursor.execute(request, param)
+        res = cursor.fetchone()
+        password = res['mdp']
+        if mdp == password:
+            msg = "okMdp"
+        else:
+            msg='error'
+    except mysql.connector.Error as e:
+        res = None
+        msg = "Failed authentification : {}".format(e)
+    closeConnexion(cnx)
+    return msg
+
+def modifMdp(email, mdp):
+    request = "UPDATE utilisateurs SET mdp = %s WHERE email = %s"
+    print(email, mdp)
+    param = (mdp, email,)
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        cnx.commit()
+        msg = "ok"
+    except mysql.connector.Error as e:
+        msg="fail"
+        print("Failed : {}".format(e))
+    closeConnexion(cnx)
+    return msg
+
 

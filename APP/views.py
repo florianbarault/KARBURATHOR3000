@@ -282,3 +282,25 @@ def addcomment():
 
     else:
         return redirect('/login')
+
+@app.route("/modifMotDePasse", methods=['POST'])
+def modifMotDePasse():
+    password = request.form['password']
+    mdp1 = request.form['mdp1']
+    mdp2 = request.form['mdp2']
+    msg = b.verifMdp(session['email'], password)
+    if msg != "okMdp":
+        # Mauvais mot de passe
+        return render_template("profile.html", info="errorMdp3", )
+    else:
+        # Bon mot de passe
+        if mdp1 != mdp2:
+            # Nouveaux mot de passe différents
+            return render_template("profile.html", info="errorMdp1")
+        elif password == mdp1:
+            # Ancien et nouveau mot de passe sont similaires
+            return render_template("profile.html", info="errorMdp2")
+        else:
+            # Tout est bon
+            msg = b.modifMdp(session['email'], mdp1)
+            return render_template("profile.html")

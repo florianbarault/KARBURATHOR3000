@@ -110,56 +110,55 @@ Profil
 						<div class="row form-group">
 							<div class="col-md-6">
 								{% if session.prenom %}
-								<label for="prenom">Prénom</label>
-								<input id="prenom" class="form-control" placeholder= {{ session.prenom }} disabled>
+								<label>Prénom</label>
+								<label class="form-control">{{ session.prenom }}</label>
 								{% endif %}
 							</div>
 							<div class="col-md-6">
 								{% if session.nom %}
-								<label for="nom">Nom</label>
-								<input id="nom" class="form-control" placeholder= {{ session.nom }} disabled>
+								<label>Nom</label>
+								<label class="form-control">{{ session.nom }}</label>
 								{% endif %}
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								{% if session.email %}
-								<label for="email">Email</label>
-								<input id="email" class="form-control" placeholder= {{ session.email }} disabled>
+								<label>Email</label>
+								<label class="form-control">{{ session.email }}</label>
 								{% endif %}
 							</div>
 						</div>
 						{% if session.certification %}
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label for="certif">Certification</label>
-								<input id="certif" class="form-control" placeholder= {{ session.certification }} disabled>
+								<label>Certification</label>
+								<label class="form-control">{{ session.certification }}</label>
 							</div>
 						</div>
 						{% endif %}
-
 
 		</div>
 			</section>
 			<section id="signIn">
 				<div class="col-md-5 col-md-push-1 animate-box">
-					<h3>Modifier votre mot de passe (non fonctionnel)</h3>
-					<form action="#">
+					<h3>Modifier votre mot de passe</h3>
+					<form method="POST", action="/modifMotDePasse">
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label for="password">Ancien mot de passe</label>
-								<input type="text" id="password" name="password" class="form-control" placeholder="Entrez votre mot de passe actuel">
+								<label>Ancien mot de passe</label>
+								<input type="password" name="password" class="form-control" placeholder="Entrez votre mot de passe actuel">
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label for="mdp1">Nouveau mot de passe</label>
-								<input type="text" id="mdp1"  name ="mdp1" class="form-control" placeholder="Entrez votre nouveau mot de passe" required>
+								<label>Nouveau mot de passe</label>
+								<input type="password" name ="mdp1" class="form-control" placeholder="Entrez votre nouveau mot de passe" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
-								<input type="text" id="mdp2" name="mdp2" class="form-control" placeholder="Confirmez votre nouveau mot de passe" required>
+								<input type="password" name="mdp2" class="form-control" placeholder="Confirmez votre nouveau mot de passe" required>
 							</div>
 						</div>
 						<div>
@@ -169,8 +168,14 @@ Profil
 								</div>
 							</div>
 							<div class="col-md-6">
-								{% if info and info == "errorSignIn" %}
-								<div class="text-danger text-center fw-bold">Erreur d'authentification</div>
+								{% if info and info == "errorMdp1" %}
+								<div class="text-danger text-center fw-bold">Les nouveaux mots de passe sont différents</div>
+								{% elif info and info == "errorMdp2" %}
+								<div class="text-danger text-center fw-bold">Le mot de passe est le même</div>
+								{% elif info and info == "errorMdp3" %}
+								<div class="text-danger text-center fw-bold">Mauvais mot de passe</div>
+								{% else %}
+								<div class="text-center fw-bold">Mot de passe modifié</div>
 								{% endif %}
 							</div>
 						</div>
