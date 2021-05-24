@@ -4,6 +4,11 @@
 Commentaires
 {% endblock %}
 
+{%block CSSlink %}
+<link rel="stylesheet" href="../static/css/comments.css" />
+{% endblock %}
+
+
 {% block header %}
 	<nav class="gtco-nav" role="navigation">
 		<div class="gtco-container">
@@ -51,18 +56,32 @@ Commentaires
 
 
 {% block content %}
-<div id="gtco-features">
-	<div class="gtco-container">
-		<div class="row">
-			<div class="col-md-4 col-sm-4 text-center">
-				<div class="feature-center animate-box" data-animate-effect="fadeIn">
+<form method="POST" action="/addcomment">
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1 text-center" data-animate-effect="fadeIn">
+					<h5>Ajoutez votre remarque ou proposer un avion à ajouter sur le site</h5>
+					<textarea id="comment" name="comment" placeholder="Écrivez votre commentaire ici" class="comment"></textarea>
+				<center class="animate-box">
+					<button type="submit" class="btn btn-primary">Valider</button>
+				</center>
 				</div>
 			</div>
 		</div>
 	</div>
+</form>
+
+{% if data %}
+<h5>Regardez ce que les autres utilisateurs ont écrit</h5>
+<div class="col-md-4 col-md-offset-4">
+	{% for comment in data %}
+	<div class="animate-box">
+		<h6>{{comment[1]}} {{comment[0]}} a posté le {{comment[2]}}:</h6>
+		<p>{{comment[3]}}</p>
+	</div>
+	{% endfor %}
 </div>
-
-
-
+{% endif %}
 
 {% endblock %}

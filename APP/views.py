@@ -48,7 +48,8 @@ def historic():
 @app.route("/comments")
 def comments():
     if session.get("idUtilisateur"):
-        return render_template("comments.html", info=session["statut"])
+        data = b.get_comments()
+        return render_template("comments.html", data=data, info=session["statut"])
     else:
         return redirect('/login')
 
@@ -151,17 +152,19 @@ def addflight():
         etapes = request.form['etapes']
         b.ajout_etapes(vol,etapes)
 
+        #Calculs pour les estimations
 
-        # avion = b.getNomAvion()[int(num_avion)]
-        coord = b.get_dist(vol)
-        b.calc_carbu(coord,vol)
-        return render_template("recap.html", data = coord  ,info=session["statut"])
+        D,cap,coordonnees_generales = b.get_dist(vol)
+        carb = b.calc_carbu(D,cap,vol)
 
+
+        #Data nécessaires pour la page recap
+        liste_etapes = b.get_etapes(vol)
+        data,conso_totale=b.conso_etapes(liste_etapes,carb)
+
+        return render_template("recap.html", table=data, coord_map=coordonnees_generales,conso_totale=conso_totale, carbu=carb, info=session["statut"])
     else:
         return redirect('/login')
-    # num_avion = request.form['select_avion']
-    # avion = b.getNomAvion()[int(num_avion)]
-    # return avion
 
 @app.route("/addAvion", methods=['POST'])
 def addAvion():
@@ -261,3 +264,18 @@ def supprimerAvion():
     dicAerodrome = b.getNomAerodrome()
     return render_template("gestion.html", aerodrome=dicAerodrome , avion=dicAvion)
 
+@app.route("/cv", methods=['GET'])
+def cv():
+    return render_template("cv.html")
+
+@app.route("/addcomment", methods=['POST', 'GET'])
+def addcomment():
+    if session.get("idUtilisateur"):
+        idUtilisateur = session["idUtilisateur"]
+        msg = request.form['comment']
+        b.add_comment(idUtilisateur,msg)
+        data = b.get_comments()
+        return render_template("comments.html", data=data, info=session["statut"])
+
+    else:
+        return redirect('/login')
