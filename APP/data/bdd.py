@@ -334,7 +334,7 @@ def ajout_vol(new_flight):
 def ajout_etapes(vol,etapes):
     liste_etapes = etapes.split(",")
 
-    request = " INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, %s, %s) "
+    request = " INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang, distance, carburant) values (%s, %s, %s, %s, %s,0,0) "
     param = (vol, liste_etapes[0], liste_etapes[1], liste_etapes[2], 1,)
     cnx = createConnexion()
     cursor = cnx.cursor()
@@ -401,7 +401,7 @@ def deleteAvion(oaci):
     return msg
 
 def calc_carbu(D,cap,idVol):
-    request = "SELECT vitesseVent, directionVent, masseVide, rayonAction finesse, consoHoraire, puissanceMoteur, VitesseCroisiere, allongement, surfaceReference FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
+    request = "SELECT vitesseVent, directionVent, rayonAction, consoHoraire, VitesseCroisiere FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
     param = (idVol,)
     cnx = createConnexion()
     cursor = cnx.cursor()
@@ -425,7 +425,7 @@ def calc_carbu(D,cap,idVol):
 
     carb = []
     for i in range (len(D)):
-        x = calcul_carbu(D[i],res[0][4],res[0][6],cap[i],res[0][1],res[0][0])
+        x = calcul_carbu(D[i],res[0][3],res[0][4],cap[i],res[0][1],res[0][0])
         carb.append(round(x))
     return carb
 
