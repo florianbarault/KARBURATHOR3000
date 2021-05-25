@@ -48,7 +48,8 @@ def historic():
 @app.route("/comments")
 def comments():
     if session.get("idUtilisateur"):
-        return render_template("comments.html", info=session["statut"])
+        data = b.get_comments()
+        return render_template("comments.html", data=data, info=session["statut"])
     else:
         return redirect('/login')
 
@@ -62,15 +63,32 @@ def profile():
 @app.route("/gestion", methods=['POST', 'GET'])
 def gestion():
     if session.get("idUtilisateur"):
-        selectedAvion = request.form.get('selectedAvion')
         dicDataAvion = {}
-        if selectedAvion is not None:
+        dicDataAerodrome = {}
+        # Crée les dictionnaires de tout les ids et noms des avions et des aéroports
+        session['avion'] = b.getNomAvion()
+        session['aerodrome'] = b.getNomAerodrome()
+
+        selectedAerodrome = None
+        selectedAvion = None
+
+        selectedAvion = request.form.get("selectedAvion")
+        if selectedAvion == "":
+            selectedAvion = None
+        elif selectedAvion is not None:
             selectedAvion = int(selectedAvion)
             dicDataAvion = b.getDataAvion(selectedAvion)
-            print(dicDataAvion)
-        dicAvion = b.getNomAvion()
-        liste = b.getaerodrome()
-        return render_template("gestion.html", data=liste,avion = dicAvion, dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+
+        selectedAerodrome = request.form.get('selectedAerodrome')
+        if selectedAerodrome == "":
+            selectedAerodrome = None
+        elif selectedAerodrome is not None:
+            selectedAvion = request.form.get('selectedAvion')
+            dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+
+        session['selectedAerodrome'] = selectedAerodrome
+        session['selectedAvion'] = selectedAvion
+        return render_template("gestion.html", dataAerodrome=dicDataAerodrome, dataAvion=dicDataAvion, info=None)
     else:
         return redirect('/login')
 
@@ -90,6 +108,7 @@ def signIn():
 
 @app.route("/signUp", methods=['POST'])
 def signUp():
+    # Récupère les données du formulaire d'inscription
     prenom = request.form['prenom']
     nom = request.form['nom']
     email = request.form['email']
@@ -97,6 +116,7 @@ def signUp():
     mdp2 = request.form['mdp2']
     certif = request.form['certif']
     certification = b.getCertification(certif)
+    # Vérifie que les deux mots de passe concordent
     if mdp1 != mdp2:
         return render_template("login.html", info="errorMdp")
     else:
@@ -105,7 +125,9 @@ def signUp():
         if msg == "userExist":
             return render_template("login.html", info="errorSignUp", )
         else:
+            # Ajoute l'utilisateur à la bdd
             b.addUser(prenom, nom, email, mdp1, certification)
+            # Crée des données de session pour l'utilisateur
             session["nom"] = nom
             session["prenom"] = prenom
             session["email"] = email
@@ -130,23 +152,27 @@ def addflight():
         #Ajout étapes
 
         idVol = b.get_idVol(idUtilisateur)
-        vol =idVol[0][0]
+        vol = idVol[0][0]
         etapes = request.form['etapes']
         b.ajout_etapes(vol,etapes)
 
+        #Calculs pour les estimations
 
-        # avion = b.getNomAvion()[int(num_avion)]
-        coord = b.get_dist(vol)
-        return render_template("recap.html", data = coord  ,info=session["statut"])
+        D,cap,coordonnees_generales = b.get_dist(vol)
+        carb = b.calc_carbu(D,cap,vol)
 
+
+        #Data nécessaires pour la page recap
+        liste_etapes = b.get_etapes(vol)
+        data,conso_totale=b.conso_etapes(liste_etapes,carb)
+
+        return render_template("recap.html", table=data, coord_map=coordonnees_generales,conso_totale=conso_totale, carbu=carb, info=session["statut"])
     else:
         return redirect('/login')
-    # num_avion = request.form['select_avion']
-    # avion = b.getNomAvion()[int(num_avion)]
-    # return avion
 
 @app.route("/addAvion", methods=['POST'])
 def addAvion():
+    # Récupère les éléments du nouvel avion
     nom = request.form['nom']
     masse = request.form['masse']
     rayon = request.form['rayon']
@@ -156,15 +182,125 @@ def addAvion():
     vitesse = request.form['vitesse']
     allongement = request.form["allongement"]
     surface = request.form["surface"]
-
-    liste = b.getaerodrome()
-    dicAvion = b.getNomAvion()
+    # Ajoute les éléments du nouvel avion à la bdd
     dicDataAvion ={}
     selectedAvion = request.form.get('selectedAvion')
     if selectedAvion is not None:
         selectedAvion = int(selectedAvion)
         dicDataAvion = b.getDataAvion(selectedAvion)
 
-    b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
+    info = b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
 
-    return render_template("gestion.html", data=liste, avion=dicAvion,dataAvion=dicDataAvion, selectedAvion=selectedAvion)
+    session['selectedAvion'] = selectedAvion
+
+    return render_template("gestion.html",dataAvion=dicDataAvion, info=info)
+
+
+@app.route("/addAerodrome", methods=['POST'])
+def addAerodrome():
+    # Récupère les éléments du nouvel aérodrome
+    oaci = request.form['oaci']
+    nomAerodrome = request.form['nomAerodrome']
+    latitude = request.form['latitude']
+    longitude = request.form['longitude']
+    # Ajoute le séléments du nouvel aérodrome dans la bdd
+    msg = b.addAerodrome(oaci, nomAerodrome, latitude, longitude)
+
+    selectedAerodrome = session['selectedAerodrome']
+    dicDataAerodrome = {}
+    if selectedAerodrome is not None:
+        dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+
+    return render_template("/gestion.html",session=session, dataAerodrome=dicDataAerodrome, info = msg)
+
+
+@app.route("/modifAerodrome", methods=['POST'])
+def modifAerodrome():
+    # Récypère les éléments modifiés de l'aérodrome
+    dicDataAerodrome={}
+    dicDataAerodrome["nom_ad"] = request.form['nomAerodrome']
+    dicDataAerodrome["longitude"] = request.form['longitude']
+    dicDataAerodrome["latitude"] = request.form['latitude']
+    dicDataAerodrome["oaci"] = request.form['oaci']
+
+    selectedAerodrome = session['selectedAerodrome']
+    # Effectue la modification dans la bdd
+    msg = b.modifAerodrome(dicDataAerodrome, selectedAerodrome)
+    # Charge les nouvelles données de l'aérodrome
+    dicDataAerodrome = {}
+    if selectedAerodrome is not None:
+        dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+
+    return render_template("gestion.html",dataAerodrome=dicDataAerodrome, info=msg)
+
+@app.route("/modifAvion", methods=['POST'])
+def modifAvion():
+    # Récupération des données du formulaire
+    dicDataAvion={}
+    dicDataAvion["reference"] = request.form["reference"]
+    dicDataAvion["masseVide"] = request.form["masseVide"]
+    dicDataAvion["rayonAction"] = request.form["rayonAction"]
+    dicDataAvion["finesse"] = request.form["finesse"]
+    dicDataAvion["consoHoraire"] = request.form["consoHoraire"]
+    dicDataAvion["puissanceMoteur"] = request.form["puissanceMoteur"]
+    dicDataAvion["vitesseCroisiere"] = request.form["vitesseCroisiere"]
+    dicDataAvion["allongement"] = request.form["allongement"]
+    dicDataAvion["surfaceReference"] = request.form["surfaceReference"]
+    # Récupère l'avion selectionné
+    selectedAvion = session['selectedAvion']
+    # Effectue la modification dans la bdd
+    msg = b.modifAvion(dicDataAvion, selectedAvion)
+    # Charge les nouvelles données de l'avion
+    dicDataAvion = {}
+    if selectedAvion is not None:
+        dicDataAvion = b.getDataAvion(selectedAvion)
+
+    return render_template("gestion.html",dataAvion=dicDataAvion)
+
+@app.route("/supprimerAvion", methods=['POST'])
+def supprimerAvion():
+    oaci = session['selectedAvion']
+    # Supprime de la bdd l'aérodrome de code OACI
+    b.deleteAvion(oaci)
+
+    session['selectedAvion'] = None
+    
+    return render_template("gestion.html")
+
+@app.route("/cv", methods=['GET'])
+def cv():
+    return render_template("cv.html")
+
+@app.route("/addcomment", methods=['POST', 'GET'])
+def addcomment():
+    if session.get("idUtilisateur"):
+        idUtilisateur = session["idUtilisateur"]
+        msg = request.form['comment']
+        b.add_comment(idUtilisateur,msg)
+        data = b.get_comments()
+        return render_template("comments.html", data=data, info=session["statut"])
+
+    else:
+        return redirect('/login')
+
+@app.route("/modifMotDePasse", methods=['POST'])
+def modifMotDePasse():
+    password = request.form['password']
+    mdp1 = request.form['mdp1']
+    mdp2 = request.form['mdp2']
+    msg = b.verifMdp(session['email'], password)
+    if msg != "okMdp":
+        # Mauvais mot de passe
+        return render_template("profile.html", info="errorMdp3", )
+    else:
+        # Bon mot de passe
+        if mdp1 != mdp2:
+            # Nouveaux mot de passe différents
+            return render_template("profile.html", info="errorMdp1")
+        elif password == mdp1:
+            # Ancien et nouveau mot de passe sont similaires
+            return render_template("profile.html", info="errorMdp2")
+        else:
+            # Tout est bon
+            msg = b.modifMdp(session['email'], mdp1)
+            return render_template("profile.html")

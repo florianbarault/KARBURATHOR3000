@@ -1,0 +1,47 @@
+h5
+{
+text-align: center;
+font-weight: 700;
+color: #1DBAC6;
+font-size: 1.6em;
+letter-spacing: 1px;
+}
+
+h6
+{
+margin-bottom: 1px;
+text-align: center;
+font-weight: 700;
+color: #1E68BD;
+font-size: 1.3em;
+letter-spacing: 1px;
+
+}
+
+p{
+
+text-align: center;
+font-size: 1.1em;
+}
+
+.btn{
+margin: 10px;
+}
+
+.comment{
+    margin: 10px;
+    resize: none;
+    width: 700px;
+    height: 200px;
+    box-shadow: none;
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    font-weight: 300;
+    }
+
+.comment:active, .etapes:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #52d3aa;
+}

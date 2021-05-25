@@ -1,7 +1,7 @@
 CREATE  DATABASE IF NOT EXISTS bddCarburantGroupeC;
 
 
-CREATE OR REPLACE TABLE aerodrome (
+CREATE TABLE aerodrome (
   OACI varchar(5) NOT NULL,
   nom_ad varchar(100) NOT NULL,
   latitude float NOT NULL,
@@ -145,7 +145,7 @@ INSERT INTO aerodrome (OACI, nom_ad, latitude, longitude) VALUES
 
 
 
-CREATE OR REPLACE TABLE avion (
+CREATE TABLE avion (
   masseVide float NOT NULL,
   rayonAction float NOT NULL,
   finesse float NOT NULL,
@@ -153,20 +153,20 @@ CREATE OR REPLACE TABLE avion (
   idAvion int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   reference varchar(30) NOT NULL,
   puissanceMoteur float NOT NULL,
-  vitesseCroisière float NOT NULL,
+  vitesseCroisiere float NOT NULL,
   allongement float NOT NULL,
   surfaceReference float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO avion (masseVide, rayonAction, finesse, consoHoraire, idAvion, reference, puissanceMoteur, vitesseCroisière,allongement,surfaceReference) VALUES
+INSERT INTO avion (masseVide, rayonAction, finesse, consoHoraire, idAvion, reference, puissanceMoteur, vitesseCroisiere,allongement,surfaceReference) VALUES
 (580, 430, 10, 38, 1, 'DR 400', 160, 215,5.35,14.2),
 (430, 390, 10, 14, 2, 'APM 20', 80, 185,8,9.5),
 (900, 645, 10, 60, 3, 'TB-20', 250, 279,8.35,11.9);
 
 
 
-CREATE OR REPLACE TABLE etapes (
+CREATE TABLE etapes (
   idEtape int(11) NOT NULL,
   idVol int(11) NOT NULL,
   OACIdep varchar(15) NOT NULL,
@@ -186,7 +186,7 @@ INSERT INTO etapes (idEtape, idVol, OACIdep, OACIarr, OACIdeg, rang) VALUES
 (6, 3, 'LFBP', 'LFBT', 'LFBZ', 2);
 
 
-CREATE OR REPLACE TABLE messages (
+CREATE TABLE messages (
   idMessage int(11) NOT NULL,
   date date NOT NULL,
   idUtilisateur int(11) NOT NULL,
@@ -199,7 +199,7 @@ INSERT INTO messages (idMessage, date, idUtilisateur, contenu) VALUES
 
 
 
-CREATE OR REPLACE TABLE utilisateurs (
+CREATE TABLE utilisateurs (
   idUtilisateur int(11) NOT NULL,
   email varchar(50) NOT NULL,
   mdp varchar(30) NOT NULL,
@@ -216,7 +216,7 @@ INSERT INTO utilisateurs (idUtilisateur, email, mdp, nom, prenom, certification,
 (3, 'bob.bob@bob.com', 'bob', 'bob', 'bob', '3', 'user');
 
 
-CREATE OR REPLACE TABLE vol (
+CREATE TABLE vol (
   idvol int(11) NOT NULL,
   idAvion int(11) NOT NULL,
   date date NOT NULL,
