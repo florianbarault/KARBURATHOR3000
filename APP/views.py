@@ -12,6 +12,8 @@ app.config.from_object('config')
 def index():
     session["totalUser"] = b.countAllFrom('utilisateurs', condition="statut='user'")
     session['totalFlight'] = b.countAllFrom('vol')
+    session['totalDistance'] = b.sumFrom('etapes', 'distance')
+    session['totalCarburant'] = b.sumFrom('etapes', 'carburant')
     return render_template("index.html")
 
 @app.route("/login")

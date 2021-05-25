@@ -110,7 +110,7 @@ NOM_SITE &mdash; Accueil
 									<i class="fas fa-gas-pump"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to="22070" data-speed="10000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to= {{ session.totalCarburant }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">Litres de carburant consommés</span>
 
 						</div>
@@ -122,7 +122,7 @@ NOM_SITE &mdash; Accueil
 									<i class="fas fa-users"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to= {{ session.totalUser }} data-speed="10000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to= {{ session.totalUser }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">Pilotes</span>
 						</div>
 					</div>
@@ -133,7 +133,7 @@ NOM_SITE &mdash; Accueil
 									<i class="fas fa-plane"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to= {{ session.totalFlight }} data-speed="10000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to= {{ session.totalFlight }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">Vols</span>
 						</div>
 					</div>
@@ -144,7 +144,7 @@ NOM_SITE &mdash; Accueil
 									<i class="fas fa-road"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to="212023" data-speed="10000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to={{ session.totalDistance }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">Milles Nautiques parcourus</span>
 						</div>
 					</div>
