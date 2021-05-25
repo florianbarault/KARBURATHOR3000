@@ -179,14 +179,9 @@ def getDataAvion(idAvion):
     for dic in res:
         if idAvion == dic['idAvion']:
             dicDataAvion["nom"] = dic['reference']
-            dicDataAvion["masseVide"] = dic['masseVide']
             dicDataAvion["rayonAction"] = dic['rayonAction']
-            dicDataAvion["finesse"] = dic['finesse']
             dicDataAvion["consoHoraire"] = dic['consoHoraire']
-            dicDataAvion["puissanceMoteur"] = dic['puissanceMoteur']
             dicDataAvion["vitesseCroisiere"] = dic['vitesseCroisiere']
-            dicDataAvion["allongement"] = dic['allongement']
-            dicDataAvion["surfaceReference"] = dic['surfaceReference']
     return dicDataAvion
 
 def getNomAerodrome():
@@ -297,9 +292,9 @@ def get_dist(idVol):
 
     return Dist, cap, coordonnees_generales
 
-def addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface):
-    request = "INSERT INTO avion (reference, masseVide, rayonAction, finesse, consoHoraire, puissanceMoteur, vitesseCroisiere, allongement, surfaceReference) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
-    param = (nom, masse, rayon, finesse, conso, puissance, vitesse,allongement, surface,)
+def addAvion(nom, rayon, conso, vitesse):
+    request = "INSERT INTO avion (reference, rayonAction, consoHoraire, vitesseCroisiere) VALUES (%s, %s, %s, %s);"
+    param = (nom, rayon, conso, vitesse,)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor()

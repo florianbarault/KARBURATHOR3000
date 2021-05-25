@@ -174,14 +174,9 @@ def addflight():
 def addAvion():
     # Récupère les éléments du nouvel avion
     nom = request.form['nom']
-    masse = request.form['masse']
     rayon = request.form['rayon']
-    finesse = request.form['finesse']
     conso = request.form['conso']
-    puissance = request.form['puissance']
     vitesse = request.form['vitesse']
-    allongement = request.form["allongement"]
-    surface = request.form["surface"]
     # Ajoute les éléments du nouvel avion à la bdd
     dicDataAvion ={}
     selectedAvion = request.form.get('selectedAvion')
@@ -189,7 +184,7 @@ def addAvion():
         selectedAvion = int(selectedAvion)
         dicDataAvion = b.getDataAvion(selectedAvion)
 
-    info = b.addAvion(nom, masse, rayon, finesse, conso, puissance, vitesse, allongement, surface)
+    info = b.addAvion(nom, rayon, conso, vitesse)
 
     session['selectedAvion'] = selectedAvion
 
@@ -238,14 +233,9 @@ def modifAvion():
     # Récupération des données du formulaire
     dicDataAvion={}
     dicDataAvion["reference"] = request.form["reference"]
-    dicDataAvion["masseVide"] = request.form["masseVide"]
     dicDataAvion["rayonAction"] = request.form["rayonAction"]
-    dicDataAvion["finesse"] = request.form["finesse"]
     dicDataAvion["consoHoraire"] = request.form["consoHoraire"]
-    dicDataAvion["puissanceMoteur"] = request.form["puissanceMoteur"]
     dicDataAvion["vitesseCroisiere"] = request.form["vitesseCroisiere"]
-    dicDataAvion["allongement"] = request.form["allongement"]
-    dicDataAvion["surfaceReference"] = request.form["surfaceReference"]
     # Récupère l'avion selectionné
     selectedAvion = session['selectedAvion']
     # Effectue la modification dans la bdd

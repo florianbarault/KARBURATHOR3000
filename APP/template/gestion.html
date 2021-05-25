@@ -61,20 +61,8 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label">Masse à vide (kg)</label>
-								<input type="number" name ="masse" class="form-control" placeholder="Entrez la masse à vide de l'avion" required>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-12">
 								<label>Rayon d'action (km)</label>
 								<input type="number" name ="rayon" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label>Finesse</label>
-								<input type="number" name ="finesse" class="form-control" placeholder="Entrez la finesse de l'avion" required>
 							</div>
 						</div>
 						<div class="row form-group">
@@ -85,26 +73,8 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label>Puissance moteur (Cv)</label>
-								<input type="number" name ="puissance" class="form-control" placeholder="Entrez la puissance du moteur" required>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-12">
 								<label>Vitesse de croisière (km/h)</label>
 								<input type="number" name ="vitesse" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label>Allongement</label>
-								<input type="number" step="0.01" name ="allongement" class="form-control" placeholder="Entrez l'allongement de l'aile" required>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label>Surface de référence (m²)</label>
-								<input type="number" step="0.01" name ="surface" class="form-control" placeholder="Entrez la surface de référence de l'aile" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -132,7 +102,7 @@ Gestion
 						</div>
 					</form>	
 					{% if session['selectedAvion'] != None %}
-					<form id="modifAvion" method="POST" action="/modifAvion">
+					<form id="modifAvion"method="POST" action="/modifAvion">
 						<div class="row form-group">
 							<div class="col-md-5">
 								<label>Nom de l'avion</label>
@@ -141,16 +111,6 @@ Gestion
 							<div class="col-md-7">
 								<label></label>
 								<input type="text" name="reference" class="form-control" placeholder="Nouveau nom">
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-5">
-								<label>Masse à vide (kg)</label>
-								<label class="form-control">{{ dataAvion["masseVide"] }}</label>
-							</div>
-							<div class="col-md-7">
-								<label></label>
-								<input type="number" name="masseVide" class="form-control" placeholder="Nouvelle masse à vide">
 							</div>
 						</div>
 						<div class="row form-group">
@@ -165,16 +125,6 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-5">
-								<label>Finesse</label>
-								<label class="form-control">{{ dataAvion["finesse"] }}</label>
-							</div>
-							<div class="col-md-7">
-								<label></label>
-								<input type="number" name="finesse" class="form-control" placeholder="Nouvelle finesse">
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-5">
 								<label>Conso horaire (L/h)</label>
 								<label class="form-control">{{ dataAvion["consoHoraire"] }}</label>
 							</div>
@@ -185,51 +135,20 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-5">
-								<label>Puissance du moteur (Cv)</label>
-								<label class="form-control">{{ dataAvion["puissanceMoteur"] }}</label>
-							</div>
-							<div class="col-md-7">
-								<label></label>
-								<input type="number" name="puissanceMoteur" class="form-control" placeholder="Nouvelle puissance du moteur">
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-5">
 								<label>Vitesse de croisière (km/h)</label>
 								<label class="form-control">{{ dataAvion["vitesseCroisiere"] }}</label>
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="number" name="vitesseCroisiere" class="form-control" placeholder="Nouvelle vitesse de croisière">
+								<input type="number" name="vitesseCroisiere" class="form-control" placeholder="Vitesse de croisière">
 							</div>
 						</div>
 						<div class="row form-group">
-							<div class="col-md-5">
-								<label>Allongement</label>
-								<label class="form-control">{{ dataAvion["allongement"] }}</label>
-							</div>
-							<div class="col-md-7">
-								<label></label>
-								<input type="number" step="0.01" name="allongement" class="form-control" placeholder="Nouvelle allongement de l'aile">
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-md-5">
-								<label>Surface de référence (m²)</label>
-								<label class="form-control">{{ dataAvion["surfaceReference"] }}</label>
-							</div>
-							<div class="col-md-7">
-								<label></label>
-								<input type="number" step="0.01" name="surfaceReference" class="form-control" placeholder="Nouvelle surface de référence de l'aile">
-							</div>
-						</div>
-						<div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<button for="modifAvion" type="submit" class="btn btn-primary">Enregitrer les modifications</button>
 								</div>
 							</div>
-						</div>
 					</form>
 					<form method="POST" action="/supprimerAvion">
 						<div class="col-md-6">
