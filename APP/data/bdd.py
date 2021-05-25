@@ -237,6 +237,10 @@ def get_dist(idVol):
     closeConnexion(cnx)
 
     #Traitement des données
+    id_etapes = []
+    for i in range(len(res)):
+        id_etapes.append(res[i][0])
+
     coordonnees= []
     coordonnees_generales=[]
     for i in range (0,len (res)):
@@ -289,6 +293,15 @@ def get_dist(idVol):
             cap.append(c2)
         compteur +=1
     print(Dist)
+    for i in range (len(id_etapes)):
+        request = "UPDATE etapes SET distance = %s WHERE idVol = %s AND idEtape = %s"
+        param = (Dist[i], idVol,id_etapes[i],)
+        print(param)
+        cnx = createConnexion()
+
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        cnx.commit()
 
     return Dist, cap, coordonnees_generales
 
@@ -343,7 +356,7 @@ def ajout_etapes(vol,etapes):
     closeConnexion(cnx)
 
     for i in range(1,len(liste_etapes)-2,2):
-        request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang) values (%s, %s, %s, %s, %s) "
+        request =" INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang,distance, carburant) values (%s, %s, %s, %s, %s,0,0) "
         param = (vol, liste_etapes[i], liste_etapes[i+2],liste_etapes[i+3], (i+3)/2,)
         cnx = createConnexion()
         cursor = cnx.cursor()
