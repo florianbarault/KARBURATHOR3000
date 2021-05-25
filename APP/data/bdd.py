@@ -90,17 +90,30 @@ def countAllFrom(table:str, condition=None):
         request = "SELECT COUNT(*) FROM {}".format(table)
     else:
         request = "SELECT COUNT(*) FROM {} WHERE ".format(table) + condition
-        print(request)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
         cursor.execute(request)
         res = cursor.fetchone()
-        print(res)
     except mysql.connector.Error as e:
         res = None
     closeConnexion(cnx)
     return str(res['COUNT(*)'])
+
+def sumFrom(table,attribut, condition=None):
+    if condition is None:
+        request = "SELECT SUM({}) FROM {}".format(attribut, table)
+    else:
+        request = "SELECT SUM({}) FROM {} WHERE ".format(attribut, table) + condition
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor(dictionary=True)
+        cursor.execute(request)
+        res = cursor.fetchone()
+    except mysql.connector.Error as e:
+        res = None
+    closeConnexion(cnx)
+    return str(res['SUM({})'.format(attribut)])
 
 def get_histo(login):
     request = "SELECT OACIdep, OACIarr , etapes.idVol, rang, vol.date, avion.reference FROM etapes " \
