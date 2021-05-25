@@ -10,7 +10,7 @@ config = {
         'password': 'ienac',
         'host': 'localhost',
         'port': 3306,
-        'database': 'bddCarburantGroupeC',
+        'database': 'IENAC20_KARBURATHOR3000',
         'raise_on_warnings': True
     }
 
