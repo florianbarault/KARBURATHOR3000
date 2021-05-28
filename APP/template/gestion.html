@@ -56,25 +56,25 @@ Gestion
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Nom de l'avion</label>
-								<input type="text" name="nom" class="form-control" placeholder="Entrez le nom de l'avion" required>
+								<input type="text" name="reference" class="form-control" placeholder="Entrez le nom de l'avion" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Rayon d'action (km)</label>
-								<input type="number" name ="rayon" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
+								<input type="number" name ="rayonAction" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Consommation horaire (L/h)</label>
-								<input type="number" step="0.1" name ="conso" class="form-control" placeholder="Entrez la consommation horaire du moteur" required>
+								<input type="number" step="0.1" name ="consoHoraire" class="form-control" placeholder="Entrez la consommation horaire du moteur" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Vitesse de croisière (km/h)</label>
-								<input type="number" name ="vitesse" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
+								<input type="number" name ="vitesseCroisiere" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -179,7 +179,7 @@ Gestion
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Nom</label>
-								<input type="text"  name ="nomAerodrome"  class="form-control" placeholder="Entrez le nom de l'aérodrome" required>
+								<input type="text"  name ="nom_ad"  class="form-control" placeholder="Entrez le nom de l'aérodrome" required>
 							</div>
 						</div>
 						<div class="row form-group">
@@ -235,7 +235,7 @@ Gestion
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="text" name="oaci" class="form-control" pattern="[A-Z]*" placeholder="Nouveau code OACI">
+								<input type="text" pattern="[A-Z]*" name="oaci" class="form-control" pattern="[A-Z]*" placeholder="Nouveau code OACI">
 							</div>
 						</div>
 						<div class="row form-group">
@@ -245,7 +245,7 @@ Gestion
 							</div>
 							<div class="col-md-7">
 								<label></label>
-								<input type="text" name="nomAerodrome" class="form-control" placeholder="Nouveau nom de l'aérodrome">
+								<input type="text" name="nom_ad" class="form-control" placeholder="Nouveau nom de l'aérodrome">
 							</div>
 						</div>
 						<div class="row form-group">
