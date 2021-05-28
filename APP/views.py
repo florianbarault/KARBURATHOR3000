@@ -11,6 +11,7 @@ app.config.from_object('config')
 
 @app.route("/")
 def index():
+    f.logout()
     f.index()
     return render_template("index.html")
 
@@ -97,6 +98,7 @@ def signIn():
             f.profile()
             return render_template("profile.html")
         elif session['statut'] =="admin":
+            
             return redirect(url_for('gestion'))
     else:
         return render_template("login.html", info="errorSignIn")

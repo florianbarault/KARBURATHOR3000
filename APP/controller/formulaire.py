@@ -1,16 +1,14 @@
 from flask import session
 from APP.data import bdd as b
 
+def addToSession(elt:str, value):
+    session[elt] = value
 
 def verifAuth(login, password):
     res, msg = b.verifAuthData(login, password)
     if res is not None:
-        session["idUtilisateur"] = res["idUtilisateur"]
-        session["email"] = res["email"]
-        session["nom"] = res["nom"]
-        session["prenom"] = res["prenom"]
-        session["certification"] = res["certification"]
-        session["statut"] = res["statut"]
+        for k, v in res.items():
+            addToSession(k, v)
     else:
         msg = "erreur"
     return msg
@@ -39,11 +37,6 @@ def signUp(d:dict):
             # Ajoute l'utilisateur à la bdd
             b.addUser(d['prenom'], d['nom'], d['email'], d['mdp1'], d['certification'])
             # Crée des données de session pour l'utilisateur
-            session["nom"] = d['nom']
-            session["prenom"] = d['prenom']
-            session["email"] = d['email']
-            session["certification"] = b.getCertification(d['certification'])
-            session["statut"] = "user"
             info = None
     return info
 
