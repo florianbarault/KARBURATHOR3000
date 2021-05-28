@@ -1,3 +1,4 @@
+from typing import Dict
 import mysql.connector
 from mysql.connector import errorcode
 from math import *
@@ -13,9 +14,6 @@ config = {
         'database': 'IENAC20_KARBURATHOR3000',
         'raise_on_warnings': True
     }
-
-#################################################################################################################
-# connexion au serveur de la base de données
 
 def createConnexion():
     cnx = None
@@ -85,11 +83,8 @@ def getCertification(certif):
     else:
         return None
 
-def countAllFrom(table:str, condition=None):
-    if condition is None:
-        request = "SELECT COUNT(*) FROM {}".format(table)
-    else:
-        request = "SELECT COUNT(*) FROM {} WHERE ".format(table) + condition
+def countAllFrom(table:str, condition=""):
+    request = "SELECT COUNT(*) FROM {} ".format(table) + condition
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
@@ -100,11 +95,8 @@ def countAllFrom(table:str, condition=None):
     closeConnexion(cnx)
     return str(res['COUNT(*)'])
 
-def sumFrom(table,attribut, condition=None):
-    if condition is None:
-        request = "SELECT SUM({}) FROM {}".format(attribut, table)
-    else:
-        request = "SELECT SUM({}) FROM {} WHERE ".format(attribut, table) + condition
+def countDistinctFrom(table, colonne, condition):
+    request = "SELECT COUNT(DISTINCT {}) FROM {} ".format(colonne, table) + condition
     cnx = createConnexion()
     try:
         cursor = cnx.cursor(dictionary=True)
@@ -113,7 +105,22 @@ def sumFrom(table,attribut, condition=None):
     except mysql.connector.Error as e:
         res = None
     closeConnexion(cnx)
-    return str(res['SUM({})'.format(attribut)])
+    return str(res['COUNT(DISTINCT {})'.format(colonne)])
+
+def sumFrom(table,attribut, condition=""):
+    request = "SELECT SUM({}) FROM {} ".format(attribut, table) + condition
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor(dictionary=True)
+        cursor.execute(request)
+        res = cursor.fetchone()
+    except mysql.connector.Error as e:
+        res = None
+    closeConnexion(cnx)
+    if str(res['SUM({})'.format(attribut)]) == "None":
+        return 0
+    else:
+        return str(res['SUM({})'.format(attribut)])
 
 def get_histo(login):
     request = "SELECT OACIdep, OACIarr , etapes.idVol, rang, vol.date, avion.reference FROM etapes " \
@@ -224,7 +231,6 @@ def getaerodrome():
     cursor.execute(request)
     res = cursor.fetchall()
     closeConnexion(cnx)
-    print(res)
     return res
 
 def get_idVol(login):
@@ -347,9 +353,9 @@ def get_dist(idVol):
 
     return Dist, cap, carb ,coordonnees_generales
 
-def addAvion(nom, rayon, conso, vitesse):
+def addAvion(d:dict):
     request = "INSERT INTO avion (reference, rayonAction, consoHoraire, vitesseCroisiere) VALUES (%s, %s, %s, %s);"
-    param = (nom, rayon, conso, vitesse,)
+    param = tuple(d.values(),)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor()
@@ -406,9 +412,9 @@ def ajout_etapes(vol,etapes):
         cnx.commit()
         closeConnexion(cnx)
 
-def addAerodrome(oaci, nomAerodrome, latitude, longitude):
+def addAerodrome(d:dict):
     request = "INSERT INTO aerodrome (OACI, nom_ad, latitude, longitude) VALUES (%s, %s, %s, %s);"
-    param = (oaci, nomAerodrome, latitude, longitude,)
+    param = tuple(d.values(),)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor()
