@@ -160,8 +160,8 @@ def addflight():
 
         #Calculs pour les estimations
 
-        D,cap,coordonnees_generales = b.get_dist(vol)
-        carb = b.calc_carbu(D,cap,vol)
+        D,cap,carb ,coordonnees_generales = b.get_dist(vol)
+
 
 
         #Data nécessaires pour la page recap

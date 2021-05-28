@@ -289,6 +289,20 @@ def get_dist(idVol):
         else:
             return (90 - theta_deg, D)
 
+    def calcul_carbu(D, conso_h, Vcroisiere, cap_avion, dir_vent, v_vent):
+            # on met D en km
+
+            cap_avion_rad, direction_vent_rad = cap_avion * pi / 180, dir_vent * pi / 180
+            vitesse_vraie = Vcroisiere - (v_vent * cos(cap_avion_rad - direction_vent_rad))  # en km/h
+
+            carbu_supp = 9  # carburant qui concerne le roulage et l'intégration à l'aérodrome
+
+            Tv = D / vitesse_vraie  # temps de vol en h
+
+            Vcarb = Tv * conso_h + carbu_supp
+
+            return Vcarb
+
     Dist=[]
     cap = []
     compteur = 0
@@ -306,9 +320,24 @@ def get_dist(idVol):
             cap.append(c2)
         compteur +=1
     print(Dist)
+
+    request = "SELECT vitesseVent, directionVent, rayonAction, consoHoraire, VitesseCroisiere FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
+    param = (idVol,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+    carb = []
+
+    for i in range(len(Dist)):
+        x = calcul_carbu(Dist[i], res[0][3], res[0][4], cap[i], res[0][1], res[0][0])
+        carb.append(round(x))
+
+
     for i in range (len(id_etapes)):
-        request = "UPDATE etapes SET distance = %s WHERE idVol = %s AND idEtape = %s"
-        param = (Dist[i], idVol,id_etapes[i],)
+        request = "UPDATE etapes SET distance = %s, carburant = %s WHERE idVol = %s AND idEtape = %s"
+        param = (Dist[i], carb[i] ,idVol,id_etapes[i],)
         print(param)
         cnx = createConnexion()
 
@@ -316,7 +345,7 @@ def get_dist(idVol):
         cursor.execute(request, param)
         cnx.commit()
 
-    return Dist, cap, coordonnees_generales
+    return Dist, cap, carb ,coordonnees_generales
 
 def addAvion(nom, rayon, conso, vitesse):
     request = "INSERT INTO avion (reference, rayonAction, consoHoraire, vitesseCroisiere) VALUES (%s, %s, %s, %s);"
@@ -426,34 +455,34 @@ def deleteAvion(oaci):
     closeConnexion(cnx)
     return msg
 
-def calc_carbu(D,cap,idVol):
-    request = "SELECT vitesseVent, directionVent, rayonAction, consoHoraire, VitesseCroisiere FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
-    param = (idVol,)
-    cnx = createConnexion()
-    cursor = cnx.cursor()
-    cursor.execute(request, param)
-    res = cursor.fetchall()
-    closeConnexion(cnx)
-
-    def calcul_carbu(D, conso_h, Vcroisiere, cap_avion, dir_vent, v_vent):
-            # on met D en km
-
-            cap_avion_rad, direction_vent_rad = cap_avion * pi / 180, dir_vent * pi / 180
-            vitesse_vraie = Vcroisiere - (v_vent * cos(cap_avion_rad - direction_vent_rad))  # en km/h
-
-            carbu_supp = 9  # carburant qui concerne le roulage et l'intégration à l'aérodrome
-
-            Tv = D / vitesse_vraie  # temps de vol en h
-
-            Vcarb = Tv * conso_h + carbu_supp
-
-            return Vcarb
-
-    carb = []
-    for i in range (len(D)):
-        x = calcul_carbu(D[i],res[0][3],res[0][4],cap[i],res[0][1],res[0][0])
-        carb.append(round(x))
-    return carb
+# def calc_carbu(D,cap,idVol):
+#     request = "SELECT vitesseVent, directionVent, rayonAction, consoHoraire, VitesseCroisiere FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
+#     param = (idVol,)
+#     cnx = createConnexion()
+#     cursor = cnx.cursor()
+#     cursor.execute(request, param)
+#     res = cursor.fetchall()
+#     closeConnexion(cnx)
+#
+#     def calcul_carbu(D, conso_h, Vcroisiere, cap_avion, dir_vent, v_vent):
+#             # on met D en km
+#
+#             cap_avion_rad, direction_vent_rad = cap_avion * pi / 180, dir_vent * pi / 180
+#             vitesse_vraie = Vcroisiere - (v_vent * cos(cap_avion_rad - direction_vent_rad))  # en km/h
+#
+#             carbu_supp = 9  # carburant qui concerne le roulage et l'intégration à l'aérodrome
+#
+#             Tv = D / vitesse_vraie  # temps de vol en h
+#
+#             Vcarb = Tv * conso_h + carbu_supp
+#
+#             return Vcarb
+#
+#     carb = []
+#     for i in range (len(D)):
+#         x = calcul_carbu(D[i],res[0][3],res[0][4],cap[i],res[0][1],res[0][0])
+#         carb.append(round(x))
+#     return carb
 
 def get_etapes(idVol):
     request = "SELECT dep.nom_ad AS Depart, arr.nom_ad AS Arrivee, deg.nom_ad AS Degagement FROM etapes JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI JOIN aerodrome AS deg ON etapes.OACIdeg = deg.OACI WHERE idVol = %s"
