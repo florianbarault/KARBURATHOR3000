@@ -62,7 +62,3 @@ def profile():
     session["userTotalPlane"] = b.countDistinctFrom('vol', 'idAvion', Where)
     session['userTotalFlight'] = b.countAllFrom('vol', Where)
     session['userTotalDistance'] = b.sumFrom('etapes', 'distance', InnerJoin + Where)
-
-
-
-    

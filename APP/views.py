@@ -138,15 +138,13 @@ def addflight():
 
         #Calculs pour les estimations
 
-        D,cap,carb ,coordonnees_generales = b.get_dist(vol)
-
-
+        dist, carb, coordonnees_generales = b.update_info(vol)
 
         #Data nécessaires pour la page recap
         liste_etapes = b.get_etapes(vol)
-        data,conso_totale=b.conso_etapes(liste_etapes,carb)
+        data,conso_totale, dist_totale=b.conso_dist_etapes(liste_etapes,carb,dist)
 
-        return render_template("recap.html", table=data, coord_map=coordonnees_generales,conso_totale=conso_totale, carbu=carb, info=session["statut"])
+        return render_template("recap.html", table=data, coord_map=coordonnees_generales, conso_totale=conso_totale, dist_totale=dist_totale, info=session["statut"])
     else:
         return redirect(url_for('/login'))
 

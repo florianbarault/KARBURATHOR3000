@@ -344,7 +344,7 @@ def update_info(idVol):
         cursor.execute(request, param)
         cnx.commit()
 
-    return dist, cap, carb, coordonnees_generales
+    return dist, carb, coordonnees_generales
 
 def addAvion(d:dict):
     request = "INSERT INTO avion (reference, rayonAction, consoHoraire, vitesseCroisiere) VALUES (%s, %s, %s, %s);"
@@ -470,7 +470,7 @@ def conso_dist_etapes(liste_etapes,carb,dist):
         data.append([liste_etapes[i][0],liste_etapes[i][1],liste_etapes[i][2],carb[i],round(dist[i])])
     conso_totale = sum(carb)
     dist_totale = round(sum(dist))
-    return data,conso_totale,dist_totale
+    return data, conso_totale, dist_totale
 
 def info_vols(idUtilisateur):
     request = "SELECT sum(carburant), sum(distance) FROM etapes JOIN vol ON vol.idvol = etapes.idVol WHERE vol.idUtilisateur = %s GROUP BY etapes.idVol"
@@ -481,25 +481,6 @@ def info_vols(idUtilisateur):
     res = cursor.fetchall()
     closeConnexion(cnx)
     return res
-
-def info_profil(idUtilisateur):
-    data = info_vols(idUtilisateur)
-    carb,dist = 0,0
-    for i in range(len(data)):
-        carb += data[i][0]
-        dist += data[i][1]
-
-    request = "SELECT COUNT(idvol), COUNT(DISTINCT idAvion) FROM vol WHERE idUtilisateur = %s"
-    param = (idUtilisateur,)
-    cnx = createConnexion()
-    cursor = cnx.cursor()
-    cursor.execute(request, param)
-    res = cursor.fetchall()
-    closeConnexion(cnx)
-
-    info = [carb, res[0][1], res[0][0], dist]
-    return info
-
 
 def add_comment(idUtilisateur,msg):
     f = datetime.now().date()
