@@ -58,7 +58,8 @@ def comments():
 @app.route("/profile")
 def profile():
     if session.get("idUtilisateur"):
-        return render_template("profile.html", info=session["statut"])
+        data = b.info_profil(session["idUtilisateur"])
+        return render_template("profile.html", data=data, info=session["statut"])
     else:
         return redirect('/login')
 
@@ -160,15 +161,14 @@ def addflight():
 
         #Calculs pour les estimations
 
-        D,cap,carb ,coordonnees_generales = b.get_dist(vol)
-
-
+        dist,cap,carb ,coordonnees_generales = b.update_info(vol)
 
         #Data nécessaires pour la page recap
-        liste_etapes = b.get_etapes(vol)
-        data,conso_totale=b.conso_etapes(liste_etapes,carb)
 
-        return render_template("recap.html", table=data, coord_map=coordonnees_generales,conso_totale=conso_totale, carbu=carb, info=session["statut"])
+        liste_etapes = b.get_etapes(vol)
+        data,conso_totale,dist_totale=b.conso_dist_etapes(liste_etapes,carb,dist)
+
+        return render_template("recap.html", table=data, coord_map=coordonnees_generales,conso_totale=conso_totale, dist_totale=dist_totale, info=session["statut"])
     else:
         return redirect('/login')
 

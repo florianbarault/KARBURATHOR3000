@@ -64,6 +64,7 @@ Historique
                 <th>Départ</th>
                 <th>Arrivée</th>
                 <th>Date</th>
+				<th>Distance (km)</th>
                 <th>Estimation (L)</th>
             </tr>
             </thead>
@@ -79,7 +80,8 @@ Historique
                 <td>{{ vol[2] }} </td>
                 <td>{{ vol[3] }}</td>
                 <td>{{ vol[1] }}</td>
-                <td>Prochainement</td>
+                <td>{{ vol[4] }}</td>
+				<td>{{ vol[5] }}</td>
             </tr>
             {% endfor %}
             </tbody>

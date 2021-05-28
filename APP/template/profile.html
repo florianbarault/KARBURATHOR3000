@@ -46,6 +46,7 @@ Profil
 {% endblock %}
 
 {% block content %}
+{% if data %}
 <div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(../static/images/img_bg_2.jpg);">
 	<div class="gtco-container">
 		<div class="row">
@@ -57,7 +58,7 @@ Profil
 									<i class="fas fa-gas-pump"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to="22070" data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to={{ data[0] }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">Litres de carburant consommés</span>
 
 						</div>
@@ -69,7 +70,7 @@ Profil
 									<i class="fas fa-users"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to="2" data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to={{ data[1] }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">avions utilisés</span>
 						</div>
 					</div>
@@ -80,7 +81,7 @@ Profil
 									<i class="fas fa-plane"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to="42" data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to={{ data[2] }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">Vols</span>
 						</div>
 					</div>
@@ -91,8 +92,8 @@ Profil
 									<i class="fas fa-road"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to="2127" data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">miles nautiques parcourus</span>
+							<span class="counter js-counter" data-from="0" data-to={{ data[3] }} data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter-label">kilomètres nautiques parcourus</span>
 						</div>
 					</div>
 				</div>
@@ -100,6 +101,8 @@ Profil
 		</div>
 	</div>
 </div>
+{% endif %}
+
 <div class="gtco-section">
 	<div class="gtco-container">
 		<div class="row">

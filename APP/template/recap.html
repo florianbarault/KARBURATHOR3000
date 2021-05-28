@@ -71,7 +71,8 @@ Récapitulatif
                 <th>Départ</th>
                 <th>Arrivée</th>
                 <th>Dégagement</th>
-                <th>Estimation (L)</th>
+                <th>Distance (km)</th>
+				<th>Estimation (L)</th>
             </tr>
             </thead>
         </table>
@@ -85,13 +86,15 @@ Récapitulatif
                 <td>{{ etape[0] }}</td>
                 <td>{{ etape[1] }}</td>
                 <td>{{ etape[2] }}</td>
-                <td>{{ etape[3] }}</td>
+                <td>{{ etape[4] }}</td>
+				<td>{{ etape[3] }}</td>
             </tr>
             {% endfor %}
 			<tr>
 				<td></td>
 				<td></td>
 				<td></td>
+				<td>Distance totale : {{ dist_totale }}</td>
 				<td>Consommation totale : {{ conso_totale }}</td>
 			</tr>
             </tbody>

@@ -125,6 +125,7 @@ def get_histo(login):
     cursor = cnx.cursor(dictionary=True)
     cursor.execute(request,param)
     res = cursor.fetchall()
+    closeConnexion(cnx)
 
     #Traitement des données
 
@@ -158,7 +159,13 @@ def get_histo(login):
     OACIarr = res[i - 1]['OACIarr']
     liste_vol[k-1].append(OACIarr)
 
-    closeConnexion(cnx)
+    #Ajout des distances & conso totales par vol:
+
+    data = info_vols(login)
+    for i in range (len(liste_vol)):
+        liste_vol[i].append(round(data[i][1]))
+        liste_vol[i].append(data[i][0])
+
     return liste_vol
 
 
@@ -224,7 +231,6 @@ def getaerodrome():
     cursor.execute(request)
     res = cursor.fetchall()
     closeConnexion(cnx)
-    print(res)
     return res
 
 def get_idVol(login):
@@ -239,7 +245,7 @@ def get_idVol(login):
     return res
 
 
-def get_dist(idVol):
+def update_info(idVol):
     request = "SELECT idEtape, dep.latitude AS latitude_depart, dep.longitude AS longitude_depart, arr.latitude AS latitude_arrivee, arr.longitude AS longitude_arrivee, deg.latitude AS latitude_degagement, deg.longitude AS longitude_degagement FROM etapes JOIN vol on vol.idVol = etapes.idVol JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI JOIN aerodrome AS deg ON etapes.OACIdeg = deg.OACI WHERE vol.idVol = %s"
 
     param =(idVol,)
@@ -303,7 +309,7 @@ def get_dist(idVol):
 
             return Vcarb
 
-    Dist=[]
+    dist=[]
     cap = []
     compteur = 0
     for j in range (len(coordonnees)-1):
@@ -313,13 +319,12 @@ def get_dist(idVol):
         c1, d1  = calc_dist(A,B)
         c2, d2 = calc_dist(A,C)
         if d2 < d1:
-            Dist.append(d1)
+            dist.append(d1)
             cap.append(c1)
         else:
-            Dist.append(d2)
+            dist.append(d2)
             cap.append(c2)
         compteur +=1
-    print(Dist)
 
     request = "SELECT vitesseVent, directionVent, rayonAction, consoHoraire, VitesseCroisiere FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
     param = (idVol,)
@@ -330,22 +335,21 @@ def get_dist(idVol):
     closeConnexion(cnx)
     carb = []
 
-    for i in range(len(Dist)):
-        x = calcul_carbu(Dist[i], res[0][3], res[0][4], cap[i], res[0][1], res[0][0])
+    for i in range(len(dist)):
+        x = calcul_carbu(dist[i], res[0][3], res[0][4], cap[i], res[0][1], res[0][0])
         carb.append(round(x))
 
 
     for i in range (len(id_etapes)):
         request = "UPDATE etapes SET distance = %s, carburant = %s WHERE idVol = %s AND idEtape = %s"
-        param = (Dist[i], carb[i] ,idVol,id_etapes[i],)
-        print(param)
+        param = (dist[i], carb[i] ,idVol,id_etapes[i],)
         cnx = createConnexion()
 
         cursor = cnx.cursor()
         cursor.execute(request, param)
         cnx.commit()
 
-    return Dist, cap, carb ,coordonnees_generales
+    return dist, cap, carb, coordonnees_generales
 
 def addAvion(nom, rayon, conso, vitesse):
     request = "INSERT INTO avion (reference, rayonAction, consoHoraire, vitesseCroisiere) VALUES (%s, %s, %s, %s);"
@@ -455,35 +459,6 @@ def deleteAvion(oaci):
     closeConnexion(cnx)
     return msg
 
-# def calc_carbu(D,cap,idVol):
-#     request = "SELECT vitesseVent, directionVent, rayonAction, consoHoraire, VitesseCroisiere FROM vol JOIN avion ON avion.idAvion = vol.idAvion WHERE vol.idVol = %s"
-#     param = (idVol,)
-#     cnx = createConnexion()
-#     cursor = cnx.cursor()
-#     cursor.execute(request, param)
-#     res = cursor.fetchall()
-#     closeConnexion(cnx)
-#
-#     def calcul_carbu(D, conso_h, Vcroisiere, cap_avion, dir_vent, v_vent):
-#             # on met D en km
-#
-#             cap_avion_rad, direction_vent_rad = cap_avion * pi / 180, dir_vent * pi / 180
-#             vitesse_vraie = Vcroisiere - (v_vent * cos(cap_avion_rad - direction_vent_rad))  # en km/h
-#
-#             carbu_supp = 9  # carburant qui concerne le roulage et l'intégration à l'aérodrome
-#
-#             Tv = D / vitesse_vraie  # temps de vol en h
-#
-#             Vcarb = Tv * conso_h + carbu_supp
-#
-#             return Vcarb
-#
-#     carb = []
-#     for i in range (len(D)):
-#         x = calcul_carbu(D[i],res[0][3],res[0][4],cap[i],res[0][1],res[0][0])
-#         carb.append(round(x))
-#     return carb
-
 def get_etapes(idVol):
     request = "SELECT dep.nom_ad AS Depart, arr.nom_ad AS Arrivee, deg.nom_ad AS Degagement FROM etapes JOIN aerodrome AS dep ON etapes.OACIdep = dep.OACI JOIN aerodrome AS arr ON etapes.OACIarr = arr.OACI JOIN aerodrome AS deg ON etapes.OACIdeg = deg.OACI WHERE idVol = %s"
     param = (idVol,)
@@ -494,12 +469,42 @@ def get_etapes(idVol):
     closeConnexion(cnx)
     return res
 
-def conso_etapes(liste_etapes,carb):
+def conso_dist_etapes(liste_etapes,carb,dist):
     data = []
     for i in range(len(liste_etapes)):
-        data.append([liste_etapes[i][0],liste_etapes[i][1],liste_etapes[i][2],carb[i]])
+        data.append([liste_etapes[i][0],liste_etapes[i][1],liste_etapes[i][2],carb[i],round(dist[i])])
     conso_totale = sum(carb)
-    return data,conso_totale
+    dist_totale = round(sum(dist))
+    return data,conso_totale,dist_totale
+
+def info_vols(idUtilisateur):
+    request = "SELECT sum(carburant), sum(distance) FROM etapes JOIN vol ON vol.idvol = etapes.idVol WHERE vol.idUtilisateur = %s GROUP BY etapes.idVol"
+    param = (idUtilisateur,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request,param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+    return res
+
+def info_profil(idUtilisateur):
+    data = info_vols(idUtilisateur)
+    carb,dist = 0,0
+    for i in range(len(data)):
+        carb += data[i][0]
+        dist += data[i][1]
+
+    request = "SELECT COUNT(idvol), COUNT(DISTINCT idAvion) FROM vol WHERE idUtilisateur = %s"
+    param = (idUtilisateur,)
+    cnx = createConnexion()
+    cursor = cnx.cursor()
+    cursor.execute(request, param)
+    res = cursor.fetchall()
+    closeConnexion(cnx)
+
+    info = [carb, res[0][1], res[0][0], dist]
+    return info
+
 
 def add_comment(idUtilisateur,msg):
     f = datetime.now().date()
