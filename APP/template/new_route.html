@@ -132,6 +132,9 @@ Nouveau trajet
 				<center>
 					<button type="submit" class="btn btn-primary">Valider</button>
 				</center>
+				{% if info == "pbEtape" %}
+				<div class="text-danger text-center fw-bold">Sélectionner au moins une étape</div>
+				{% endif %}
 			</div>
 			</div>
 			</div>
