@@ -42,51 +42,49 @@ Profil
 <div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(../static/images/img_bg_2.jpg);">
 	<div class="gtco-container">
 		<div class="row">
-				<div class="display-tc">
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
-							<span class="icon">
-								<span style="font-size: 2.6em; color: #2BCFBB;">
-									<i class="fas fa-gas-pump"></i>
-								</span>
+			<div class="display-tc">
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
+						<span class="icon">
+							<span style="font-size: 2.6em; color: #2BCFBB;">
+								<i class="fas fa-gas-pump"></i>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to={{ session["userTotalCarburant"] }} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">Litres de carburant consommés</span>
-
-						</div>
+						</span>
+						<span class="counter js-counter" data-from="0" data-to={{ session["userTotalCarburant"] }} data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">Litres de carburant consommés</span>
 					</div>
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
-							<span class="icon">
-								<span style="font-size: 2.6em; color: #2BCFBB;">
-									<i class="fas fa-users"></i>
-								</span>
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
+						<span class="icon">
+							<span style="font-size: 2.6em; color: #2BCFBB;">
+								<i class="fas fa-users"></i>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to={{ session['userTotalPlane'] }} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">avions utilisés</span>
-						</div>
+						</span>
+						<span class="counter js-counter" data-from="0" data-to={{ session['userTotalPlane'] }} data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">avions utilisés</span>
 					</div>
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
-							<span class="icon">
-								<span style="font-size: 2.6em; color: #2BCFBB;">
-									<i class="fas fa-plane"></i>
-								</span>
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
+						<span class="icon">
+							<span style="font-size: 2.6em; color: #2BCFBB;">
+								<i class="fas fa-plane"></i>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to={{ session['userTotalFlight']}} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">Vols</span>
-						</div>
+						</span>
+						<span class="counter js-counter" data-from="0" data-to={{ session['userTotalFlight']}} data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">Vols</span>
 					</div>
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
-							<span class="icon">
-								<span style="font-size: 2.6em; color: #2BCFBB;">
-									<i class="fas fa-road"></i>
-								</span>
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
+						<span class="icon">
+							<span style="font-size: 2.6em; color: #2BCFBB;">
+								<i class="fas fa-road"></i>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to={{ session['userTotalDistance'] }} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">miles nautiques parcourus</span>
-						</div>
+						</span>
+						<span class="counter js-counter" data-from="0" data-to={{ session['userTotalDistance'] }} data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">miles nautiques parcourus</span>
 					</div>
 				</div>
 			</div>
@@ -132,7 +130,7 @@ Profil
 			<section id="signIn">
 				<div class="col-md-5 col-md-push-1 animate-box">
 					<h3>Modifier votre mot de passe</h3>
-					<form method="POST", action="/modifMotDePasse">
+					<form method="POST" action="/modifMotDePasse">
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Ancien mot de passe</label>
