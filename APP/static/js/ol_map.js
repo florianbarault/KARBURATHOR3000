@@ -69,6 +69,7 @@ var selectClick = new ol.interaction.Select({
 
 etapes = []
 etape = []
+coord_etape =[]
 compteur = 0
 
 if (selectClick !== null) {
@@ -76,17 +77,29 @@ if (selectClick !== null) {
     selectClick.on('select', function (e) {
         let feat = e.target.getFeatures().getArray()[0];
         etape.push(feat.get('oaci'))
+        coord_etape.push([feat.get('latitude'), feat.get('longitude')])
+        
         if (etape.length == 1){
           document.getElementById('aide').innerHTML = "Cliquer sur l'aérodrome d'arrivé ou d'étape"
+
         }
+        
         if (etape.length == 2) {
+
           document.getElementById('aide').innerHTML = "Cliquer sur l'aérodrome de dégagement"
+
         }
+        
         if (etape.length == 3){
+
+          
           if (compteur == 0) {
             etapes.push(etape[0])
           }
+          
           compteur = compteur +1
+          tracerEtape(coord_etape)
+
           etapes.push(etape[1], etape[2])
           var ligne = document.createElement("tr")
           var col0 = document.createElement("td")
@@ -109,11 +122,121 @@ if (selectClick !== null) {
 
 
           etape = [etape[1]]
-          console.log(etapes)
         }
     });
     }
-    }
+
+function tracerEtape(coord_map) {
+    
+
+  let style1 = new ol.style.Style({
+    image: new ol.style.Icon({
+        color: "black",
+        src: "../static/library/openlayersv6.5.0/examples/data/dot.png",
+        scale: 0.6
+    }),
+})
+let style2 = new ol.style.Style({
+    image: new ol.style.Icon({
+        color: "red",
+        src: "../static/library/openlayersv6.5.0/examples/data/dot.png",
+        scale: 0.6
+    }),
+})
+
+let coord_villes=[]
+let tab_villes=[];
+coord_villes.push(coord_map[0])
+console.log(coord_map)
+for (var i = 1; i < coord_map.length; i= i+2) {
+  console.log(coord_map.length)
+  console.log(i)
+
+coord_villes.push(coord_map[i]);
+let lat= parseFloat(coord_map[i][1]);
+let lg= parseFloat(coord_map[i][0]);
+
+let F1 = new ol.Feature({
+    geometry : new ol.geom.Point(ol.proj.fromLonLat([lg,lat])),
+    type : "Point",
+    latitude: lat,
+    longitude :lg
+});
+
+F1.setStyle(style1);
+tab_villes.push(F1);
+}
+console.log(coord_villes)
+
+
+let tab_deg=[];
+for (var i = 2; i < coord_map.length; i += 2) {
+
+let lat= parseFloat(coord_map[i][0]);
+let lg= parseFloat(coord_map[i][1]);
+
+let F2 = new ol.Feature({
+    geometry : new ol.geom.Point(ol.proj.fromLonLat([lg,lat])),
+    type : "Point",
+    latitude: lat,
+    longitude :lg
+});
+
+F2.setStyle(style2);
+tab_deg.push(F2);
+}
+
+
+var vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: tab_villes
+    }),
+    name : "Villes"
+
+});
+var vectorLayer2 = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: tab_deg
+    }),
+    name : "Villes2"
+
+});
+
+
+map.addLayer(vectorLayer);
+map.addLayer(vectorLayer2);
+
+coord_villes.map(function (l){
+    return l.reverse();
+});
+
+let Fligne = new ol.Feature({
+    geometry: new ol.geom.LineString(coord_villes),
+    name: "trajet"
+});
+Fligne.getGeometry().transform('EPSG:4326','EPSG:3857');
+
+let style3 = new ol.style.Style({
+    stroke: new ol.style.Stroke ({
+        color: 'blue',
+        width:2
+    })
+});
+
+var lignes = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: [Fligne]
+    }),
+    name : "trajet"
+});
+
+map.addLayer(lignes);
+coord_villes.map(function (l){
+  return l.reverse();
+});
+
+}
+
 
 String.prototype.format = function() {
   a = this;
@@ -123,12 +246,4 @@ String.prototype.format = function() {
   return a
 }
 
-function removeEtapes() {
-  etapes = []
-  console.log(etapes)
-  etape = []
-  compteur = 0
-  document.getElementById("etapes").innerHTML = '<tbody id="etapes" class="tbl-content"></tbody>'
-  document.getElementById("liste_vol").innerHTML = ""
-  document.getElementById('aide').innerHTML = "Cliquer sur un aérodrome de départ"
- }
+}
