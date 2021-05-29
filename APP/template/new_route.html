@@ -7,93 +7,151 @@ Nouveau trajet
 {%block CSSlink %}
 <link rel="stylesheet" href="../static/library/openlayersv6.5.0/css/ol.css" />
 <link rel="stylesheet" href="../static/css/ol.css" />
+<style>
+	#map-id {
+		width: 512px;
+		height: 256px;
+	}
+</style>
 {% endblock %}
 
 {% block header %}
-	<nav class="gtco-nav" role="navigation">
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-xs-2">
-					<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
-				</div>
-				<div class="col-xs-8 text-center menu-1">
-					<ul>
-						<li class="active"><a href="/new_route">Nouveau trajet</a></li>
-						<li><a href="/historic">Historique</a></li>
-						<li><a href="/comments">Commentaires</a></li>
-						{% if session.statut == "admin" %}
-						<li><a href="/gestion">Gestion</a></li>
-						{% else %}
-						<li><a href="/profile">Profil</a></li>
-						{% endif %}
-					</ul>
-				</div>
-				<div class="col-xs-2 text-right hidden-xs menu-2">
-					<ul>
-						<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
-					</ul>
-				</div>
+<nav class="gtco-nav" role="navigation">
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-xs-2">
+				<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
 			</div>
-			
+			<div class="col-xs-8 text-center menu-1">
+				<ul>
+					<li class="active"><a href="/new_route">Nouveau trajet</a></li>
+					<li><a href="/historic">Historique</a></li>
+					<li><a href="/comments">Commentaires</a></li>
+					{% if session.statut == "admin" %}
+					<li><a href="/gestion">Gestion</a></li>
+					{% else %}
+					<li><a href="/profile">Profil</a></li>
+					{% endif %}
+				</ul>
+			</div>
+			<div class="col-xs-2 text-right hidden-xs menu-2">
+				<ul>
+					<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
+				</ul>
+			</div>
 		</div>
-	</nav>
+	</div>
+</nav>
 
-	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
+<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
 
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t">
-						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Nouveau trajet</h1>
-						</div>
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center">
+				<div class="display-t">
+					<div class="display-tc animate-box" data-animate-effect="fadeIn">
+						<h1>Nouveau trajet</h1>
 					</div>
 				</div>
 			</div>
 		</div>
-	</header>
+	</div>
+</header>
 {% endblock %}
 {% block content %}
 
-<form method="POST" action="/addflight">
-	<div id="gtco-features">
-		<center class="gtco-container">
-			<div class="row">
-				<div class="col-md-8 animate-box">
-					<div id="tooltip"></div>
-					<div id="ol_localisation" class="map"></div>
-				</div>
-				<div class="col-md-4 animate-box">
-					<textarea id="etapes" name="etapes" placeholder="Cliquez sur des villes, elles s'afficheront ici" class="etapes" readonly></textarea>
-				</div>
-			</div>
 
+<section id="vol">
+	<form method="POST" action="/addflight">
+		<div class="container">
 			<div class="row">
-				<div class="col-md-6 animate-box">
-					<input type="text" id="vent_vit" name="vent_vit" class="form-control" placeholder="Entrez la vitesse du vent en noeuds" required>
-					<input type="text" id="vent_dir" name="vent_dir" class="form-control" placeholder="Entrez la direction du vent" required>
+				<div>
+					<p>
+						<center>
+							<b id="aide">Cliquer sur l'aérodrome de départ</>
+						</center>
+						</p>
 				</div>
-				<div class="col-md-6 animate-box">
-					<select name="select_avion" id="select_avion" class="form-control">
-						<option value="" selected="true" >Veuillez sélectionner un avion</option>
-						{% for idAvion, nomAvion in avion.items() %}
-						<option value= {{ idAvion }}>{{ nomAvion }}</option>
-						{% endfor %}
-					</select>
-					<input type="date" id="date" name="date" class="form-control" placeholder="Entrez la date" required>
+				<div class="col-lg-9">
+					<div id"map-id>
+						<div id="tooltip"></div>
+						<div id="ol_localisation" class="map"></div>
+					</div>	
+				</div>
+				<div class="table">
+					<div class="col-lg-3">
+						<table id="table" class="table"  cellpadding="0" cellspacing="0">
+							<thead class="tbl-header">
+								<tr>
+									<th id = 'numero'>Etapes</th>
+									<th>Départ</th>
+									<th>Arrivée</th>
+									<th>Dégagement</th>
+								</tr>
+							</thead>
+							<tbody class="tbl-content" id ='etapes'>
+							</tbody>
+						</table>
+							<center>
+								<button type="button" class="btn" onclick="removeEtapes();">Réinisialiser</button>
+							</center>
+						</div>
+						<textarea id="liste_vol" name="etapes" hidden></textarea>
+					</div>
+					</div>
+				</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<h3>Vent</h3>
+						<div class="form-group">
+							<div class="col-md-5">
+								<label>Vitesse (kts)</label>
+								<input class="form-control" pattern="[0-9]{3}" type="number" min="0" max="100" name="vent_vit" class="form-control" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-5">
+								<label>Direction (°)</label>
+								<input class="form-control" pattern="[0-9]{3}" type="number" min="0" max="359" name="vent_dir" class="form-control" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-5">
+								<label>Date du vol</label>
+								<input type="date" id="date" name="date" class="form-control" placeholder="Entrez la date" required>
+							</div>
+						</div>
+				</div>
+				<div class="col-lg-6">
+					<h3>Avion</h3>
+						<div class="form-group">
+							<label>Modèle d'avion</label>
+							<select name="select_avion" id="select_avion" class="form-control">
+								<option value="" selected="true" >Veuillez sélectionner un avion</option>
+								{% for idAvion, nomAvion in avion.items() %}
+								<option value= {{ idAvion }}>{{ nomAvion }}</option>
+								{% endfor %}
+							</select>
+						</div>
 				</div>
 			</div>
-			<center class="animate-box">
-				<button type="submit" class="btn btn-primary">Valider</button>
-			</center>
-		</center>
-	</div>
-</form>
+			<div class="row">
+				<center>
+					<button type="submit" class="btn btn-primary">Valider</button>
+				</center>
+			</div>
+			</div>
+			</div>
+		</div>
+	</form>
+</section>
 
 
 {% endblock %}
 
 {% block JSscript %}
+<style>  #map { height: 200%; width: 100%;} </style>
 <script src="../static/library/openlayersv6.5.0/build/ol.js"></script>
 <script src="../static/js/functionOpenLayer.js"></script>
 <script src="../static/js/ol_map.js"></script>

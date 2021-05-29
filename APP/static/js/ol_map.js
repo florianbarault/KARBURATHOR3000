@@ -8,8 +8,8 @@ var map = new ol.Map({
           })
         ],
         view: new ol.View({
-          center: ol.proj.fromLonLat([2.4682543369163965, 46.8643629949555]),
-          zoom: 6
+          center: ol.proj.fromLonLat([2.4682543369163965, 46.3]),
+          zoom: 5.6
         })
       });
 
@@ -58,7 +58,7 @@ var vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
         features: tab,
     }),
-    name : "Villes"
+    nom : "Villes"
 });
 
 map.addLayer(vectorLayer);
@@ -67,16 +67,68 @@ var selectClick = new ol.interaction.Select({
   condition: ol.events.condition.click,
 });
 
-var liste_etapes = []
+etapes = []
+etape = []
+compteur = 0
 
 if (selectClick !== null) {
     map.addInteraction(selectClick);
     selectClick.on('select', function (e) {
         let feat = e.target.getFeatures().getArray()[0];
-        liste_etapes.push(feat.get('oaci'))
-        document.getElementById('etapes').innerHTML = liste_etapes
-        console.log(liste_etapes)
+        etape.push(feat.get('oaci'))
+        if (etape.length == 1){
+          document.getElementById('aide').innerHTML = "Cliquer sur l'aérodrome d'arrivé ou d'étape"
+        }
+        if (etape.length == 2) {
+          document.getElementById('aide').innerHTML = "Cliquer sur l'aérodrome de dégagement"
+        }
+        if (etape.length == 3){
+          if (compteur == 0) {
+            etapes.push(etape[0])
+          }
+          compteur = compteur +1
+          etapes.push(etape[1], etape[2])
+          var ligne = document.createElement("tr")
+          var col0 = document.createElement("td")
+          col0.innerHTML = "<label>{0}</label>".format(compteur.toString(), etape[0].toString(), etape[1].toString(), etape[2].toString())
+          ligne.appendChild(col0)
+          var col1 = document.createElement("td")
+          col1.innerHTML = "<label>{1}</label>".format(compteur.toString(), etape[0].toString(), etape[1].toString(), etape[2].toString())
+          ligne.appendChild(col1)
+          var col2 = document.createElement("td")
+          col2.innerHTML = "<label>{2}</label>".format(compteur.toString(), etape[0].toString(), etape[1].toString(), etape[2].toString())
+          ligne.appendChild(col2)
+          var col3 = document.createElement("td")
+          col3.innerHTML = "<label>{3}</label>".format(compteur.toString(), etape[0].toString(), etape[1].toString(), etape[2].toString())
+          ligne.appendChild(col3)
 
+          document.getElementById('etapes').appendChild(ligne)
+
+          document.getElementById("liste_vol").innerHTML = etapes.toString()
+          document.getElementById('aide').innerHTML = "Cliquer sur l'aérodrome d'arrivé ou d'étape"
+
+
+          etape = [etape[1]]
+          console.log(etapes)
+        }
     });
     }
     }
+
+String.prototype.format = function() {
+  a = this;
+  for (k in arguments) {
+    a = a.replace("{" + k + "}", arguments[k])
+  }
+  return a
+}
+
+function removeEtapes() {
+  etapes = []
+  console.log(etapes)
+  etape = []
+  compteur = 0
+  document.getElementById("etapes").innerHTML = '<tbody id="etapes" class="tbl-content"></tbody>'
+  document.getElementById("liste_vol").innerHTML = ""
+  document.getElementById('aide').innerHTML = "Cliquer sur un aérodrome de départ"
+ }
