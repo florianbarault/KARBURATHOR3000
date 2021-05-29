@@ -7,12 +7,6 @@ Nouveau trajet
 {%block CSSlink %}
 <link rel="stylesheet" href="../static/library/openlayersv6.5.0/css/ol.css" />
 <link rel="stylesheet" href="../static/css/ol.css" />
-<style>
-	#map-id {
-		width: 512px;
-		height: 256px;
-	}
-</style>
 {% endblock %}
 
 {% block nav %}
@@ -57,75 +51,72 @@ Nouveau trajet
 	<form method="POST" action="/addflight">
 		<div class="container">
 			<div class="row">
-				<div>
-					<p>
-						<center>
-							<b id="aide">Cliquer sur l'aérodrome de départ</>
-						</center>
-						</p>
-				</div>
+				<center>
+					<b id="aide">Cliquer sur l'aérodrome de départ</b>
+				</center>
 				<div class="col-lg-9">
-					<div id"map-id>
-						<div id="tooltip"></div>
-						<div id="ol_localisation" class="map"></div>
-					</div>	
+					<div id="tooltip"></div>
+					<div id="ol_localisation" class="map"></div>
 				</div>
 				<div class="table">
 					<div class="col-lg-3">
-						<table id="table" class="table"  cellpadding="0" cellspacing="0">
+						<table id="table" class="table" cellpadding="0" cellspacing="0">
 							<thead class="tbl-header">
-								<tr>
-									<th id = 'numero'>Etapes</th>
-									<th>Départ</th>
-									<th>Arrivée</th>
-									<th>Dégagement</th>
-								</tr>
+							<tr>
+								<th id='numero'>Etapes</th>
+								<th>Départ</th>
+								<th>Arrivée</th>
+								<th>Dégagement</th>
+							</tr>
 							</thead>
-							<tbody class="tbl-content" id ='etapes'>
+							<tbody class="tbl-content" id='etapes'>
 							</tbody>
 						</table>
-							<center>
-								<button type="button" class="btn" onclick="removeEtapes();">Réinisialiser</button>
-							</center>
-						</div>
-						<textarea id="liste_vol" name="etapes" hidden></textarea>
+						<center>
+							<button type="button" class="btn" onclick="removeEtapes();">Réinisialiser</button>
+						</center>
 					</div>
-					</div>
+					<textarea id="liste_vol" name="etapes" hidden></textarea>
 				</div>
+			</div>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6">
 					<h3>Vent</h3>
-						<div class="form-group">
-							<div class="col-md-5">
-								<label>Vitesse (kts)</label>
-								<input class="form-control" pattern="[0-9]{3}" type="number" min="0" max="100" name="vent_vit" class="form-control" required>
-							</div>
+					<div class="form-group">
+						<div class="col-md-5">
+							<label>Vitesse (kts)</label>
+							<input class="form-control" pattern="[0-9]{3}" type="number" min="0" max="100"
+								   name="vent_vit" required>
 						</div>
-						<div class="form-group">
-							<div class="col-md-5">
-								<label>Direction (°)</label>
-								<input class="form-control" pattern="[0-9]{3}" type="number" min="0" max="359" name="vent_dir" class="form-control" required>
-							</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-5">
+							<label>Direction (°)</label>
+							<input class="form-control" pattern="[0-9]{3}" type="number" min="0" max="359"
+								   name="vent_dir" required>
 						</div>
-						<div class="form-group">
-							<div class="col-md-5">
-								<label>Date du vol</label>
-								<input type="date" id="date" name="date" class="form-control" placeholder="Entrez la date" required>
-							</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-5">
+							<label>Date du vol</label>
+							<input type="date" id="date" name="date" class="form-control" placeholder="Entrez la date"
+								   required>
 						</div>
+					</div>
 				</div>
 				<div class="col-lg-6">
 					<h3>Avion</h3>
-						<div class="form-group">
-							<label>Modèle d'avion</label>
-							<select name="select_avion" id="select_avion" class="form-control">
-								<option value="" selected="true" >Veuillez sélectionner un avion</option>
-								{% for idAvion, nomAvion in avion.items() %}
-								<option value= {{ idAvion }}>{{ nomAvion }}</option>
-								{% endfor %}
-							</select>
-						</div>
+					<div class="form-group">
+						<label>Modèle d'avion</label>
+						<select name="select_avion" id="select_avion" class="form-control">
+							<option value="" selected="true">Veuillez sélectionner un avion</option>
+							{% for idAvion, nomAvion in avion.items() %}
+							<option value={{ idAvion }}>{{ nomAvion }}</option>
+							{% endfor %}
+						</select>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -136,14 +127,10 @@ Nouveau trajet
 				<div class="text-danger text-center fw-bold">Sélectionner au moins une étape</div>
 				{% endif %}
 			</div>
-			</div>
-			</div>
 		</div>
 	</form>
 </section>
 {% endblock %}
-
-
 
 
 {% block JSscript %}
