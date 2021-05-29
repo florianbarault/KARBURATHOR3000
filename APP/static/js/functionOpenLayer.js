@@ -28,8 +28,8 @@ function displayTooltip(evt, overlay, map) {
         return feature;
     });
     tooltip.style.display = feature ? '' : 'none';
-    if (feature && feature.get('name')) {  //uniquement pour les marker de type Point
+    if (feature && feature.get('nom')) {  //uniquement pour les marker de type Point
         overlay.setPosition(evt.coordinate);
-        tooltip.innerHTML = feature.get('name'); //Affichage de la description du marker
+        tooltip.innerHTML = feature.get('nom'); //Affichage de la description du marker
     }
 }
