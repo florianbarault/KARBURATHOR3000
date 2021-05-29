@@ -4,6 +4,10 @@
 Karburathor3000 &mdash; Accueil
 {% endblock %}
 
+{%block CSSlink %}
+<link rel="stylesheet" href="../static/css/index.css" />
+{% endblock %}
+
 {% block nav %}
 <div class="col-xs-8 text-center menu-1">
 	<ul>
@@ -24,7 +28,8 @@ Karburathor3000 &mdash; Accueil
 				<div class="display-t">
 					<div class="display-tc animate-box" data-animate-effect="fadeIn">
 						<h1>Karburathor3000</h1>
-						<h2>Estimation de consommation aéronautique</h2>
+						<h2>Estimateur de consommation aéronautique</h2>
+						<img src="../static/images/logo.png" alt= "logo" height="300px" width="352px"/>
 						<p><a href="/login" class="btn btn-default">Je me connecte</a></p>
 					</div>
 				</div>
@@ -94,52 +99,55 @@ Karburathor3000 &mdash; Accueil
 <div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(../static/images/img_bg_2.jpg);">
 	<div class="gtco-container">
 		<div class="row">
-				<div class="display-tc">
-					<div class="counter-label feature-center">Notre site c'est :</div>
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
+			<div class="display-tc">
+				<div class="counter-label feature-center">Notre site c'est :</div>
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
 							<span class="icon">
 								<span style="font-size: 2.6em; color: #2BCFBB;">
 									<i class="fas fa-gas-pump"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to= {{ session.totalCarburant }} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">Litres de carburant consommés</span>
+						<span class="counter js-counter" data-from="0" data-to={{ session.totalCarburant }}
+							  data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">Litres de carburant consommés</span>
 
-						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
 							<span class="icon">
 								<span style="font-size: 2.6em; color: #2BCFBB;">
 									<i class="fas fa-users"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to= {{ session.totalUser }} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">Pilotes</span>
-						</div>
+						<span class="counter js-counter" data-from="0" data-to={{ session.totalUser }} data-speed="5000"
+							  data-refresh-interval="50">1</span>
+						<span class="counter-label">Pilotes</span>
 					</div>
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
 							<span class="icon">
 								<span style="font-size: 2.6em; color: #2BCFBB;">
 									<i class="fas fa-plane"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to= {{ session.totalFlight }} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">Vols</span>
-						</div>
+						<span class="counter js-counter" data-from="0" data-to={{ session.totalFlight }}
+							  data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">Vols</span>
 					</div>
-					<div class="col-md-3 col-sm-6 animate-box">
-						<div class="feature-center">
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box">
+					<div class="feature-center">
 							<span class="icon">
 								<span style="font-size: 2.6em; color: #2BCFBB;">
 									<i class="fas fa-road"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to={{ session.totalDistance }} data-speed="5000" data-refresh-interval="50">1</span>
-							<span class="counter-label">Milles Nautiques parcourus</span>
-						</div>
+						<span class="counter js-counter" data-from="0" data-to={{ session.totalDistance }}
+							  data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">Milles Nautiques parcourus</span>
 					</div>
 				</div>
 			</div>
