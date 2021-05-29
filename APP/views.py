@@ -134,17 +134,24 @@ def addflight():
         idVol = b.get_idVol(idUtilisateur)
         vol = idVol[0][0]
         etapes = request.form['etapes']
-        b.ajout_etapes(vol,etapes)
+        liste_etapes = etapes.split(",")
+        n = len(liste_etapes)
 
-        #Calculs pour les estimations
+        if n%2 == 0 or n==1:
+            return render_template("new_route.html", data=b.getaerodrome(), avion=b.getNomAvion())
 
-        dist, carb, coordonnees_generales = b.update_info(vol)
+        else:
+            b.ajout_etapes(vol,liste_etapes)
 
-        #Data nécessaires pour la page recap
-        liste_etapes = b.get_etapes(vol)
-        data,conso_totale, dist_totale=b.conso_dist_etapes(liste_etapes,carb,dist)
+            #Calculs pour les estimations
 
-        return render_template("recap.html", table=data, coord_map=coordonnees_generales, conso_totale=conso_totale, dist_totale=dist_totale, info=session["statut"])
+            dist, carb, coordonnees_generales = b.update_info(vol)
+
+            #Data nécessaires pour la page recap
+            liste_etapes = b.get_etapes(vol)
+            data,conso_totale, dist_totale=b.conso_dist_etapes(liste_etapes,carb,dist)
+
+            return render_template("recap.html", table=data, coord_map=coordonnees_generales, conso_totale=conso_totale, dist_totale=dist_totale, info=session["statut"])
     else:
         return redirect(url_for('/login'))
 

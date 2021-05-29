@@ -64,8 +64,8 @@ Historique
             </thead>
         </table>
     </div>
+    {% if data %}
     <div class="tbl-content">
-        {% if data %}
         <table cellpadding="0" cellspacing="0" border="0">
             <tbody>
             {% for vol in data %}
@@ -80,8 +80,8 @@ Historique
             {% endfor %}
             </tbody>
         </table>
-        {% endif %}
     </div>
+    {% endif %}
 </section>
 {% endblock %}
 
