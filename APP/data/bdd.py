@@ -388,7 +388,9 @@ def ajout_vol(new_flight):
     cnx.commit()
     closeConnexion(cnx)
 
-def ajout_etapes(vol,liste_etapes):
+def ajout_etapes(vol,etapes):
+    liste_etapes = etapes.split(",")
+
     request = " INSERT INTO etapes (idVol, OACIdep, OACIarr, OACIdeg, rang, distance, carburant) values (%s, %s, %s, %s, %s,0,0) "
     param = (vol, liste_etapes[0], liste_etapes[1], liste_etapes[2], 1,)
     cnx = createConnexion()
