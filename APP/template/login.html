@@ -4,24 +4,19 @@
 Connectez-vous
 {% endblock %}
 
+{% block nav %}
+<div class="col-xs-8 text-center menu-1">
+	<ul>
+		<li><a href="#gtco-features">Nos avantages</a></li>
+		<li><a href="#gtco-features-2">Tutoriel</a></li>
+		<li><a href="#gtco-counter">Quelques chiffres</a></li>
+		<li><a href="/cv">Concepteurs</a></li>
+	</ul>
+</div>
+{% endblock %}
+
+
 {% block header %}
-<nav class="gtco-nav" role="navigation">
-	<div class="gtco-container">
-		<div class="row">
-			<div class="col-xs-2">
-				<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
-			</div>
-			<div class="col-xs-8 text-center menu-1">
-				<ul>
-					<li><a href="/#gtco-features">Nos avantages</a></li>
-					<li><a href="/#gtco-features-2">Tutoriel</a></li>
-					<li><a href="/#gtco-counter">Quelques chiffres</a></li>
-					<li><a href="/cv">Concepteurs</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</nav>
 <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
 	<div class="gtco-container">
 		<div class="row">
@@ -37,11 +32,11 @@ Connectez-vous
 </header>
 {% endblock %}
 
+
 {% block content %}
 <div class="gtco-section">
 	<div class="gtco-container">
 		<div class="row">
-
 			<section id="signUp">
 				<div class="col-md-6 animate-box">
 					<h3>S'enregistrer</h3>
@@ -100,9 +95,8 @@ Connectez-vous
 
 							</div>
 						</div>
-
 					</form>
-		</div>
+				</div>
 			</section>
 			<section id="signIn">
 				<div class="col-md-5 col-md-push-1 animate-box">
@@ -142,11 +136,10 @@ Connectez-vous
 	<div class="overlay"></div>
 	<div class="gtco-container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2 text-center">
+			<div class="col-md-12 text-center">
 				<div class="display-t">
 					<div class="display-tc animate-box" data-animate-effect="fadeIn">
-						<h1>insérer texte ici</h1>
-						<h2>là aussi</h2>
+						<h1>Rejoignez une communauté de pilotes passionés</h1>
 					</div>
 				</div>
 			</div>
