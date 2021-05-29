@@ -4,6 +4,10 @@
 Karburathor3000 &mdash; Accueil
 {% endblock %}
 
+{%block CSSlink %}
+<link rel="stylesheet" href="../static/css/index.css" />
+{% endblock %}
+
 {% block nav %}
 <div class="col-xs-8 text-center menu-1">
 	<ul>
@@ -24,7 +28,8 @@ Karburathor3000 &mdash; Accueil
 				<div class="display-t">
 					<div class="display-tc animate-box" data-animate-effect="fadeIn">
 						<h1>Karburathor3000</h1>
-						<h2>Estimation de consommation aéronautique</h2>
+						<h2>Estimateur de consommation aéronautique</h2>
+						<img src="../static/images/logo.png" alt= "logo" height="300px" width="352px"/>
 						<p><a href="/login" class="btn btn-default">Je me connecte</a></p>
 					</div>
 				</div>
