@@ -10,35 +10,28 @@ Historique
 {% endblock %}
 
 
+{% block nav %}
+<div class="col-xs-8 text-center menu-1">
+	<ul>
+		<li><a href="/new_route">Nouveau trajet</a></li>
+		<li class="active"><a href="/historic">Historique</a></li>
+		<li><a href="/comments">Commentaires</a></li>
+		{% if session.statut == "admin" %}
+		<li><a href="/gestion">Gestion</a></li>
+		{% else %}
+		<li><a href="/profile">Profil</a></li>
+		{% endif %}
+	</ul>
+</div>
+<div class="col-xs-2 text-right hidden-xs menu-2">
+	<ul>
+		<li class="btn-cta"><a href="/"><span>Deconnexion</span></a></li>
+	</ul>
+</div>
+{% endblock %}
+
 
 {% block header %}
-<nav class="gtco-nav" role="navigation">
-	<div class="gtco-container">
-		<div class="row">
-			<div class="col-xs-2">
-				<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
-			</div>
-			<div class="col-xs-8 text-center menu-1">
-				<ul>
-					<li><a href="/new_route">Nouveau trajet</a></li>
-					<li class="active"><a href="/historic">Historique</a></li>
-					<li><a href="/comments">Commentaires</a></li>
-					{% if session.statut == "admin" %}
-					<li><a href="/gestion">Gestion</a></li>
-					{% else %}
-					<li><a href="/profile">Profil</a></li>
-					{% endif %}
-				</ul>
-			</div>
-			<div class="col-xs-2 text-right hidden-xs menu-2">
-				<ul>
-					<li class="btn-cta"><a href="/"><span>Deconnexion</span></a></li>
-				</ul>
-			</div>
-		</div>
-
-	</div>
-</nav>
 <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
 	<div class="gtco-container">
 		<div class="row">
@@ -53,6 +46,7 @@ Historique
 	</div>
 </header>
 {% endblock %}
+
 
 {% block content %}
 <section id="historic-table">
@@ -89,8 +83,8 @@ Historique
         {% endif %}
     </div>
 </section>
-
 {% endblock %}
+
 
 {% block JSscript %}
 <script src="../static/js/table.js"></script>

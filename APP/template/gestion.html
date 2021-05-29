@@ -4,46 +4,39 @@
 Gestion
 {% endblock %}
 
+{% block nav %}
+<div class="col-xs-8 text-center menu-1">
+	<ul>
+		<li><a href="/new_route">Nouveau trajet</a></li>
+		<li><a href="/historic">Historique</a></li>
+		<li><a href="/comments">Commentaires</a></li>
+		<li class="active"><a href="/gestion">Gestion</a></li>
+	</ul>
+</div>
+<div class="col-xs-2 text-right hidden-xs menu-2">
+	<ul>
+		<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
+	</ul>
+</div>
+{% endblock %}
+
+
 {% block header %}
-	<nav class="gtco-nav" role="navigation">
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-xs-2">
-					<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
-				</div>
-				<div class="col-xs-8 text-center menu-1">
-					<ul>
-						<li><a href="/new_route">Nouveau trajet</a></li>
-						<li><a href="/historic">Historique</a></li>
-						<li><a href="/comments">Commentaires</a></li>
-						<li class="active"><a href="/gestion">Gestion</a></li>
-					</ul>
-				</div>
-				<div class="col-xs-2 text-right hidden-xs menu-2">
-					<ul>
-						<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
-					</ul>
-				</div>
-			</div>
-
-		</div>
-	</nav>
-
-	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
-
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t">
-						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Gestion du site</h1>
-						</div>
+<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center">
+				<div class="display-t">
+					<div class="display-tc animate-box" data-animate-effect="fadeIn">
+						<h1>Gestion du site</h1>
 					</div>
 				</div>
 			</div>
 		</div>
-	</header>
+	</div>
+</header>
 {% endblock %}
+
 
 {% block content %}
 <section id="avion">
@@ -149,6 +142,7 @@ Gestion
 									<button for="modifAvion" type="submit" class="btn btn-primary">Enregitrer les modifications</button>
 								</div>
 							</div>
+						</div>
 					</form>
 					<form method="POST" action="/supprimerAvion">
 						<div class="col-md-6">
@@ -190,7 +184,7 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label">Longitude</label>
+								<label>Longitude</label>
 								<input type="number" step="0.000001"  name ="longitude" class="form-control" placeholder="Entrez la longitude de l'aérodrome" required>
 							</div>
 						</div>
@@ -206,7 +200,6 @@ Gestion
 							</div>
 						</div>
 						{% endif %}
-
 					</form>
 			</div>
 				<div class="col-md-6 col-md-push-1 animate-box">
@@ -240,7 +233,7 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-5">
-								<label">Nom de l'aérodorme</label>
+								<label>Nom de l'aérodorme</label>
 								<label class="form-control">{{ dataAerodrome["nom_ad"] }}</label>
 							</div>
 							<div class="col-md-7">
@@ -250,7 +243,7 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-5">
-								<label">Latitude</label>
+								<label>Latitude</label>
 								<label class="form-control">{{ dataAerodrome["latitude"] }}</label>
 							</div>
 							<div class="col-md-7">

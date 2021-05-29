@@ -15,36 +15,29 @@ Nouveau trajet
 </style>
 {% endblock %}
 
+{% block nav %}
+<div class="col-xs-8 text-center menu-1">
+	<ul>
+		<li class="active"><a href="/new_route">Nouveau trajet</a></li>
+		<li><a href="/historic">Historique</a></li>
+		<li><a href="/comments">Commentaires</a></li>
+		{% if session.statut == "admin" %}
+		<li><a href="/gestion">Gestion</a></li>
+		{% else %}
+		<li><a href="/profile">Profil</a></li>
+		{% endif %}
+	</ul>
+</div>
+<div class="col-xs-2 text-right hidden-xs menu-2">
+	<ul>
+		<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
+	</ul>
+</div>
+{% endblock %}
+
+
 {% block header %}
-<nav class="gtco-nav" role="navigation">
-	<div class="gtco-container">
-		<div class="row">
-			<div class="col-xs-2">
-				<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
-			</div>
-			<div class="col-xs-8 text-center menu-1">
-				<ul>
-					<li class="active"><a href="/new_route">Nouveau trajet</a></li>
-					<li><a href="/historic">Historique</a></li>
-					<li><a href="/comments">Commentaires</a></li>
-					{% if session.statut == "admin" %}
-					<li><a href="/gestion">Gestion</a></li>
-					{% else %}
-					<li><a href="/profile">Profil</a></li>
-					{% endif %}
-				</ul>
-			</div>
-			<div class="col-xs-2 text-right hidden-xs menu-2">
-				<ul>
-					<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</nav>
-
 <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
-
 	<div class="gtco-container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 text-center">
@@ -58,9 +51,8 @@ Nouveau trajet
 	</div>
 </header>
 {% endblock %}
+
 {% block content %}
-
-
 <section id="vol">
 	<form method="POST" action="/addflight">
 		<div class="container">
@@ -146,9 +138,10 @@ Nouveau trajet
 		</div>
 	</form>
 </section>
-
-
 {% endblock %}
+
+
+
 
 {% block JSscript %}
 <style>  #map { height: 200%; width: 100%;} </style>

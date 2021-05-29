@@ -4,46 +4,39 @@
 Profil
 {% endblock %}
 
+{% block nav %}
+<div class="col-xs-8 text-center menu-1">
+	<ul>
+		<li><a href="/new_route">Nouveau trajet</a></li>
+		<li><a href="/historic">Historique</a></li>
+		<li><a href="/comments">Commentaires</a></li>
+		<li class="active"><a href="/profile">Profil</a></li>
+	</ul>
+</div>
+<div class="col-xs-2 text-right hidden-xs menu-2">
+	<ul>
+		<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
+	</ul>
+</div>
+{% endblock %}
+
+
 {% block header %}
-	<nav class="gtco-nav" role="navigation">
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-xs-2">
-					<div id="gtco-logo"><a href="/">NOM_SITE</a></div>
-				</div>
-				<div class="col-xs-8 text-center menu-1">
-					<ul>
-						<li><a href="/new_route">Nouveau trajet</a></li>
-						<li><a href="/historic">Historique</a></li>
-						<li><a href="/comments">Commentaires</a></li>
-						<li class="active"><a href="/profile">Profil</a></li>
-					</ul>
-				</div>
-				<div class="col-xs-2 text-right hidden-xs menu-2">
-					<ul>
-						<li class="btn-cta"><a href="/logout"><span>Deconnexion</span></a></li>
-					</ul>
-				</div>
-			</div>
-			
-		</div>
-	</nav>
-
-	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
-
-		<div class="gtco-container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t">
-						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Profil {% if session.nom and session.prenom %} de {% endif %} {{ session.prenom }} {{ session.nom }}</h1>
-						</div>
+<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(../static/images/img_bg_1.jpg);">
+	<div class="gtco-container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center">
+				<div class="display-t">
+					<div class="display-tc animate-box" data-animate-effect="fadeIn">
+						<h1>Profil {% if session.nom and session.prenom %} de {% endif %} {{ session.prenom }} {{ session.nom }}</h1>
 					</div>
 				</div>
 			</div>
 		</div>
-	</header>
+	</div>
+</header>
 {% endblock %}
+
 
 {% block content %}
 <div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(../static/images/img_bg_2.jpg);">
@@ -57,7 +50,7 @@ Profil
 									<i class="fas fa-gas-pump"></i>
 								</span>
 							</span>
-							<span class="counter js-counter" data-from="0" data-to={{ session["userTotalCarburant"] }} data-speed="5000" data-refresh-interval="50">1</span>
+							<span class="counter js-counter" data-from="0" data-to=""{{ session["userTotalCarburant"] }} data-speed="5000" data-refresh-interval="50">1</span>
 							<span class="counter-label">Litres de carburant consommés</span>
 
 						</div>
@@ -103,40 +96,38 @@ Profil
 <div class="gtco-section">
 	<div class="gtco-container">
 		<div class="row">
-
 			<section id="signUp">
 				<div class="col-md-6 animate-box">
 					<h3>Informations personnelles</h3>
-						<div class="row form-group">
-							<div class="col-md-6">
-								{% if session.prenom %}
-								<label>Prénom</label>
-								<label class="form-control">{{ session.prenom }}</label>
-								{% endif %}
-							</div>
-							<div class="col-md-6">
-								{% if session.nom %}
-								<label>Nom</label>
-								<label class="form-control">{{ session.nom }}</label>
-								{% endif %}
-							</div>
+					<div class="row form-group">
+						<div class="col-md-6">
+							{% if session.prenom %}
+							<label>Prénom</label>
+							<label class="form-control">{{ session.prenom }}</label>
+							{% endif %}
 						</div>
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label>Email</label>
-								<label class="form-control">{{ session.email }}</label>
-							</div>
+						<div class="col-md-6">
+							{% if session.nom %}
+							<label>Nom</label>
+							<label class="form-control">{{ session.nom }}</label>
+							{% endif %}
 						</div>
-						{% if session.certification %}
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label>Certification</label>
-								<label class="form-control">{{ session.certification }}</label>
-							</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label>Email</label>
+							<label class="form-control">{{ session.email }}</label>
 						</div>
-						{% endif %}
-
-		</div>
+					</div>
+					{% if session.certification %}
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label>Certification</label>
+							<label class="form-control">{{ session.certification }}</label>
+						</div>
+					</div>
+					{% endif %}
+				</div>
 			</section>
 			<section id="signIn">
 				<div class="col-md-5 col-md-push-1 animate-box">
@@ -183,7 +174,4 @@ Profil
 		</div>
 	</div>
 </div>
-
-
-
 {% endblock %}

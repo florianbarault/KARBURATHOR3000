@@ -36,8 +36,16 @@
 	<body>
 	
 	<div id="page">
-
-
+		<nav class="gtco-nav" role="navigation">
+			<div class="gtco-container">
+				<div class="row">
+					<div class="col-xs-2">
+						<div id="gtco-logo"><a href="/">Karburathor3000</a></div>
+					</div>
+					{% block nav %}{% endblock %}
+				</div>
+			</div>
+		</nav>
 	{% block header %}{% endblock %}
 	{% block content %}{% endblock %}
 
@@ -50,10 +58,10 @@
 					</p>
 					<p class="pull-right">
 						<ul class="gtco-social-icons pull-right">
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
-							<li><a href="https://cutt.ly/cbaRbin"><i class="icon-facebook"></i></a></li>
-							<li><a href="#"><i class="icon-linkedin"></i></a></li>
-							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							<li><a href="https://twitter.com/enacfrance?s=20" target="_blank"><i class="icon-twitter"></i></a></li>
+							<li><a href="https://cutt.ly/cbaRbin" target="_blank"><i class="icon-facebook"></i></a></li>
+							<li><a href="https://www.linkedin.com/school/ecole-nationale-de-l'aviation-civile/" target="_blank"><i class="icon-linkedin"></i></a></li>
+							<li><a href="https://www.enac.fr/fr" target="_blank"><i class="icon-dribbble"></i></a></li>
 						</ul>
 					</p>
 				</div>
