@@ -1,4 +1,5 @@
-CREATE  DATABASE IF NOT EXISTS IENAC20_KARBURATHOR3000;
+CREATE  DATABASE IF NOT EXISTS IENAC20_KARBURATHOR3000;CREATE  DATABASE IF NOT EXISTS IENAC20_KARBURATHOR3000;
+
 
 CREATE TABLE `aerodrome` (
   `OACI` varchar(5) NOT NULL,
@@ -6,7 +7,6 @@ CREATE TABLE `aerodrome` (
   `latitude` float NOT NULL,
   `longitude` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 INSERT INTO `aerodrome` (`OACI`, `nom_ad`, `latitude`, `longitude`) VALUES
@@ -158,7 +158,6 @@ INSERT INTO `avion` (`rayonAction`, `consoHoraire`, `idAvion`, `reference`, `vit
 (645, 60, 3, 'TB-20', 279);
 
 
-
 CREATE TABLE `etapes` (
   `idEtape` int(11) NOT NULL,
   `idVol` int(11) NOT NULL,
@@ -179,10 +178,8 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
 INSERT INTO `messages` (`idMessage`, `date`, `idUtilisateur`, `contenu`) VALUES
-(1, '2021-05-12', 2, 'j\'adore le g@ming');
-
+(1, '2021-05-07', 3, 'Trop bien ce site !!');
 
 
 CREATE TABLE `utilisateurs` (
@@ -198,8 +195,9 @@ CREATE TABLE `utilisateurs` (
 
 
 INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `certification`, `statut`) VALUES
-(1, 'admin@enac.fr', 'ienac', '', '', '', 'admin'),
-(2, 'cc@gmail.com', 'gamer', 'deg', 'clem', 'PPL', 'user');
+(1, 'admin@enac.fr', 'admin', '', '', '', 'admin'),
+(2, 'clement.d@gmail.com', 'cl3m3nt', 'deheunynck', 'clement', 'PPL', 'user'),
+(3, 'bob.b@gmail.com', 'b0b123', 'bob', 'dupont', 'LAPL', 'user');
 
 
 CREATE TABLE `vol` (
@@ -208,17 +206,16 @@ CREATE TABLE `vol` (
   `date` date NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `vitesseVent` float NOT NULL,
-  `directionVent` float NOT NULL
+  `directionVent` float NOT NULL,
+  `typeVol` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE `aerodrome`
   ADD PRIMARY KEY (`OACI`);
 
-
 ALTER TABLE `avion`
   ADD PRIMARY KEY (`idAvion`);
-
 
 ALTER TABLE `etapes`
   ADD PRIMARY KEY (`idEtape`),
@@ -227,40 +224,32 @@ ALTER TABLE `etapes`
   ADD KEY `OACIdeg` (`OACIdeg`),
   ADD KEY `OACIdep` (`OACIdep`);
 
-
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`idMessage`),
   ADD KEY `idUtilisateur` (`idUtilisateur`);
 
-
 ALTER TABLE `utilisateurs`
   ADD PRIMARY KEY (`idUtilisateur`);
-
 
 ALTER TABLE `vol`
   ADD PRIMARY KEY (`idvol`),
   ADD KEY `idAvion` (`idAvion`),
   ADD KEY `idUtilisateur` (`idUtilisateur`);
 
-
-
 ALTER TABLE `avion`
   MODIFY `idAvion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
-
 ALTER TABLE `etapes`
-  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `messages`
   MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 
 ALTER TABLE `utilisateurs`
   MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 ALTER TABLE `vol`
-  MODIFY `idvol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idvol` int(11) NOT NULL AUTO_INCREMENT;
 
 
 ALTER TABLE `etapes`
