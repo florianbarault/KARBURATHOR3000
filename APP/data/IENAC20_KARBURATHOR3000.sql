@@ -1,4 +1,8 @@
-CREATE  DATABASE IF NOT EXISTS IENAC20_KARBURATHOR3000;
+CREATE  DATABASE IF NOT EXISTS IENAC20_KARBURATHOR3000;CREATE  DATABASE IF NOT EXISTS IENAC20_KARBURATHOR3000;
+
+
+
+
 
 CREATE TABLE `aerodrome` (
   `OACI` varchar(5) NOT NULL,
@@ -158,7 +162,6 @@ INSERT INTO `avion` (`rayonAction`, `consoHoraire`, `idAvion`, `reference`, `vit
 (645, 60, 3, 'TB-20', 279);
 
 
-
 CREATE TABLE `etapes` (
   `idEtape` int(11) NOT NULL,
   `idVol` int(11) NOT NULL,
@@ -171,6 +174,20 @@ CREATE TABLE `etapes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+INSERT INTO `etapes` (`idEtape`, `idVol`, `OACIdep`, `OACIarr`, `OACIdeg`, `rang`, `distance`, `carburant`) VALUES
+(1, 1, 'LFBL', 'LFLX', 'LFOA', 1, 171.648, 36),
+(2, 1, 'LFLX', 'LFEI', 'LFLA', 2, 172.464, 36),
+(3, 1, 'LFEI', 'LFGQ', 'LFSN1', 3, 282.211, 53),
+(4, 2, 'LFCL', 'LFMW', 'LFMK', 1, 79.997, 14),
+(5, 2, 'LFMW', 'LFMU', 'LFMT', 2, 165.308, 20),
+(6, 2, 'LFMU', 'LFMI', 'LFMY', 3, 144.737, 19),
+(7, 3, 'LFBL', 'LFLX', 'LFOC', 1, 243.908, 63),
+(8, 3, 'LFLX', 'LFAY', 'LFAT', 2, 407.433, 100),
+(9, 3, 'LFAY', 'LFAV', 'LFQI', 3, 70.557, 25),
+(10, 4, 'LFES', 'LFED', 'LFRT', 1, 81.701, 27),
+(11, 4, 'LFED', 'LFEB', 'LFRD', 2, 85.317, 28);
+
+
 CREATE TABLE `messages` (
   `idMessage` int(11) NOT NULL,
   `date` date NOT NULL,
@@ -179,10 +196,10 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
 INSERT INTO `messages` (`idMessage`, `date`, `idUtilisateur`, `contenu`) VALUES
-(1, '2021-05-12', 2, 'j\'adore le g@ming');
-
+(1, '2021-05-07', 3, 'Trop bien ce site !!'),
+(2, '2021-05-30', 2, 'Un grand merci à Jacques sans qui ce projet n\'aurait pas été possible'),
+(3, '2021-05-30', 3, 'Vous avez essayé de cliquer sur l\'icône facebook dans le footer ?');
 
 
 CREATE TABLE `utilisateurs` (
@@ -196,10 +213,10 @@ CREATE TABLE `utilisateurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
 INSERT INTO `utilisateurs` (`idUtilisateur`, `email`, `mdp`, `nom`, `prenom`, `certification`, `statut`) VALUES
-(1, 'admin@enac.fr', 'ienac', '', '', '', 'admin'),
-(2, 'cc@gmail.com', 'gamer', 'deg', 'clem', 'PPL', 'user');
+(1, 'admin@enac.fr', 'admin', '', '', '', 'admin'),
+(2, 'clement.d@gmail.com', 'cl3m3nt', 'deheunynck', 'clement', 'PPL', 'user'),
+(3, 'bob.d@gmail.com', 'b0b123', 'dupont', 'bob', 'LAPL', 'user');
 
 
 CREATE TABLE `vol` (
@@ -208,17 +225,23 @@ CREATE TABLE `vol` (
   `date` date NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
   `vitesseVent` float NOT NULL,
-  `directionVent` float NOT NULL
+  `directionVent` float NOT NULL,
+  `typeVol` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `vol` (`idvol`, `idAvion`, `date`, `idUtilisateur`, `vitesseVent`, `directionVent`, `typeVol`) VALUES
+(1, 1, '2021-05-14', 2, 30, 270, 'vfr_local_vue'),
+(2, 2, '2020-07-15', 2, 25, 300, 'nav_vfr'),
+(3, 3, '2021-05-12', 3, 10, 20, 'vfr_nuit'),
+(4, 3, '2021-05-15', 3, 15, 90, 'vfr_local_hors_aero');
 
 
 ALTER TABLE `aerodrome`
   ADD PRIMARY KEY (`OACI`);
 
-
 ALTER TABLE `avion`
   ADD PRIMARY KEY (`idAvion`);
-
 
 ALTER TABLE `etapes`
   ADD PRIMARY KEY (`idEtape`),
@@ -227,41 +250,32 @@ ALTER TABLE `etapes`
   ADD KEY `OACIdeg` (`OACIdeg`),
   ADD KEY `OACIdep` (`OACIdep`);
 
-
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`idMessage`),
   ADD KEY `idUtilisateur` (`idUtilisateur`);
 
-
 ALTER TABLE `utilisateurs`
   ADD PRIMARY KEY (`idUtilisateur`);
-
 
 ALTER TABLE `vol`
   ADD PRIMARY KEY (`idvol`),
   ADD KEY `idAvion` (`idAvion`),
   ADD KEY `idUtilisateur` (`idUtilisateur`);
 
-
-
 ALTER TABLE `avion`
   MODIFY `idAvion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
-
 ALTER TABLE `etapes`
-  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 ALTER TABLE `messages`
-  MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 ALTER TABLE `utilisateurs`
   MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 ALTER TABLE `vol`
-  MODIFY `idvol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `idvol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 ALTER TABLE `etapes`
   ADD CONSTRAINT `etapes_ibfk_1` FOREIGN KEY (`idVol`) REFERENCES `vol` (`idvol`),
@@ -272,7 +286,6 @@ ALTER TABLE `etapes`
 
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`idUtilisateur`);
-
 
 ALTER TABLE `vol`
   ADD CONSTRAINT `vol_ibfk_1` FOREIGN KEY (`idAvion`) REFERENCES `avion` (`idAvion`),

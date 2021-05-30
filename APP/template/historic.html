@@ -55,6 +55,7 @@ Historique
             <thead>
             <tr>
                 <th>Type Avion</th>
+                <th>Type Vol</th>
                 <th>Départ</th>
                 <th>Arrivée</th>
                 <th>Date</th>
@@ -71,11 +72,12 @@ Historique
             {% for vol in data %}
             <tr>
                 <td>{{ vol[0] }}</td>
-                <td>{{ vol[2] }} </td>
+                <td>{{ vol[2] }}</td>
                 <td>{{ vol[3] }}</td>
-                <td>{{ vol[1] }}</td>
                 <td>{{ vol[4] }}</td>
-				<td>{{ vol[5] }}</td>
+                <td>{{ vol[1] }}</td>
+                <td>{{ vol[5] }}</td>
+				<td>{{ vol[6] }}</td>
             </tr>
             {% endfor %}
             </tbody>
