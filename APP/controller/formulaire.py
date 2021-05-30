@@ -37,7 +37,6 @@ def signUp(d:dict):
             # Ajoute l'utilisateur à la bdd
             b.addUser(d['prenom'], d['nom'], d['email'], d['mdp1'], d['certification'])
             # Crée des données de session pour l'utilisateur
-            print(b.getIdUser(d['email']))
             addToSession('idUtilisateur', b.getIdUser(d['email']))
             addToSession('statut', "user")
             for k,v in d.items():
@@ -46,10 +45,8 @@ def signUp(d:dict):
             return None
 
 def verifMdp(email, password, mdp1, mdp2):
-    print(password, mdp2, mdp2)
     msg = b.verifMdp(email, password)
     if msg != "okMdp":
-        print(1)
         info = "errorMdp3"
     elif mdp1 != mdp2:
         # Nouveaux mot de passe différents
@@ -60,7 +57,6 @@ def verifMdp(email, password, mdp1, mdp2):
     else:
         msg = b.modifMdp(session['email'], mdp1)
         info = "okMdp"
-        print(4)
     return info
 
 def profile():

@@ -559,7 +559,6 @@ def verifMdp(email, mdp):
 
 def modifMdp(email, mdp):
     request = "UPDATE utilisateurs SET mdp = %s WHERE email = %s"
-    print(email, mdp)
     param = (mdp, email,)
     cnx = createConnexion()
     try:

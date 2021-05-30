@@ -158,7 +158,6 @@ def addAvion():
         dicAvion[elt] = request.form["{}".format(elt)]
 
     info = b.addAvion(dicAvion)
-    print(info)
     session['avion'] = b.getNomAvion()
     avion=session['avion']
     selectedAvion=session['selectedAvion']
