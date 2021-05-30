@@ -55,19 +55,19 @@ Gestion
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Rayon d'action (km)</label>
-								<input type="number" name ="rayonAction" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
+								<input type="number" name ="rayonAction" min="0" class="form-control" placeholder="Entrez le rayon d'action l'avion" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Consommation horaire (L/h)</label>
-								<input type="number" step="0.1" name ="consoHoraire" class="form-control" placeholder="Entrez la consommation horaire du moteur" required>
+								<input type="number" step="0.1" name ="consoHoraire" min="0" class="form-control" placeholder="Entrez la consommation horaire du moteur" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Vitesse de croisière (km/h)</label>
-								<input type="number" name ="vitesseCroisiere" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
+								<input type="number" name ="vitesseCroisiere" min="0" class="form-control" placeholder="Entrez la vitesse de croisière de l'avion" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -76,6 +76,11 @@ Gestion
 							</div>
 						</div>
 					</form>
+					{% if info == "okAddAvion" %}
+					<div class="text-center fw-bold">L'avion a bien été ajouté</div>
+					{% elif info == "okDeleteAvion" %}
+					<div class="text-center fw-bold">L'avion a bien été supprimé</div>
+					{% endif %}
 				</div>
 				<div class="col-md-6 col-md-push-1 animate-box">
 					<h3>Modifier un avion enregistré</h3>
@@ -172,7 +177,7 @@ Gestion
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label>Code OACI</label>
-								<input type="text" name="oaci" pattern="[A-Z]*" class="form-control" placeholder="Entrer le code OACI de l'aérodrome" required>
+								<input type="text" name="oaci" pattern="[A-Z]*{4}" class="form-control" placeholder="Entrer le code OACI de l'aérodrome" required>
 							</div>
 						</div>
 						<div class="row form-group">
@@ -183,14 +188,14 @@ Gestion
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label>Latitude</label>
-								<input type="number" step="0.000001"  name ="latitude" class="form-control" placeholder="Entrez la latitude de l'aérodrome" required>
+								<label>Latitude (°)</label>
+								<input type="number" step="0.000001" min="-90" max="90" name ="latitude" class="form-control" placeholder="+ pour Nord, - pour Sud" required>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label>Longitude</label>
-								<input type="number" step="0.000001"  name ="longitude" class="form-control" placeholder="Entrez la longitude de l'aérodrome" required>
+								<label>Longitude (°)</label>
+								<input type="number" step="0.000001"  min="-180" max="180" name ="longitude" class="form-control" placeholder="+ pour E, - pour Ouest " required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -198,10 +203,22 @@ Gestion
 								<button type="submit" class="btn btn-primary">Enregistrer</button>
 							</div>
 						</div>
-						{% if info == "fail" %}
+						{% if info == "errorAddAerodrome" %}
 						<div class="form-group">
 							<div class="col-md-6">
 								<label class="text-danger text-center fw-bold">Cet aérodrome existe déjà</label>
+							</div>
+						</div>
+						{% elif info == "okAddAerodrome" %}
+						<div class="form-group">
+							<div class="col-md-6">
+								<label class="text-center fw-bold">L'aérodrome a bien été enregistré</label>
+							</div>
+						</div>
+						{% elif info == "errorOaci" %}
+						<div class="form-group">
+							<div class="col-md-6">
+								<label class="text-danger text-center fw-bold">Le code OACI doit contenir 4 lettres</label>
 							</div>
 						</div>
 						{% endif %}
@@ -273,7 +290,7 @@ Gestion
 								</div>
 							</div>
 						</div>
-						{% if info == "fail" %}
+						{% if info == "errorModifAerodrome" %}
 						<div class="form-group">
 							<div class="col-md-6">
 								<label class="text-danger text-center fw-bold">Ce code OACI est déja utilisé</label>

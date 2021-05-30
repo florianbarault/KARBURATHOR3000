@@ -156,18 +156,24 @@ def addAvion():
     dicAvion={}
     for elt in ['reference', 'rayonAction', 'consoHoraire', 'vitesseCroisiere']:
         dicAvion[elt] = request.form["{}".format(elt)]
+
+    info = b.addAvion(dicAvion)
+    print(info)
+    session['avion'] = b.getNomAvion()
+    avion=session['avion']
+    selectedAvion=session['selectedAvion']
+    for k, v in avion.items():
+        if dicAvion['reference'] == v:
+            selectedAvion = k
+
     # Ajoute les éléments du nouvel avion à la bdd
     dicDataAvion ={}
-    selectedAvion = request.form.get('selectedAvion')
     if selectedAvion is not None:
         selectedAvion = int(selectedAvion)
         dicDataAvion = b.getDataAvion(selectedAvion)
-
-    info = b.addAvion(dicAvion)
-
     session['selectedAvion'] = selectedAvion
 
-    return render_template("gestion.html",dataAvion=dicDataAvion, info=info)
+    return render_template("gestion.html", info="okAddAvion", dataAvion=dicDataAvion)
 
 
 @app.route("/addAerodrome", methods=['POST'])
@@ -177,15 +183,21 @@ def addAerodrome():
     for elt in ['oaci', 'nom_ad', 'latitude', 'longitude']:
         dicAerodrome[elt] = request.form["{}".format(elt)]
 
-    # Ajoute le séléments du nouvel aérodrome dans la bdd
-    msg = b.addAerodrome(dicAerodrome)
+    if len(dicAerodrome['oaci']) != 4:
+        selectedAerodrome = None
+        return render_template("/gestion.html", info = "errorOaci")
 
-    selectedAerodrome = session['selectedAerodrome']
-    dicDataAerodrome = {}
-    if selectedAerodrome is not None:
-        dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+    else:
+        # Ajoute le séléments du nouvel aérodrome dans la bdd
+        msg = b.addAerodrome(dicAerodrome)
 
-    return render_template("/gestion.html",session=session, dataAerodrome=dicDataAerodrome, info = msg)
+        selectedAerodrome=dicAerodrome['oaci']
+        dicDataAerodrome = {}
+        if selectedAerodrome is not None:
+            dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
+
+        session["selectedAerodrome"] = selectedAerodrome
+        return render_template("/gestion.html", dataAerodrome=dicDataAerodrome, info = msg)
 
 @app.route("/modifAerodrome", methods=['POST'])
 def modifAerodrome():
@@ -193,15 +205,16 @@ def modifAerodrome():
     dicDataAerodrome={}
     for elt in ['nom_ad', 'longitude', 'latitude', 'oaci']:
         dicDataAerodrome[elt] = request.form["{}".format(elt)]
-
-    selectedAerodrome = session['selectedAerodrome']
+    selectedAerodrome = session["selectedAerodrome"]
     # Effectue la modification dans la bdd
     msg = b.modifAerodrome(dicDataAerodrome, selectedAerodrome)
     # Charge les nouvelles données de l'aérodrome
+    selectedAerodrome = dicDataAerodrome['oaci']
     dicDataAerodrome = {}
     if selectedAerodrome is not None:
         dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
 
+    session['selectedAerodrome'] = selectedAerodrome
     return render_template("gestion.html",dataAerodrome=dicDataAerodrome, info=msg)
 
 @app.route("/modifAvion", methods=['POST'])
@@ -227,6 +240,7 @@ def supprimerAvion():
     # Supprime de la bdd l'aérodrome de code OACI
     msg = b.deleteAvion(idAvion)
     session['selectedAvion'] = None
+    session['avion'] = b.getNomAvion()
     return render_template("gestion.html", info=msg)
 
 @app.route("/supprimerAerodrome", methods=['POST'])

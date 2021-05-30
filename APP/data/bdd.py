@@ -435,9 +435,9 @@ def addAerodrome(d:dict):
         cursor = cnx.cursor()
         cursor.execute(request, param)
         cnx.commit()
-        msg = "ok"
+        msg = "okAddAerodrome"
     except mysql.connector.Error as e:
-        msg="fail"
+        msg="errorAddAerodrome"
         print("Failed add aerodrome : {}".format(e))
     closeConnexion(cnx)
     return msg
@@ -451,12 +451,11 @@ def modifAerodrome(dataAerodrome, selectedAerodrome):
             cnx = createConnexion()
             try:
                 cursor = cnx.cursor()
-                print(request.format(k),param)
                 cursor.execute(request.format(k), param)
                 cnx.commit()
-                msg = "ok"
+                msg = "okModifAerodrome"
             except mysql.connector.Error as e:
-                msg="fail"
+                msg="errorModifAerodrome"
                 print("Failed add {} a aerodrome : {}".format(k, e))
             closeConnexion(cnx)
     return msg
@@ -469,6 +468,7 @@ def deleteAvion(idAvion):
         cursor = cnx.cursor()
         cursor.execute(request, param)
         cnx.commit()
+        res= cursor.fetchall()
         msg = "okDeleteAvion"
     except mysql.connector.Error as e:
         msg="errorDeleteAvion"
