@@ -1,4 +1,6 @@
-Base de données: APP/data/bddCarburantGroupeC.sql
+Bonjour et bienvenue sur Karburathor 3000
+
+Base de données: APP/data/IENAC20_KARBURATHOR3000.sql
 
 ----------------- USER -------------------
 
@@ -18,6 +20,31 @@ Base de données: APP/data/bddCarburantGroupeC.sql
 
     Identifiant: admin@enac.fr
 	   
-    Mot de passe: ienac
+    Mot de passe: admin
 	   
 ------------------------------------------
+------------- DEFAULT ADMIN --------------
+
+# Connexion: http://localhost:8080/login
+
+    Identifiant: admin@enac.fr
+
+    Mot de passe: admin
+
+------------------Utilisateur1---------------------
+# Connexion: http://localhost:8080/login
+
+    Identifiant : clement.d@gmail.com
+
+    Mot de passe: cl3m3nt
+
+------------------Utilisateur2---------------------
+# Connexion: http://localhost:8080/login
+
+    Identifiant : bob.d@gmail.com
+
+    Mot de passe: b0b123
+
+
+
+ATTENTION: A chaque changement d'utilisateur il faut vider le cache du navigateur
