@@ -55,7 +55,7 @@ def getIdUser(email):
         res = None
         print("Failed get idUtilisateur : {}".format(e))
         closeConnexion(cnx)
-    return res
+    return res[0][0]
 
 def verifUserEmail(email):
     request = "SELECT * FROM utilisateurs WHERE email = %s LIMIT 1"

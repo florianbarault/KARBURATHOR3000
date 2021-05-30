@@ -37,7 +37,9 @@ def signUp(d:dict):
             # Ajoute l'utilisateur à la bdd
             b.addUser(d['prenom'], d['nom'], d['email'], d['mdp1'], d['certification'])
             # Crée des données de session pour l'utilisateur
+            print(b.getIdUser(d['email']))
             addToSession('idUtilisateur', b.getIdUser(d['email']))
+            addToSession('statut', "user")
             for k,v in d.items():
                 addToSession(k,v)
             profile()
