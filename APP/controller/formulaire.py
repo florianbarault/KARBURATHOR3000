@@ -28,24 +28,28 @@ def logout():
 
 def signUp(d:dict):
     if d['mdp1'] != d['mdp2']:
-        info="errorMdp"
+        return "errorMdp"
     else:
         msg = b.verifUserEmail(d['email'])
         if msg == "userExist":
-            info="errorSignUp"
+            return "errorSignUp"
         else:
             # Ajoute l'utilisateur à la bdd
             b.addUser(d['prenom'], d['nom'], d['email'], d['mdp1'], d['certification'])
             # Crée des données de session pour l'utilisateur
-            session['idUtilisateur'] = b.getIdUser(d['email'])
-            info = None
-    return info
+            addToSession('idUtilisateur', b.getIdUser(d['email']))
+            for k,v in d.items():
+                addToSession(k,v)
+            profile()
+            return None
 
 def verifMdp(email, password, mdp1, mdp2):
+    print(password, mdp2, mdp2)
     msg = b.verifMdp(email, password)
     if msg != "okMdp":
+        print(1)
         info = "errorMdp3"
-    if mdp1 != mdp2:
+    elif mdp1 != mdp2:
         # Nouveaux mot de passe différents
         info = "errorMdp1"
     elif password == mdp1:
@@ -54,6 +58,7 @@ def verifMdp(email, password, mdp1, mdp2):
     else:
         msg = b.modifMdp(session['email'], mdp1)
         info = "okMdp"
+        print(4)
     return info
 
 def profile():

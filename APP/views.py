@@ -110,11 +110,8 @@ def signUp():
     data={}
     for elt in ['prenom', 'nom', 'email', 'mdp1', 'mdp2', 'certification']:
         data[elt] = request.form["{}".format(elt)]
-
-    info = f.signUp(data)
-    f.profile()
-
-    return render_template("profile.html", info=info)
+    info = f.signUp(data)    
+    return render_template("profile.html") if info is None else render_template("login.html", info=info)
 
 @app.route("/addflight", methods=['POST'])
 def addflight():
