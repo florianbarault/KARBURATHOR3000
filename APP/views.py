@@ -112,6 +112,7 @@ def signUp():
         data[elt] = request.form["{}".format(elt)]
 
     info = f.signUp(data)
+    f.profile()
 
     return render_template("profile.html", info=info)
 

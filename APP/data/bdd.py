@@ -43,6 +43,20 @@ def addUser(prenom, nom, email, mdp, certif):
         print("Failed add user : {}".format(e))
     closeConnexion(cnx)
 
+def getIdUser(email):
+    request = "SELECT idUtilisateur FROM utilisateurs WHERE email = %s"
+    param = (email, )
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        res = cursor.fetchall()
+    except mysql.connector.Error as e:
+        res = None
+        print("Failed get idUtilisateur : {}".format(e))
+        closeConnexion(cnx)
+    return res
+
 def verifUserEmail(email):
     request = "SELECT * FROM utilisateurs WHERE email = %s LIMIT 1"
     param = (email,)
@@ -540,3 +554,4 @@ def modifMdp(email, mdp):
     return msg
 
 
+    
