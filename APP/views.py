@@ -126,7 +126,8 @@ def addflight():
         dir_vent = request.form['vent_dir']
         vit_vent = request.form['vent_vit']
         date = request.form['date']
-        new_flight = [num_avion, date, idUtilisateur, vit_vent, dir_vent]
+        type_vol = request.form['select_type']
+        new_flight = [num_avion, date, idUtilisateur, vit_vent, dir_vent, type_vol]
         b.ajout_vol(new_flight)
 
         #Ajout étapes
@@ -145,7 +146,7 @@ def addflight():
 
             #Data nécessaires pour la page recap
             liste_etapes = b.get_etapes(vol)
-            data,conso_totale, dist_totale=b.conso_dist_etapes(liste_etapes,carb,dist)
+            data, conso_totale, dist_totale=b.conso_dist_etapes(liste_etapes,carb,dist)
 
             return render_template("recap.html", table=data, coord_map=coordonnees_generales, conso_totale=conso_totale, dist_totale=dist_totale, info=session["statut"])
     else:

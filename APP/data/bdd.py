@@ -111,7 +111,7 @@ def sumFrom(table,attribut, condition=""):
         return str(res['SUM({})'.format(attribut)])
 
 def get_histo(login):
-    request = "SELECT OACIdep, OACIarr , etapes.idVol, rang, vol.date, avion.reference FROM etapes " \
+    request = "SELECT OACIdep, OACIarr , etapes.idVol, rang, vol.date, avion.reference, vol.typeVol FROM etapes " \
                "INNER JOIN vol ON etapes.idVol = vol.idVol " \
                "INNER JOIN avion ON vol.idAvion = avion.idAvion " \
                "WHERE vol.idUtilisateur = %s order BY etapes.idVol ASC, etapes.rang ASC "
@@ -123,6 +123,8 @@ def get_histo(login):
     closeConnexion(cnx)
 
     #Traitement des données
+
+    dico_type_vol = {"vfr_local_vue": "VFR local en vue d'aérodrome", "vfr_local_hors_aero": "VFR local hors aérodrome", "nav_vfr": "Navigation VFR", "vfr_nuit": "VFR nuit"}
 
     try :
         liste_vol = []
@@ -140,6 +142,9 @@ def get_histo(login):
 
                 date = res[i]["date"]
                 liste_vol[k].append(date)
+
+                type_vol = res[i]["typeVol"]
+                liste_vol[k].append(dico_type_vol[type_vol])
 
                 OACIdep = res[i]["OACIdep"]
                 liste_vol[k].append(OACIdep)
@@ -380,8 +385,8 @@ def modifAvion(dataAvion, selectedAvion):
     return msg
 
 def ajout_vol(new_flight):
-    request =" INSERT INTO vol (idAvion, date, idUtilisateur, vitesseVent, directionVent) values (%s, %s,%s, %s, %s) "
-    param = (new_flight[0],new_flight[1],new_flight[2],new_flight[3],new_flight[4],)
+    request =" INSERT INTO vol (idAvion, date, idUtilisateur, vitesseVent, directionVent, typeVol) values (%s, %s,%s, %s, %s, %s) "
+    param = (new_flight[0], new_flight[1], new_flight[2], new_flight[3], new_flight[4], new_flight[5])
     cnx = createConnexion()
     cursor = cnx.cursor()
     cursor.execute(request, param)
