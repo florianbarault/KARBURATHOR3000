@@ -461,17 +461,32 @@ def modifAerodrome(dataAerodrome, selectedAerodrome):
             closeConnexion(cnx)
     return msg
 
-def deleteAvion(oaci):
+def deleteAvion(idAvion):
     request = "DELETE FROM avion WHERE idAvion = %s"
+    param = (idAvion,)
+    cnx = createConnexion()
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(request, param)
+        cnx.commit()
+        msg = "okDeleteAvion"
+    except mysql.connector.Error as e:
+        msg="errorDeleteAvion"
+        print("Failed delete avion : {}".format(e))
+    closeConnexion(cnx)
+    return msg
+
+def deleteAerodrome(oaci):
+    request = "DELETE FROM aerodrome WHERE OACI = %s"
     param = (oaci,)
     cnx = createConnexion()
     try:
         cursor = cnx.cursor()
         cursor.execute(request, param)
         cnx.commit()
-        msg = "ok"
+        msg = "okDeleteAerodrome"
     except mysql.connector.Error as e:
-        msg="fail"
+        msg="errorDeleteAerodrome"
         print("Failed delete aerodrome : {}".format(e))
     closeConnexion(cnx)
     return msg
@@ -559,4 +574,3 @@ def modifMdp(email, mdp):
     return msg
 
 
-    

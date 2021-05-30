@@ -152,6 +152,11 @@ Gestion
 						</div>
 					</form>
 					{% endif %}
+					{% if info == "errorDeleteAvion" %}
+					<div class="text-danger text-center fw-bold">Action impossible, cet avion est associé à des vols</div>
+					{% elif info == "okDeleteAvion" %}
+					<div class="text-center fw-bold">L'avion a bien été supprimé</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -276,6 +281,18 @@ Gestion
 						</div>
 						{% endif %}
 					</form>
+					<form method="POST" action="/supprimerAerodrome">
+						<div class="col-md-6">
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Supprimer cet aérodrome</button>
+							</div>
+						</div>
+					</form>
+					{% endif %}
+					{% if info == "errorDeleteAerodrome" %}
+					<div class="text-danger text-center fw-bold">Action impossible, cet aérodrome est associé à des vols</div>
+					{% elif info == "okDeleteAerodrome" %}
+					<div class="text-center fw-bold">L'aérodrome a bien été supprimé</div>
 					{% endif %}
 				</div>
 			</div>

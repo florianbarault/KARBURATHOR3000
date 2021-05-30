@@ -223,12 +223,19 @@ def modifAvion():
 
 @app.route("/supprimerAvion", methods=['POST'])
 def supprimerAvion():
-    oaci = session['selectedAvion']
+    idAvion = session['selectedAvion']
     # Supprime de la bdd l'aérodrome de code OACI
-    b.deleteAvion(oaci)
+    msg = b.deleteAvion(idAvion)
     session['selectedAvion'] = None
-    
-    return render_template("gestion.html")
+    return render_template("gestion.html", info=msg)
+
+@app.route("/supprimerAerodrome", methods=['POST'])
+def supprimerAerodrome():
+    oaci = session['selectedAerodrome']
+    # Supprime de la bdd l'aérodrome de code OACI
+    msg = b.deleteAerodrome(oaci)
+    session['selectedAerodrome'] = None
+    return render_template("gestion.html", info=msg)
 
 @app.route("/cv", methods=['GET'])
 def cv():
