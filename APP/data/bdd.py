@@ -501,7 +501,7 @@ def add_comment(idUtilisateur,msg):
     closeConnexion(cnx)
 
 def get_comments():
-    request ="SELECT nom,prenom,date,contenu FROM messages JOIN utilisateurs ON messages.idUtilisateur = utilisateurs.idUtilisateur"
+    request ="SELECT nom,prenom,date,contenu FROM messages JOIN utilisateurs ON messages.idUtilisateur = utilisateurs.idUtilisateur ORDER BY date ASC"
     cnx = createConnexion()
     cursor = cnx.cursor()
     cursor.execute(request)
