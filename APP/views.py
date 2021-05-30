@@ -209,12 +209,13 @@ def modifAerodrome():
     # Effectue la modification dans la bdd
     msg = b.modifAerodrome(dicDataAerodrome, selectedAerodrome)
     # Charge les nouvelles données de l'aérodrome
-    selectedAerodrome = dicDataAerodrome['oaci']
+    if dicDataAerodrome['oaci'] == None:
+        selectedAerodrome = dicDataAerodrome['oaci']
+        session['selectedAerodrome'] = selectedAerodrome
     dicDataAerodrome = {}
     if selectedAerodrome is not None:
         dicDataAerodrome = b.getDataAerodrome(selectedAerodrome)
 
-    session['selectedAerodrome'] = selectedAerodrome
     return render_template("gestion.html",dataAerodrome=dicDataAerodrome, info=msg)
 
 @app.route("/modifAvion", methods=['POST'])
