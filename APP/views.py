@@ -239,7 +239,14 @@ def supprimerAerodrome():
 
 @app.route("/cv", methods=['GET'])
 def cv():
-    return render_template("cv.html")
+    return render_template("cv.html", photo="cv_jacques.png")
+
+@app.route("/cvVampire", methods=['POST', 'GET'])
+def cvVampire():
+    photo = "cv_jacques.png"
+    if request.form['vampire'] == "oui":
+        photo = "cv_vampire.png"
+    return render_template("cv.html", photo=photo)
 
 @app.route("/addcomment", methods=['POST', 'GET'])
 def addcomment():

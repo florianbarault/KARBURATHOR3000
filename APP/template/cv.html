@@ -142,7 +142,24 @@ CV Concepteurs
 				<p> Piano (apprentissage en autonomie)</p>
 			</div>
 			<div class="col-md-6 animate-box">
-				<img src="../static/images/cv_florian.png" alt= "cvflorian" title="Florian Barault" height="200px" width="200px"/>
+				<img src=../static/images/{{ photo }} alt= "cvflorian" title="Florian Barault" height="200px" width="200px"/>
+				<form action="/cvVampire" method="POST">
+					<div>
+						<label>Jacques est-il un vampire ?</label>
+					</div>
+					<div>
+						<input type="radio" name="vampire" value="oui">
+						<label>Oui</label>
+					  </div>
+					  
+					  <div>
+						<input type="radio" name="vampire" value="non">
+						<label>Non</label>
+					  </div>
+					<div>
+						<button type="submit" class="btn btn-primary">Vérifier</button>
+					</div>
+				</form>
 				<h3>Jacques SERIEN</h3>
 				<h4>Expériences professionnelles</h4>
 				<b>2017, Juillet-Aout
